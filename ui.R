@@ -1,39 +1,28 @@
 library(shiny)
+library(rmarkdown)
 
-# アプリケーションの UI 定義。ヒストグラムを描く
+pageTitle <- "いろいろな確率分布のパラメータをいじくるアプリ @ksmzn #Shiny "
+statDist <- a("確率分布", href="https://ksmzn.shinyapps.io/statdist/") 
+titleLink <- span(statDist)
+googleAnalytics <- tags$head(includeScript("google-analytics.js"))
+
 shinyUI(
-  navbarPage("確率分布",
-    tabPanel("Home",
-        titlePanel("正規分布"),
-        fluidRow(
-          column(12,
-            withMathJax(),
-            helpText("$$f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}} \\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)$$")
-          )
-        ),
-        sidebarLayout(
-          sidebarPanel(
-            radioButtons(paste("home", "p_or_c", sep="."), "",
-                      c("確率密度関数"="p", "累積分布関数"="c")
-            ),
-            sliderInput(paste("home", "range", sep="."), "範囲",
-                        min = -100, max = 100, value = c(-10, 10), step= 0.5),
-            sliderInput(paste("home", "mean", sep="."), "平均 \\(\\mu\\)",
-                        min = -50, max = 50, value = 0, step= 0.05),
-            sliderInput(paste("home", "sd", sep="."), "標準偏差 \\(\\sigma\\)",
-                        min = 0, max = 10, value = 1, step= 0.05)
-          ),
-          mainPanel(
-            plotOutput("homePlot")
-          )
+  navbarPage(
+    titleLink,
+    windowTitle = pageTitle,
+    tabPanel("About",
+      fluidRow(
+        column(12,
+#               offset = 1,
+          includeMarkdown("about.md")
         )
-    ),
+      )
+             ),
     navbarMenu("連続分布",
       tabPanel("アーラン分布",
         titlePanel("アーラン分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$
               f(x; n, \\lambda)=
               {\\lambda^{n} x^{n-1} e^{-\\lambda x} \\over (n-1)!}\\quad\\mbox{for }x>0
@@ -63,7 +52,6 @@ shinyUI(
         titlePanel("F分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$ f(x) = \\frac{1}{\\mathrm{B}(d_1/2, d_2/2)} \\; \\left(\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_1/2} \\; \\left(1-\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_2/2} \\; x^{-1} $$")
           )
         ),
@@ -88,7 +76,6 @@ shinyUI(
         titlePanel("非心F分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$ f(x)
               =\\sum\\limits_{k=0}^\\infty
               \\frac{e^{-\\lambda/2}(\\lambda/2)^k}
@@ -123,7 +110,6 @@ shinyUI(
         titlePanel("カイ二乗分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x;k)=\\frac{(1/2)^{k/2}}{\\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}
               \\ \\ \\ \\ \\mathrm{for\\ } x > 0$$")
           )
@@ -147,7 +133,6 @@ shinyUI(
         titlePanel("非心カイ二乗分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f_X(x; k,\\lambda) =
               \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x)
               \\ \\ \\ \\ \\mathrm{for\\ } x > 0\\\\
@@ -176,7 +161,6 @@ shinyUI(
         titlePanel("ガンマ分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x) = x^{k-1} \\frac{e^{-x/\\theta}}{\\Gamma(k)\\,\\theta^k}
                      \\ \\ \\ \\ \\mathrm{for\\ } x > 0$$")
           )
@@ -203,7 +187,6 @@ shinyUI(
         titlePanel("コーシー分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$\\begin{align}f(x; x_0,\\gamma) &= { 1 \\over \\pi } \\left[ { \\gamma \\over (x - x_0)^2 + \\gamma^2  } \\right]\\end{align}$$")
           )
         ),
@@ -228,7 +211,6 @@ shinyUI(
         titlePanel("指数分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x; \\lambda) = \\left\\{ \\begin{array}{ll} \\lambda e^{-\\lambda x} & (x \\geq 0) \\\\ 0 & (x < 0)\\end{array}\\right.$$")
           )
         ),
@@ -251,7 +233,6 @@ shinyUI(
         titlePanel("正規分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}} \\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)$$")
           )
         ),
@@ -277,7 +258,6 @@ shinyUI(
         titlePanel("対数正規分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x) = \\frac{1}{\\sqrt{2\\pi} \\sigma x} e^{-\\frac{ (\\ln{x}-\\mu)^2}{2\\sigma^2} }, \\quad 0<x< \\infty$$")
           )
         ),
@@ -302,7 +282,6 @@ shinyUI(
         titlePanel("t分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x) = \\frac{\\Gamma((\\nu+1)/2)}{\\sqrt{\\nu\\pi\\,}\\,\\Gamma(\\nu/2)} (1+x^2/\\nu)^{-(\\nu+1)/2}$$")
           )
         ),
@@ -325,7 +304,6 @@ shinyUI(
         titlePanel("非心t分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$ f(x) =\\frac{\\nu^{\\frac{\\nu}{2}} \\exp\\left (-\\frac{\\nu\\mu^2}{2(x^2+\\nu)} \\right )}{\\sqrt{\\pi}\\Gamma(\\frac{\\nu}{2})2^{\\frac{\\nu-1}{2}}(x^2+\\nu)^{\\frac{\\nu+1}{2}}} \\int_0^\\infty y^\\nu\\exp\\left (-\\frac{1}{2}\\left(y-\\frac{\\mu x}{\\sqrt{x^2+\\nu}}\\right)^2\\right ) dy$$")
           )
         ),
@@ -352,7 +330,6 @@ shinyUI(
         titlePanel("ベータ分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x)=\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}$$")
           )
         ),
@@ -377,7 +354,6 @@ shinyUI(
         titlePanel("非心ベータ分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$
               f(x) = \\sum_{j=0}^\\infty \\frac{1}{j!}
               \\left(\\frac{\\lambda}{2}\\right)^je^{-\\lambda/2}
@@ -411,7 +387,6 @@ shinyUI(
         titlePanel("連続一様分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$
   f(x)=\\begin{cases}
   \\frac{1}{b - a} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
@@ -442,7 +417,6 @@ shinyUI(
         titlePanel("ロジスティック分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$
               f(x;\\mu,s) = \\frac{\\exp(-\\frac{x-\\mu}{s})}{s(1+\\exp(-\\frac{x-\\mu}{s}))^2}
             $$")
@@ -469,7 +443,6 @@ shinyUI(
         titlePanel("ワイブル分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$
                      f(t)=\\frac{m}{\\eta}\\left(\\frac{t}{\\eta}\\right)^{m-1}
                      \\exp \\left\\{-\\left(\\frac{t}{\\eta}\\right)^m\\right\\}
@@ -499,7 +472,6 @@ shinyUI(
         titlePanel("幾何分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$\\Pr(X = k) = p(1-p)^{k}
                      $$")
           )
@@ -523,7 +495,6 @@ shinyUI(
         titlePanel("超幾何分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$
               \\operatorname{P}(X=x)
               = \\frac{\\binom{m}{x}\\binom{n}{k-x}}{\\binom{m+n}{k}}
@@ -555,7 +526,6 @@ shinyUI(
         titlePanel("二項分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$P[X=k]={n\\choose k}p^k(1-p)^{n-k}\\quad\\mbox{for}\\ k=0,1,2,\\dots,n 
                      $$")
           )
@@ -581,7 +551,6 @@ shinyUI(
         titlePanel("負の二項分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$f(x)=P(X=x) = {x-1 \\choose r-1} p^r (1-p)^{x-r}
                      $$")
           )
@@ -609,7 +578,6 @@ shinyUI(
         titlePanel("ポアソン分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}
                      $$")
           )
@@ -633,7 +601,6 @@ shinyUI(
         titlePanel("離散一様分布"),
         fluidRow(
           column(12,
-            withMathJax(),
             helpText("$$
               f(x)=\\begin{cases}
               \\frac{1}{n} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
@@ -655,6 +622,11 @@ shinyUI(
           )
         )
       )
+    ),
+    googleAnalytics,
+    footer=tagList(
+      includeScript("sharebutton.horizontal.js"),
+      withMathJax()
     )
   )
 )
