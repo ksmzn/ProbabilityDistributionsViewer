@@ -5,6 +5,12 @@ shinyUI(
   navbarPage("確率分布",
     tabPanel("Home",
         titlePanel("正規分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}} \\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("home", "p_or_c", sep="."), "",
@@ -12,9 +18,9 @@ shinyUI(
             ),
             sliderInput(paste("home", "range", sep="."), "範囲",
                         min = -100, max = 100, value = c(-10, 10), step= 0.5),
-            sliderInput(paste("home", "mean", sep="."), "平均",
+            sliderInput(paste("home", "mean", sep="."), "平均 \\(\\mu\\)",
                         min = -50, max = 50, value = 0, step= 0.05),
-            sliderInput(paste("home", "sd", sep="."), "標準偏差",
+            sliderInput(paste("home", "sd", sep="."), "標準偏差 \\(\\sigma\\)",
                         min = 0, max = 10, value = 1, step= 0.05)
           ),
           mainPanel(
@@ -29,6 +35,12 @@ shinyUI(
 #       tabPanel("ウィッシャート分布"),
       tabPanel("F分布",
         titlePanel("F分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$ f(x) = \\frac{1}{\\mathrm{B}(d_1/2, d_2/2)} \\; \\left(\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_1/2} \\; \\left(1-\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_2/2} \\; x^{-1} $$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("f", "p_or_c", sep="."), "",
@@ -36,20 +48,60 @@ shinyUI(
             ),
             sliderInput(paste("f", "range", sep="."), "範囲",
                         min = 0, max = 100, value = c(0, 20), step= 0.5),
-            sliderInput(paste("f", "df1", sep="."), "自由度1",
+            sliderInput(paste("f", "df1", sep="."), "自由度 \\(d_1\\)",
                         min = 1, max = 20, value = 1, step= 1),
-            sliderInput(paste("f", "df2", sep="."), "自由度2",
-                        min = 1, max = 20, value = 1, step= 1),
-            sliderInput(paste("f", "ncp", sep="."), "非中心度パラメータ",
-                        min = 0, max = 20, value = 0, step= 0.1)
+            sliderInput(paste("f", "df2", sep="."), "自由度 \\(d_2\\)",
+                        min = 1, max = 20, value = 1, step= 1)
           ),
           mainPanel(
             plotOutput("fPlot")
           )
         )
       ),
+      tabPanel("非心F分布",
+        titlePanel("非心F分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$ f(x)
+              =\\sum\\limits_{k=0}^\\infty
+              \\frac{e^{-\\lambda/2}(\\lambda/2)^k}
+              { B\\left(\\frac{\\nu_2}{2},\\frac{\\nu_1}{2}+k\\right) k!}
+              \\left(\\frac{\\nu_1}{\\nu_2}\\right)^{\\frac{\\nu_1}{2}+k}
+              \\left(\\frac{\\nu_2}{\\nu_2+\\nu_1x}\\right)
+              ^{\\frac{\\nu_1+\\nu_2}{2}+k}x^{\\nu_1/2-1+k}
+              \\ \\ \\ \\ \\mathrm{for\\ } x > 0
+              $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("ncf", "p_or_c", sep="."), "",
+                      c("確率密度関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("ncf", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 0.5),
+            sliderInput(paste("ncf", "df1", sep="."), "自由度 \\(\\nu_1\\)",
+                        min = 1, max = 20, value = 1, step= 1),
+            sliderInput(paste("ncf", "df2", sep="."), "自由度 \\(\\nu_2\\)",
+                        min = 1, max = 20, value = 1, step= 1),
+            sliderInput(paste("ncf", "ncp", sep="."), "非中心度 \\(\\lambda\\)",
+                        min = 0, max = 20, value = 0, step= 0.1)
+          ),
+          mainPanel(
+            plotOutput("ncfPlot")
+          )
+        )
+      ),
       tabPanel("カイ二乗分布",
         titlePanel("カイ二乗分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x;k)=\\frac{(1/2)^{k/2}}{\\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}
+              \\ \\ \\ \\ \\mathrm{for\\ } x > 0$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("chisq", "p_or_c", sep="."), "",
@@ -57,19 +109,52 @@ shinyUI(
             ),
             sliderInput(paste("chisq", "range", sep="."), "範囲",
                         min = 0, max = 100, value = c(0, 20), step= 0.5),
-            sliderInput(paste("chisq", "df", sep="."), "自由度",
-                        min = 1, max = 20, value = 1, step= 1),
-            sliderInput(paste("chisq", "ncp", sep="."), "非中心度パラメータ",
-                        min = 0, max = 20, value = 0, step= 0.1)
+            sliderInput(paste("chisq", "df", sep="."), "自由度 \\(k\\)",
+                        min = 1, max = 20, value = 1, step= 1)
           ),
           mainPanel(
             plotOutput("chisqPlot")
           )
         )
                ),
+      tabPanel("非心カイ二乗分布",
+        titlePanel("非心カイ二乗分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f_X(x; k,\\lambda) =
+              \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x)
+              \\ \\ \\ \\ \\mathrm{for\\ } x > 0\\\\
+              \\\\ Y_q \\mathrm{\\ は自由度\\ } q \\mathrm{\\ のカイ二乗分布に従う\\ } $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("ncChisq", "p_or_c", sep="."), "",
+                      c("確率密度関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("ncChisq", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 0.5),
+            sliderInput(paste("ncChisq", "df", sep="."), "自由度 \\(k\\)",
+                        min = 1, max = 20, value = 1, step= 1),
+            sliderInput(paste("ncChisq", "ncp", sep="."), "非中心度 \\(\\lambda\\)",
+                        min = 0, max = 20, value = 0, step= 0.1)
+          ),
+          mainPanel(
+            plotOutput("ncChisqPlot")
+          )
+        )
+               ),
 #       tabPanel("ガンベル分布"),
       tabPanel("ガンマ分布",
         titlePanel("ガンマ分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x) = x^{k-1} \\frac{e^{-x/\\theta}}{\\Gamma(k)\\,\\theta^k}
+                     \\ \\ \\ \\ \\mathrm{for\\ } x > 0$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("gamma", "p_or_c", sep="."), "",
@@ -77,9 +162,9 @@ shinyUI(
             ),
             sliderInput(paste("gamma", "range", sep="."), "範囲",
                         min = 0, max = 100, value = c(0, 20), step= 0.5),
-            sliderInput(paste("gamma", "shape", sep="."), "形状",
+            sliderInput(paste("gamma", "shape", sep="."), "形状 \\(k\\)",
                         min = 0, max = 20, value = 1, step= 0.1),
-            sliderInput(paste("gamma", "scale", sep="."), "尺度",
+            sliderInput(paste("gamma", "scale", sep="."), "尺度 \\(\\theta\\)",
                         min = 0, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
@@ -90,6 +175,12 @@ shinyUI(
 #       tabPanel("逆ガウス分布"),
       tabPanel("コーシー分布",
         titlePanel("コーシー分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$\\begin{align}f(x; x_0,\\gamma) &= { 1 \\over \\pi } \\left[ { \\gamma \\over (x - x_0)^2 + \\gamma^2  } \\right]\\end{align}$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("cauchy", "p_or_c", sep="."), "",
@@ -97,9 +188,9 @@ shinyUI(
             ),
             sliderInput(paste("cauchy", "range", sep="."), "範囲",
                         min = -100, max = 100, value = c(-10, 10), step= 0.5),
-            sliderInput(paste("cauchy", "location", sep="."), "位置",
+            sliderInput(paste("cauchy", "location", sep="."), "位置 \\(x_0\\)",
                         min = -20, max = 20, value = 0, step= 0.1),
-            sliderInput(paste("cauchy", "scale", sep="."), "尺度",
+            sliderInput(paste("cauchy", "scale", sep="."), "尺度 \\(\\gamma\\)",
                         min = 0, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
@@ -109,6 +200,12 @@ shinyUI(
       ),
       tabPanel("指数分布",
         titlePanel("指数分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x; \\lambda) = \\left\\{ \\begin{array}{ll} \\lambda e^{-\\lambda x} & (x \\geq 0) \\\\ 0 & (x < 0)\\end{array}\\right.$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("exp", "p_or_c", sep="."), "",
@@ -116,7 +213,7 @@ shinyUI(
             ),
             sliderInput(paste("exp","range",sep="."), "範囲",
                         min = -10, max = 100, value = c(0, 5), step= 0.5),
-            sliderInput(paste("exp","rate",sep="."), "λ",
+            sliderInput(paste("exp","rate",sep="."), "\\(\\lambda\\)",
                         min = 0, max = 50, value = 1, step= 0.1)
           ),
           mainPanel(
@@ -126,6 +223,12 @@ shinyUI(
       ),
       tabPanel("正規分布",
         titlePanel("正規分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}} \\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("norm", "p_or_c", sep="."), "",
@@ -133,9 +236,9 @@ shinyUI(
             ),
             sliderInput(paste("norm", "range", sep="."), "範囲",
                         min = -100, max = 100, value = c(-10, 10), step= 0.5),
-            sliderInput(paste("norm", "mean", sep="."), "平均",
+            sliderInput(paste("norm", "mean", sep="."), "平均 \\(\\mu\\)",
                         min = -50, max = 50, value = 0, step= 0.05),
-            sliderInput(paste("norm", "sd", sep="."), "標準偏差",
+            sliderInput(paste("norm", "sd", sep="."), "標準偏差 \\(\\sigma\\)",
                         min = 0, max = 10, value = 1, step= 0.05)
           ),
           mainPanel(
@@ -146,6 +249,12 @@ shinyUI(
 #       tabPanel("双曲線正割分布"),
       tabPanel("対数正規分布",
         titlePanel("対数正規分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x) = \\frac{1}{\\sqrt{2\\pi} \\sigma x} e^{-\\frac{ (\\ln{x}-\\mu)^2}{2\\sigma^2} }, \\quad 0<x< \\infty$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("lnorm", "p_or_c", sep="."), "",
@@ -165,6 +274,12 @@ shinyUI(
       ),
       tabPanel("t分布",
         titlePanel("t分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x) = \\frac{\\Gamma((\\nu+1)/2)}{\\sqrt{\\nu\\pi\\,}\\,\\Gamma(\\nu/2)} (1+x^2/\\nu)^{-(\\nu+1)/2}$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("t", "p_or_c", sep="."), "",
@@ -172,13 +287,36 @@ shinyUI(
             ),
             sliderInput(paste("t", "range", sep="."), "範囲",
                         min = -100, max = 100, value = c(-10, 10), step= 0.5),
-            sliderInput(paste("t", "df", sep="."), "自由度",
-                        min = 1, max = 20, value = 1, step= 1),
-            sliderInput(paste("t", "ncp", sep="."), "非中心度パラメータ",
-                        min = 0, max = 20, value = 0, step= 0.1)
+            sliderInput(paste("t", "df", sep="."), "自由度 \\(\\nu\\)",
+                        min = 1, max = 20, value = 1, step= 1)
           ),
           mainPanel(
             plotOutput("tPlot")
+          )
+        )
+      ),
+      tabPanel("非心t分布",
+        titlePanel("非心t分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$ f(x) =\\frac{\\nu^{\\frac{\\nu}{2}} \\exp\\left (-\\frac{\\nu\\mu^2}{2(x^2+\\nu)} \\right )}{\\sqrt{\\pi}\\Gamma(\\frac{\\nu}{2})2^{\\frac{\\nu-1}{2}}(x^2+\\nu)^{\\frac{\\nu+1}{2}}} \\int_0^\\infty y^\\nu\\exp\\left (-\\frac{1}{2}\\left(y-\\frac{\\mu x}{\\sqrt{x^2+\\nu}}\\right)^2\\right ) dy$$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("nct", "p_or_c", sep="."), "",
+                      c("確率密度関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("nct", "range", sep="."), "範囲",
+                        min = -100, max = 100, value = c(-10, 10), step= 0.5),
+            sliderInput(paste("nct", "df", sep="."), "自由度 \\(\\nu\\)",
+                        min = 1, max = 20, value = 1, step= 1),
+            sliderInput(paste("nct", "ncp", sep="."), "非中心度 \\(\\mu\\)",
+                        min = 0, max = 20, value = 0, step= 0.1)
+          ),
+          mainPanel(
+            plotOutput("nctPlot")
           )
         )
       ),
@@ -186,6 +324,12 @@ shinyUI(
 #       tabPanel("パレート分布"),
       tabPanel("ベータ分布",
         titlePanel("ベータ分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x)=\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}$$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("beta", "p_or_c", sep="."), "",
@@ -193,15 +337,44 @@ shinyUI(
             ),
             sliderInput(paste("beta", "range", sep="."), "範囲",
                         min = 0, max = 1, value = c(0, 1), step= 0.01),
-            sliderInput(paste("beta", "shape1", sep="."), "形状α",
+            sliderInput(paste("beta", "shape1", sep="."), "形状 \\(\\alpha\\)",
                         min = 0, max = 20, value = 2, step= 0.1),
-            sliderInput(paste("beta", "shape2", sep="."), "形状β",
-                        min = 0, max = 20, value = 2, step= 0.1),
-            sliderInput(paste("beta", "ncp", sep="."), "非中心度パラメータ",
-                        min = 0, max = 20, value = 0, step= 0.1)
+            sliderInput(paste("beta", "shape2", sep="."), "形状 \\(\\beta\\)",
+                        min = 0, max = 20, value = 2, step= 0.1)
           ),
           mainPanel(
             plotOutput("betaPlot")
+          )
+        )
+      ),
+      tabPanel("非心ベータ分布",
+        titlePanel("非心ベータ分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$
+              f(x) = \\sum_{j=0}^\\infty \\frac{1}{j!}
+              \\left(\\frac{\\lambda}{2}\\right)^je^{-\\lambda/2}
+              \\frac{x^{\\alpha+j-1}(1-x)^{\\beta-1}}{B(\\alpha+j,\\beta)}
+            $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("ncbeta", "p_or_c", sep="."), "",
+                      c("確率密度関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("ncbeta", "range", sep="."), "範囲",
+                        min = 0, max = 1, value = c(0, 1), step= 0.01),
+            sliderInput(paste("ncbeta", "shape1", sep="."), "形状 \\(\\alpha\\)",
+                        min = 0, max = 20, value = 2, step= 0.1),
+            sliderInput(paste("ncbeta", "shape2", sep="."), "形状 \\(\\beta\\)",
+                        min = 0, max = 20, value = 2, step= 0.1),
+            sliderInput(paste("ncbeta", "ncp", sep="."), "非中心度 \\(\\lambda\\)",
+                        min = 0, max = 20, value = 0, step= 0.1)
+          ),
+          mainPanel(
+            plotOutput("ncbetaPlot")
           )
         )
       ),
@@ -210,6 +383,22 @@ shinyUI(
 #       tabPanel("レヴィ分布"),
       tabPanel("連続一様分布",
         titlePanel("連続一様分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$
+  f(x)=\\begin{cases}
+  \\frac{1}{b - a} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
+  0 & \\mathrm{for}\\ x<a\\ \\mathrm{or}\\ x>b
+  \\end{cases} 
+            $$")
+#             helpText("$$
+#               f(x)=\\left\\{\\begin{matrix}
+#               \\frac{1}{b - a} & \\ \\ \\ \\mathrm{for}\\ a \\le x \\le b, \\\\  \\\\
+#               0 & \\mathrm{for}\\ x<a\\ \\mathrm{or}\\ x>b, \\end{matrix}\\right
+#             $$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("unif", "p_or_c", sep="."), "",
@@ -217,10 +406,6 @@ shinyUI(
             ),
             sliderInput(paste("unif", "range", sep="."), "範囲",
                         min = -100, max = 100, value = c(0, 1), step= 0.5)
-#             sliderInput(paste("unif", "min", sep="."), "最小値",
-#                         min = -100, max = 100, value = 0, step= 0.5),
-#             sliderInput(paste("unif", "max", sep="."), "最大値",
-#                         min = -100, max = 100, value = 1, step= 0.5)
           ),
           mainPanel(
             plotOutput("unifPlot")
@@ -229,6 +414,14 @@ shinyUI(
       ),
       tabPanel("ロジスティック分布",
         titlePanel("ロジスティック分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$
+              f(x;\\mu,s) = \\frac{\\exp(-\\frac{x-\\mu}{s})}{s(1+\\exp(-\\frac{x-\\mu}{s}))^2}
+            $$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("logis", "p_or_c", sep="."), "",
@@ -236,9 +429,9 @@ shinyUI(
             ),
             sliderInput(paste("logis", "range", sep="."), "範囲",
                         min = -100, max = 100, value = c(-10, 10), step= 0.5),
-            sliderInput(paste("logis", "location", sep="."), "位置",
+            sliderInput(paste("logis", "location", sep="."), "位置 \\(\\mu\\)",
                         min = -20, max = 20, value = 2, step= 0.1),
-            sliderInput(paste("logis", "scale", sep="."), "尺度",
+            sliderInput(paste("logis", "scale", sep="."), "尺度 \\(s\\)",
                         min = 0, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
@@ -248,6 +441,15 @@ shinyUI(
                ),
       tabPanel("ワイブル分布",
         titlePanel("ワイブル分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$
+                     f(t)=\\frac{m}{\\eta}\\left(\\frac{t}{\\eta}\\right)^{m-1}
+                     \\exp \\left\\{-\\left(\\frac{t}{\\eta}\\right)^m\\right\\}
+                     $$")
+          )
+        ),
         sidebarLayout(
           sidebarPanel(
             radioButtons(paste("weibull", "p_or_c", sep="."), "",
@@ -255,9 +457,9 @@ shinyUI(
             ),
             sliderInput(paste("weibull", "range", sep="."), "範囲",
                         min = 0, max = 100, value = c(0, 20), step= 0.5),
-            sliderInput(paste("weibull", "shape", sep="."), "形状m",
+            sliderInput(paste("weibull", "shape", sep="."), "形状 \\(m\\)",
                         min = 0, max = 20, value = 1, step= 0.1),
-            sliderInput(paste("weibull", "scale", sep="."), "尺度η",
+            sliderInput(paste("weibull", "scale", sep="."), "尺度 \\(\\eta\\)",
                         min = 0, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(

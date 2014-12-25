@@ -1,126 +1,6 @@
 library(shiny)
 library(ggplot2)
 
-# F分布
-f.func <- function(df1, df2, ncp, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) df(x, df1, df2, ncp)
-  } else {
-    func <- function(x) pf(x, df1, df2, ncp)
-  }
-  return(func)
-}
-
-# カイ二乗分布
-chisq.func <- function(df, ncp, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dchisq(x, df, ncp)
-  } else {
-    func <- function(x) pchisq(x, df, ncp)
-  }
-  return(func)
-}
-
-# ガンマ分布
-gamma.func <- function(shape, scale, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dgamma(x, shape, scale)
-  } else {
-    func <- function(x) pgamma(x, shape, scale)
-  }
-  return(func)
-}
-
-# コーシー分布
-cauchy.func <- function(location, scale, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dcauchy(x, location, scale)
-  } else {
-    func <- function(x) pcauchy(x, location, scale)
-  }
-  return(func)
-}
-
-# 指数分布
-exp.func <- function(rate, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dexp(x, rate)
-  } else {
-    func <- function(x) pexp(x, rate)
-  }
-  return(func)
-}
-
-# 正規分布
-norm.func <- function(mean, sd, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dnorm(x, mean, sd)
-  } else {
-    func <- function(x) pnorm(x, mean, sd)
-  }
-  return(func)
-}
-
-# 対数正規分布
-lnorm.func <- function(meanlog, sdlog, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dlnorm(x, meanlog, sdlog)
-  } else {
-    func <- function(x) plnorm(x, meanlog, sdlog)
-  }
-  return(func)
-}
-
-# t分布
-t.func <- function(df, ncp, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dt(x, df, ncp)
-  } else {
-    func <- function(x) pt(x, df, ncp)
-  }
-  return(func)
-}
-
-# ベータ分布
-beta.func <- function(shape1, shape2, ncp, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dbeta(x, shape1, shape2, ncp)
-  } else {
-    func <- function(x) pbeta(x, shape1, shape2, ncp)
-  }
-  return(func)
-}
-
-# 一様分布
-unif.func <- function(min, max, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dunif(x, min, max)
-  } else {
-    func <- function(x) punif(x, min, max)
-  }
-  return(func)
-}
-
-# ロジスティック分布
-logis.func <- function(location, scale, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dlogis(x, location, scale)
-  } else {
-    func <- function(x) plogis(x, location, scale)
-  }
-  return(func)
-}
-
-# ワイブル分布
-weibull.func <- function(shape, scale, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dweibull(x, shape, scale)
-  } else {
-    func <- function(x) pweibull(x, shape, scale)
-  }
-  return(func)
-}
-
 # サーバロジックの定義。ヒストグラムを描く
 shinyServer(function(input, output) {
   # ヒストグラムを描くための式。
@@ -137,15 +17,29 @@ shinyServer(function(input, output) {
   })
 
   output$fPlot <- renderPlot({
-    func <- f.func(input$f.df1, input$f.df2, input$f.ncp, input$f.p_or_c)
+    func <- f.func(input$f.df1, input$f.df2, input$f.p_or_c)
     p <- ggplot(data.frame(x=input$f.range), aes(x)) +
       stat_function(fun=func)
     print(p)
   })
 
+  output$ncfPlot <- renderPlot({
+    func <- ncf.func(input$ncf.df1, input$ncf.df2, input$ncf.ncp, input$ncf.p_or_c)
+    p <- ggplot(data.frame(x=input$ncf.range), aes(x)) +
+      stat_function(fun=func)
+    print(p)
+  })
+
   output$chisqPlot <- renderPlot({
-    func <- chisq.func(input$chisq.df, input$chisq.ncp, input$chisq.p_or_c)
+    func <- chisq.func(input$chisq.df, input$chisq.p_or_c)
     p <- ggplot(data.frame(x=input$chisq.range), aes(x)) +
+      stat_function(fun=func)
+    print(p)
+  })
+
+  output$ncChisqPlot <- renderPlot({
+    func <- ncChisq.func(input$ncChisq.df, input$ncChisq.ncp, input$ncChisq.p_or_c)
+    p <- ggplot(data.frame(x=input$ncChisq.range), aes(x)) +
       stat_function(fun=func)
     print(p)
   })
@@ -186,15 +80,32 @@ shinyServer(function(input, output) {
   })
 
   output$tPlot <- renderPlot({
-    func <- t.func(input$t.df, input$t.ncp, input$t.p_or_c)
+    func <- t.func(input$t.df, input$t.p_or_c)
     p <- ggplot(data.frame(x=input$t.range), aes(x)) +
       stat_function(fun=func)
     print(p)
   })
 
+  output$nctPlot <- renderPlot({
+    func <- nct.func(input$nct.df, input$nct.ncp, input$nct.p_or_c)
+    p <- ggplot(data.frame(x=input$nct.range), aes(x)) +
+      stat_function(fun=func)
+    print(p)
+  })
+
   output$betaPlot <- renderPlot({
-    func <- beta.func(input$beta.shape1, input$beta.shape2, input$beta.ncp, input$beta.p_or_c)
+    func <- beta.func(input$beta.shape1, input$beta.shape2, input$beta.p_or_c)
     p <- ggplot(data.frame(x=input$beta.range), aes(x)) +
+      stat_function(fun=func)
+    print(p)
+  })
+
+  output$ncbetaPlot <- renderPlot({
+    func <- ncbeta.func(input$ncbeta.shape1,
+                        input$ncbeta.shape2,
+                        input$ncbeta.ncp,
+                        input$ncbeta.p_or_c)
+    p <- ggplot(data.frame(x=input$ncbeta.range), aes(x)) +
       stat_function(fun=func)
     print(p)
   })
