@@ -16,6 +16,13 @@ shinyServer(function(input, output) {
     print(p)
   })
 
+  output$erlangPlot <- renderPlot({
+    func <- gamma.func(input$erlang.shape, input$erlang.scale, input$erlang.p_or_c)
+    p <- ggplot(data.frame(x=input$erlang.range), aes(x)) +
+      stat_function(fun=func)
+    print(p)
+  })
+
   output$fPlot <- renderPlot({
     func <- f.func(input$f.df1, input$f.df2, input$f.p_or_c)
     p <- ggplot(data.frame(x=input$f.range), aes(x)) +
@@ -130,4 +137,56 @@ shinyServer(function(input, output) {
       stat_function(fun=func)
     print(p)
   })
+
+  ####################################################
+  # 離散分布
+  ####################################################
+  output$geomPlot <- renderPlot({
+    func <- geom.func(input$geom.prob, input$geom.p_or_c)
+    p <- ggplot(transform(data.frame(x=c(input$geom.range[1]:input$geom.range[2])),
+                          y=func(x)), aes(x, y))
+    p <- p + geom_point()
+    print(p)
+  })
+
+  output$hyperPlot <- renderPlot({
+    func <- hyper.func(input$hyper.m, input$hyper.n, input$hyper.k, input$hyper.p_or_c)
+    p <- ggplot(transform(data.frame(x=c(input$hyper.range[1]:input$hyper.range[2])),
+                          y=func(x)), aes(x, y))
+    p <- p + geom_point()
+    print(p)
+  })
+
+  output$binomPlot <- renderPlot({
+    func <- binom.func(input$binom.size, input$binom.prob, input$binom.p_or_c)
+    p <- ggplot(transform(data.frame(x=c(input$binom.range[1]:input$binom.range[2])),
+                          y=func(x)), aes(x, y))
+    p <- p + geom_point()
+    print(p)
+  })
+
+  output$nbinomPlot <- renderPlot({
+    func <- nbinom.func(input$nbinom.size, input$nbinom.prob, input$nbinom.p_or_c)
+    p <- ggplot(transform(data.frame(x=c(input$nbinom.range[1]:input$nbinom.range[2])),
+                          y=func(x)), aes(x, y))
+    p <- p + geom_point()
+    print(p)
+  })
+
+  output$poisPlot <- renderPlot({
+    func <- pois.func(input$pois.lambda, input$pois.p_or_c)
+    p <- ggplot(transform(data.frame(x=c(input$pois.range[1]:input$pois.range[2])),
+                          y=func(x)), aes(x, y))
+    p <- p + geom_point()
+    print(p)
+  })
+
+  output$dunifPlot <- renderPlot({
+    func <- unif.func(input$dunif.range[1], input$dunif.range[2], input$dunif.p_or_c)
+    p <- ggplot(transform(data.frame(x=c(input$dunif.range[1]:input$dunif.range[2])),
+                          y=func(x)), aes(x, y))
+    p <- p + geom_point()
+    print(p)
+  })
+
 })

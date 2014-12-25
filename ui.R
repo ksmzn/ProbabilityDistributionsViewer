@@ -29,8 +29,34 @@ shinyUI(
         )
     ),
     navbarMenu("連続分布",
-#       tabPanel("アーラン分布",
-#       ),
+      tabPanel("アーラン分布",
+        titlePanel("アーラン分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$
+              f(x; n, \\lambda)=
+              {\\lambda^{n} x^{n-1} e^{-\\lambda x} \\over (n-1)!}\\quad\\mbox{for }x>0
+                     $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("erlang", "p_or_c", sep="."), "",
+                      c("確率密度関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("erlang", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 0.5),
+            sliderInput(paste("erlang", "shape", sep="."), "\\(n\\)",
+                        min = 1, max = 20, value = 1, step= 1),
+            sliderInput(paste("erlang", "scale", sep="."), "\\(\\lambda\\)",
+                        min = 0, max = 20, value = 1, step= 0.1)
+          ),
+          mainPanel(
+            plotOutput("erlangPlot")
+          )
+        )
+      ),
 #       tabPanel("一般化双曲型分布"),
 #       tabPanel("ウィッシャート分布"),
       tabPanel("F分布",
@@ -469,16 +495,166 @@ shinyUI(
       )
     ),
     navbarMenu("離散分布",
-      tabPanel("幾何分布"),
-      tabPanel("超幾何分布"),
-      tabPanel("ジップ分布"),
-      tabPanel("多項分布"),
-      tabPanel("二項分布"),
-      tabPanel("負の二項分布"),
-      tabPanel("ポアソン二項分布"),
-      tabPanel("ベルヌーイ分布"),
-      tabPanel("ポアソン分布"),
-      tabPanel("離散一様分布")
+      tabPanel("幾何分布",
+        titlePanel("幾何分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$\\Pr(X = k) = p(1-p)^{k}
+                     $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("geom", "p_or_c", sep="."), "",
+                      c("確率関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("geom", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 1),
+            sliderInput(paste("geom", "prob", sep="."), "成功確率 \\(p\\)",
+                        min = 0, max = 1, value = 0.5, step= 0.01)
+          ),
+          mainPanel(
+            plotOutput("geomPlot")
+          )
+        )
+      ),
+      tabPanel("超幾何分布",
+        titlePanel("超幾何分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$
+              \\operatorname{P}(X=x)
+              = \\frac{\\binom{m}{x}\\binom{n}{k-x}}{\\binom{m+n}{k}}
+                     $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("hyper", "p_or_c", sep="."), "",
+                      c("確率関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("hyper", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 1),
+            sliderInput(paste("hyper", "m", sep="."), "成功状態の数 \\(m\\)",
+                        min = 0, max = 100, value = 50, step= 1),
+            sliderInput(paste("hyper", "n", sep="."), "失敗状態の数 \\(n\\)",
+                        min = 0, max = 100, value = 50, step= 1),
+            sliderInput(paste("hyper", "k", sep="."), "取り出す数 \\(k\\)",
+                        min = 0, max = 100, value = 10, step= 1)
+          ),
+          mainPanel(
+            plotOutput("hyperPlot")
+          )
+        )
+      ),
+#       tabPanel("ジップ分布",),
+#       tabPanel("多項分布",),
+      tabPanel("二項分布",
+        titlePanel("二項分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$P[X=k]={n\\choose k}p^k(1-p)^{n-k}\\quad\\mbox{for}\\ k=0,1,2,\\dots,n 
+                     $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("binom", "p_or_c", sep="."), "",
+                      c("確率関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("binom", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 1),
+            sliderInput(paste("binom", "size", sep="."), "試行回数 \\(n\\)",
+                        min = 0, max = 40, value = 10, step= 1),
+            sliderInput(paste("binom", "prob", sep="."), "成功確率 \\(p\\)",
+                        min = 0, max = 1, value = 0.5, step= 0.01)
+          ),
+          mainPanel(
+            plotOutput("binomPlot")
+          )
+        )
+      ),
+      tabPanel("負の二項分布",
+        titlePanel("負の二項分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$f(x)=P(X=x) = {x-1 \\choose r-1} p^r (1-p)^{x-r}
+                     $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("nbinom", "p_or_c", sep="."), "",
+                      c("確率関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("nbinom", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 1),
+            sliderInput(paste("nbinom", "size", sep="."), "成功回数 \\(r\\)",
+                        min = 1, max = 20, value = 1, step= 1),
+            sliderInput(paste("nbinom", "prob", sep="."), "成功確率 \\(p\\)",
+                        min = 0, max = 1, value = 0.5, step= 0.01)
+          ),
+          mainPanel(
+            plotOutput("nbinomPlot")
+          )
+        )
+      ),
+#       tabPanel("ポアソン二項分布",),
+#       tabPanel("ベルヌーイ分布",),
+      tabPanel("ポアソン分布",
+        titlePanel("ポアソン分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}
+                     $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("pois", "p_or_c", sep="."), "",
+                      c("確率関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("pois", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 1),
+            sliderInput(paste("pois", "lambda", sep="."), "\\(\\lambda\\)",
+                        min = 1, max = 20, value = 1, step= 0.5)
+          ),
+          mainPanel(
+            plotOutput("poisPlot")
+          )
+        )
+      ),
+      tabPanel("離散一様分布",
+        titlePanel("離散一様分布"),
+        fluidRow(
+          column(12,
+            withMathJax(),
+            helpText("$$
+              f(x)=\\begin{cases}
+              \\frac{1}{n} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
+              0 & \\mathrm{for}\\ x<a\\ \\mathrm{or}\\ x>b
+              \\end{cases} 
+            $$")
+          )
+        ),
+        sidebarLayout(
+          sidebarPanel(
+            radioButtons(paste("dunif", "p_or_c", sep="."), "",
+                      c("確率関数"="p", "累積分布関数"="c")
+            ),
+            sliderInput(paste("dunif", "range", sep="."), "範囲",
+                        min = 0, max = 100, value = c(0, 20), step= 1)
+            ),
+          mainPanel(
+            plotOutput("dunifPlot")
+          )
+        )
       )
     )
+  )
 )

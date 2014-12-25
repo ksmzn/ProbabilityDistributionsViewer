@@ -171,4 +171,63 @@ weibull.func <- function(shape, scale, p_or_c){
 ####################################################
 # 離散分布
 ####################################################
+# 幾何分布
+geom.func <- function(prob, p_or_c){
+  if(p_or_c == "p"){
+    func <- function(x) dgeom(x, prob)
+  } else {
+    func <- function(x) pgeom(x, prob)
+  }
+  return(func)
+}
+
+# 超幾何分布
+hyper.func <- function(m, n, k, p_or_c){
+  if(p_or_c == "p"){
+    func <- function(x) dhyper(x, m, n, k)
+  } else {
+    func <- function(x) phyper(x, m, n, k)
+  }
+  return(func)
+}
+
+# 二項分布
+binom.func <- function(size, prob, p_or_c){
+  if(p_or_c == "p"){
+    func <- function(x) dbinom(x, size, prob)
+  } else {
+    func <- function(x) pbinom(x, size, prob)
+  }
+  return(func)
+}
+
+# 負の二項分布
+nbinom.func <- function(size, prob, p_or_c){
+  if(p_or_c == "p"){
+    func <- function(x) dnbinom(x, size, prob)
+  } else {
+    func <- function(x) pnbinom(x, size, prob)
+  }
+  return(func)
+}
+
+# ポアソン分布
+pois.func <- function(lambda, p_or_c){
+  if(p_or_c == "p"){
+    func <- function(x) dpois(x, lambda)
+  } else {
+    func <- function(x) ppois(x, lambda)
+  }
+  return(func)
+}
+
+# # 離散一様分布
+# dunif.func <- function(min, max, p_or_c){
+#   if(p_or_c == "p"){
+#     func <- function(x) dunif(x, min, max)
+#   } else {
+#     func <- function(x) punif(x, min, max)
+#   }
+#   return(func)
+# }
 
