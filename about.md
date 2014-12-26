@@ -7,7 +7,7 @@
 このアプリはR言語のWebアプリフレームワークである<a href="http://shiny.rstudio.com/">Shiny</a>
 で、<a href="https://twitter.com/ksmzn">@ksmzn</a>が作りました。
 ご指摘や、追加すべき確率分布などがありましたらTwitterで教えてくださると助かります。
-また、全てのコードは<a href='https://github.com/pmaier1971/AutomatedForecastingWithShiny'>GitHub</a>にもおいてありますので、拙いコードでよろしければ参考にしてください。
+また、全てのコードは<a href='https://github.com/ksmzn/ShinyDistributionsApp'>GitHub</a>にもおいてありますので、拙いコードでよろしければ参考にしてください。
 
 時間があれば、グラフをggplot2ではなく、D3.jsなどを使ったインタラクティブなものにしたいですね。
 
