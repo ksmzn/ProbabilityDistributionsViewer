@@ -1,15 +1,19 @@
+addResourcePath(prefix="img", directoryPath="img/")
 library(shiny)
 library(rmarkdown)
 
 pageTitle <- "いろいろな確率分布のパラメータをいじくるアプリ @ksmzn #Shiny "
-statDist <- a("確率分布", href="https://ksmzn.shinyapps.io/statdist/") 
+statDist <- "確率分布いろいろ"
 titleLink <- span(statDist)
-googleAnalytics <- tags$head(includeScript("google-analytics.js"))
+googleAnalytics <- tags$head(includeScript("js/google-analytics.js"))
+addThis <- "http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-549cda7f5c2056e5"
 
 shinyUI(
   navbarPage(
     titleLink,
     windowTitle = pageTitle,
+    id = "top-nav",
+    inverse=TRUE,
     tabPanel("About",
       fluidRow(
         column(12,
@@ -17,7 +21,7 @@ shinyUI(
           includeMarkdown("about.md")
         )
       )
-             ),
+    ),
     navbarMenu("連続分布",
       tabPanel("アーラン分布",
         titlePanel("アーラン分布"),
@@ -623,9 +627,25 @@ shinyUI(
         )
       )
     ),
+    tabPanel(title="@ksmzn", value="https://twitter.com/ksmzn", icon=icon("twitter")),
+    tabPanel(title="GitHub", value="http://github.com/ksmzn/statdist", icon=icon("github")),
+    tabPanel(title="Blog", value="http://ksmzn.hatenablog.com/", icon=icon("pencil")),
     googleAnalytics,
+#     tags$head(includeScript("addthis.js")),
+#     tags$head(includeScript("jquery.socialbutton-1.9.1.min.js")),
+#     header=tagList(
+#       includeScript("")
+#     ),
     footer=tagList(
-      includeScript("sharebutton.horizontal.js"),
+#       includeScript("addthis.js"),
+      tags$div(id="social-button"),
+#       includeScript("jquery.socialbutton-1.9.1.min.js"),
+#       includeScript("sharebutton.horizontal.js"),
+      includeCSS("css/style.css"),
+#       includeScript("js/jquery.popn-socialbutton.js"),
+      includeScript("js/share.min.js"),
+      includeScript("js/execute-share.js"),
+      includeScript("js/top-nav-links.js"),
       withMathJax()
     )
   )
