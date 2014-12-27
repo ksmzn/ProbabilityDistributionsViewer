@@ -1,4 +1,4 @@
-addResourcePath(prefix="img", directoryPath="img/")
+# addResourcePath(prefix="img", directoryPath="img/")
 library(shiny)
 library(rmarkdown)
 
@@ -6,7 +6,6 @@ pageTitle <- "いろいろな確率分布のパラメータをいじくるアプ
 statDist <- "確率分布いろいろ"
 titleLink <- span(statDist)
 googleAnalytics <- tags$head(includeScript("js/google-analytics.js"))
-addThis <- "http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-549cda7f5c2056e5"
 
 shinyUI(
   navbarPage(
@@ -637,14 +636,10 @@ shinyUI(
 #       includeScript("")
 #     ),
     footer=tagList(
-#       includeScript("addthis.js"),
-      tags$div(id="social-button"),
-#       includeScript("jquery.socialbutton-1.9.1.min.js"),
-#       includeScript("sharebutton.horizontal.js"),
-      includeCSS("css/style.css"),
-#       includeScript("js/jquery.popn-socialbutton.js"),
-      includeScript("js/share.min.js"),
-      includeScript("js/execute-share.js"),
+#       tags$div(id="social-button"),
+#       includeCSS("css/style.css"),
+#       includeScript("js/share.min.js"),
+#       includeScript("js/execute-share.js"),
       includeScript("js/top-nav-links.js"),
       withMathJax()
     )
