@@ -627,7 +627,7 @@ shinyUI(
       )
     ),
     tabPanel(title="@ksmzn", value="https://twitter.com/ksmzn", icon=icon("twitter")),
-    tabPanel(title="GitHub", value="http://github.com/ksmzn/statdist", icon=icon("github")),
+    tabPanel(title="GitHub", value="http://github.com/ksmzn/ShinyDistributionsApp", icon=icon("github")),
     tabPanel(title="Blog", value="http://ksmzn.hatenablog.com/", icon=icon("pencil")),
     googleAnalytics,
 #     tags$head(includeScript("addthis.js")),
