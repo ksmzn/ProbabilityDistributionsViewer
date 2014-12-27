@@ -1,14 +1,7 @@
 library(shiny)
 library(ggplot2)
 
-# サーバロジックの定義。ヒストグラムを描く
 shinyServer(function(input, output) {
-  # ヒストグラムを描くための式。
-  # この式は renderPlot にラップされている。つまり、
-  #
-  #  1) これは "reactive" であり、入力が変更されると
-  #     自動的に再実行される
-  #  2) この出力タイプは plot である
   output$homePlot <- renderPlot({
     func <- norm.func(input$home.mean, input$home.sd, input$home.p_or_c)
     p <- ggplot(data.frame(x=input$home.range), aes(x)) +
