@@ -1,3 +1,17 @@
+.title-panel {
+  margin: 10px 0;
+  padding: 10px 0;
+}
+
+.dist {
+  font-size: 31.5px;
+  line-height: 40px;
+  font-family: inherit;
+  font-weight: bold;
+  color: inherit;
+  text-rendering: optimizelegibility;
+}
+
 #social-button {
   position: absolute;
   bottom: 5%;

@@ -1,11 +1,21 @@
 # addResourcePath(prefix="img", directoryPath="img/")
 library(shiny)
 library(rmarkdown)
-
+library(rCharts)
 pageTitle <- "いろいろな確率分布のパラメータをいじくるアプリ @ksmzn #Shiny "
 statDist <- "確率分布いろいろ"
 titleLink <- span(statDist)
 googleAnalytics <- tags$head(includeScript("js/google-analytics.js"))
+distPanel <- function(name){
+  doc <- div(class="title-panel",
+             span(class="dist", name),
+             a(href = paste('http://ja.wikipedia.org/wiki/', name, sep=''),
+               img(src='img/external.png'),
+               'Wikipedia'
+               )
+             )
+  return(doc)
+}
 
 shinyUI(
   navbarPage(
@@ -23,7 +33,7 @@ shinyUI(
     ),
     navbarMenu("連続分布",
       tabPanel("アーラン分布",
-        titlePanel("アーラン分布"),
+        distPanel("アーラン分布"),
         fluidRow(
           column(12,
             helpText("$$
@@ -45,14 +55,14 @@ shinyUI(
                         min = 0, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
-            plotOutput("erlangPlot")
+            lineChartOutput("erlangPlot")
           )
         )
       ),
 #       tabPanel("一般化双曲型分布"),
 #       tabPanel("ウィッシャート分布"),
       tabPanel("F分布",
-        titlePanel("F分布"),
+        distPanel("F分布"),
         fluidRow(
           column(12,
             helpText("$$ f(x) = \\frac{1}{\\mathrm{B}(d_1/2, d_2/2)} \\; \\left(\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_1/2} \\; \\left(1-\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_2/2} \\; x^{-1} $$")
@@ -71,7 +81,7 @@ shinyUI(
                         min = 1, max = 20, value = 1, step= 1)
           ),
           mainPanel(
-            plotOutput("fPlot")
+            lineChartOutput("fPlot")
           )
         )
       ),
@@ -105,12 +115,12 @@ shinyUI(
                         min = 0, max = 20, value = 0, step= 0.1)
           ),
           mainPanel(
-            plotOutput("ncfPlot")
+            lineChartOutput("ncfPlot")
           )
         )
       ),
       tabPanel("カイ二乗分布",
-        titlePanel("カイ二乗分布"),
+        distPanel("カイ二乗分布"),
         fluidRow(
           column(12,
             helpText("$$f(x;k)=\\frac{(1/2)^{k/2}}{\\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}
@@ -128,12 +138,12 @@ shinyUI(
                         min = 1, max = 20, value = 1, step= 1)
           ),
           mainPanel(
-            plotOutput("chisqPlot")
+            lineChartOutput("chisqPlot")
           )
         )
                ),
       tabPanel("非心カイ二乗分布",
-        titlePanel("非心カイ二乗分布"),
+        distPanel("非心カイ二乗分布"),
         fluidRow(
           column(12,
             helpText("$$f_X(x; k,\\lambda) =
@@ -155,13 +165,13 @@ shinyUI(
                         min = 0, max = 20, value = 0, step= 0.1)
           ),
           mainPanel(
-            plotOutput("ncChisqPlot")
+            lineChartOutput("ncChisqPlot")
           )
         )
                ),
 #       tabPanel("ガンベル分布"),
       tabPanel("ガンマ分布",
-        titlePanel("ガンマ分布"),
+        distPanel("ガンマ分布"),
         fluidRow(
           column(12,
             helpText("$$f(x) = x^{k-1} \\frac{e^{-x/\\theta}}{\\Gamma(k)\\,\\theta^k}
@@ -181,13 +191,13 @@ shinyUI(
                         min = 0, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
-            plotOutput("gammaPlot")
+            lineChartOutput("gammaPlot")
           )
         )
                ),
 #       tabPanel("逆ガウス分布"),
       tabPanel("コーシー分布",
-        titlePanel("コーシー分布"),
+        distPanel("コーシー分布"),
         fluidRow(
           column(12,
             helpText("$$\\begin{align}f(x; x_0,\\gamma) &= { 1 \\over \\pi } \\left[ { \\gamma \\over (x - x_0)^2 + \\gamma^2  } \\right]\\end{align}$$")
@@ -203,15 +213,15 @@ shinyUI(
             sliderInput(paste("cauchy", "location", sep="."), "位置 \\(x_0\\)",
                         min = -20, max = 20, value = 0, step= 0.1),
             sliderInput(paste("cauchy", "scale", sep="."), "尺度 \\(\\gamma\\)",
-                        min = 0, max = 20, value = 1, step= 0.1)
+                        min = 0.1, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
-            plotOutput("cauchyPlot")
+            lineChartOutput("cauchyPlot")
           )
         )
       ),
       tabPanel("指数分布",
-        titlePanel("指数分布"),
+        distPanel("指数分布"),
         fluidRow(
           column(12,
             helpText("$$f(x; \\lambda) = \\left\\{ \\begin{array}{ll} \\lambda e^{-\\lambda x} & (x \\geq 0) \\\\ 0 & (x < 0)\\end{array}\\right.$$")
@@ -228,12 +238,12 @@ shinyUI(
                         min = 0, max = 50, value = 1, step= 0.1)
           ),
           mainPanel(
-            plotOutput("expPlot")
+            lineChartOutput("expPlot")
           )
         )
       ),
       tabPanel("正規分布",
-        titlePanel("正規分布"),
+        distPanel("正規分布"),
         fluidRow(
           column(12,
             helpText("$$f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}} \\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)$$")
@@ -245,20 +255,21 @@ shinyUI(
                       c("確率密度関数"="p", "累積分布関数"="c")
             ),
             sliderInput(paste("norm", "range", sep="."), "範囲",
-                        min = -100, max = 100, value = c(-10, 10), step= 0.5),
+                        min = -100, max = 100, value = c(-10, 10), step= 1),
             sliderInput(paste("norm", "mean", sep="."), "平均 \\(\\mu\\)",
-                        min = -50, max = 50, value = 0, step= 0.05),
+                        min = -50, max = 50, value = 0, step= 1),
             sliderInput(paste("norm", "sd", sep="."), "標準偏差 \\(\\sigma\\)",
-                        min = 0, max = 10, value = 1, step= 0.05)
+                        min = 0, max = 10, value = 1, step= 0.5)
           ),
           mainPanel(
-            plotOutput("normalPlot")
+#             plotOutput("normalPlot")
+              lineChartOutput("normalPlot")
           )
         )
       ),
 #       tabPanel("双曲線正割分布"),
       tabPanel("対数正規分布",
-        titlePanel("対数正規分布"),
+        distPanel("対数正規分布"),
         fluidRow(
           column(12,
             helpText("$$f(x) = \\frac{1}{\\sqrt{2\\pi} \\sigma x} e^{-\\frac{ (\\ln{x}-\\mu)^2}{2\\sigma^2} }, \\quad 0<x< \\infty$$")
@@ -277,12 +288,12 @@ shinyUI(
                         min = 0, max = 10, value = 1, step= 0.05)
           ),
           mainPanel(
-            plotOutput("lnormalPlot")
+            lineChartOutput("lnormalPlot")
           )
         )
       ),
       tabPanel("t分布",
-        titlePanel("t分布"),
+        distPanel("t分布"),
         fluidRow(
           column(12,
             helpText("$$f(x) = \\frac{\\Gamma((\\nu+1)/2)}{\\sqrt{\\nu\\pi\\,}\\,\\Gamma(\\nu/2)} (1+x^2/\\nu)^{-(\\nu+1)/2}$$")
@@ -299,12 +310,12 @@ shinyUI(
                         min = 1, max = 20, value = 1, step= 1)
           ),
           mainPanel(
-            plotOutput("tPlot")
+            lineChartOutput("tPlot")
           )
         )
       ),
       tabPanel("非心t分布",
-        titlePanel("非心t分布"),
+        distPanel("非心t分布"),
         fluidRow(
           column(12,
             helpText("$$ f(x) =\\frac{\\nu^{\\frac{\\nu}{2}} \\exp\\left (-\\frac{\\nu\\mu^2}{2(x^2+\\nu)} \\right )}{\\sqrt{\\pi}\\Gamma(\\frac{\\nu}{2})2^{\\frac{\\nu-1}{2}}(x^2+\\nu)^{\\frac{\\nu+1}{2}}} \\int_0^\\infty y^\\nu\\exp\\left (-\\frac{1}{2}\\left(y-\\frac{\\mu x}{\\sqrt{x^2+\\nu}}\\right)^2\\right ) dy$$")
@@ -323,14 +334,14 @@ shinyUI(
                         min = 0, max = 20, value = 0, step= 0.1)
           ),
           mainPanel(
-            plotOutput("nctPlot")
+            lineChartOutput("nctPlot")
           )
         )
       ),
 #       tabPanel("ディリクレ分布"),
 #       tabPanel("パレート分布"),
       tabPanel("ベータ分布",
-        titlePanel("ベータ分布"),
+        distPanel("ベータ分布"),
         fluidRow(
           column(12,
             helpText("$$f(x)=\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}$$")
@@ -349,7 +360,7 @@ shinyUI(
                         min = 0, max = 20, value = 2, step= 0.1)
           ),
           mainPanel(
-            plotOutput("betaPlot")
+            lineChartOutput("betaPlot")
           )
         )
       ),
@@ -379,7 +390,7 @@ shinyUI(
                         min = 0, max = 20, value = 0, step= 0.1)
           ),
           mainPanel(
-            plotOutput("ncbetaPlot")
+            lineChartOutput("ncbetaPlot")
           )
         )
       ),
@@ -387,7 +398,7 @@ shinyUI(
 #       tabPanel("レイリー分布"),
 #       tabPanel("レヴィ分布"),
       tabPanel("連続一様分布",
-        titlePanel("連続一様分布"),
+        distPanel("連続一様分布"),
         fluidRow(
           column(12,
             helpText("$$
@@ -412,12 +423,12 @@ shinyUI(
                         min = -100, max = 100, value = c(0, 1), step= 0.5)
           ),
           mainPanel(
-            plotOutput("unifPlot")
+            lineChartOutput("unifPlot")
           )
         )
       ),
       tabPanel("ロジスティック分布",
-        titlePanel("ロジスティック分布"),
+        distPanel("ロジスティック分布"),
         fluidRow(
           column(12,
             helpText("$$
@@ -438,12 +449,12 @@ shinyUI(
                         min = 0, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
-            plotOutput("logisPlot")
+            lineChartOutput("logisPlot")
           )
         )
                ),
       tabPanel("ワイブル分布",
-        titlePanel("ワイブル分布"),
+        distPanel("ワイブル分布"),
         fluidRow(
           column(12,
             helpText("$$
@@ -460,19 +471,19 @@ shinyUI(
             sliderInput(paste("weibull", "range", sep="."), "範囲",
                         min = 0, max = 100, value = c(0, 20), step= 0.5),
             sliderInput(paste("weibull", "shape", sep="."), "形状 \\(m\\)",
-                        min = 0, max = 20, value = 1, step= 0.1),
+                        min = 0.1, max = 20, value = 1, step= 0.1),
             sliderInput(paste("weibull", "scale", sep="."), "尺度 \\(\\eta\\)",
-                        min = 0, max = 20, value = 1, step= 0.1)
+                        min = 0.1, max = 20, value = 1, step= 0.1)
           ),
           mainPanel(
-            plotOutput("weibullPlot")
+            lineChartOutput("weibullPlot")
           )
         )
       )
     ),
     navbarMenu("離散分布",
       tabPanel("幾何分布",
-        titlePanel("幾何分布"),
+        distPanel("幾何分布"),
         fluidRow(
           column(12,
             helpText("$$\\Pr(X = k) = p(1-p)^{k}
@@ -490,12 +501,12 @@ shinyUI(
                         min = 0, max = 1, value = 0.5, step= 0.01)
           ),
           mainPanel(
-            plotOutput("geomPlot")
+            scatterChartOutput("geomPlot")
           )
         )
       ),
       tabPanel("超幾何分布",
-        titlePanel("超幾何分布"),
+        distPanel("超幾何分布"),
         fluidRow(
           column(12,
             helpText("$$
@@ -519,14 +530,14 @@ shinyUI(
                         min = 0, max = 100, value = 10, step= 1)
           ),
           mainPanel(
-            plotOutput("hyperPlot")
+            scatterChartOutput("hyperPlot")
           )
         )
       ),
 #       tabPanel("ジップ分布",),
 #       tabPanel("多項分布",),
       tabPanel("二項分布",
-        titlePanel("二項分布"),
+        distPanel("二項分布"),
         fluidRow(
           column(12,
             helpText("$$P[X=k]={n\\choose k}p^k(1-p)^{n-k}\\quad\\mbox{for}\\ k=0,1,2,\\dots,n 
@@ -546,12 +557,12 @@ shinyUI(
                         min = 0, max = 1, value = 0.5, step= 0.01)
           ),
           mainPanel(
-            plotOutput("binomPlot")
+            scatterChartOutput("binomPlot")
           )
         )
       ),
       tabPanel("負の二項分布",
-        titlePanel("負の二項分布"),
+        distPanel("負の二項分布"),
         fluidRow(
           column(12,
             helpText("$$f(x)=P(X=x) = {x-1 \\choose r-1} p^r (1-p)^{x-r}
@@ -571,14 +582,14 @@ shinyUI(
                         min = 0, max = 1, value = 0.5, step= 0.01)
           ),
           mainPanel(
-            plotOutput("nbinomPlot")
+            scatterChartOutput("nbinomPlot")
           )
         )
       ),
 #       tabPanel("ポアソン二項分布",),
 #       tabPanel("ベルヌーイ分布",),
       tabPanel("ポアソン分布",
-        titlePanel("ポアソン分布"),
+        distPanel("ポアソン分布"),
         fluidRow(
           column(12,
             helpText("$$P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}
@@ -596,12 +607,12 @@ shinyUI(
                         min = 1, max = 20, value = 1, step= 0.5)
           ),
           mainPanel(
-            plotOutput("poisPlot")
+            scatterChartOutput("poisPlot")
           )
         )
       ),
       tabPanel("離散一様分布",
-        titlePanel("離散一様分布"),
+        distPanel("離散一様分布"),
         fluidRow(
           column(12,
             helpText("$$
@@ -621,7 +632,7 @@ shinyUI(
                         min = 0, max = 100, value = c(0, 20), step= 1)
             ),
           mainPanel(
-            plotOutput("dunifPlot")
+            scatterChartOutput("dunifPlot")
           )
         )
       )
@@ -637,7 +648,7 @@ shinyUI(
 #     ),
     footer=tagList(
 #       tags$div(id="social-button"),
-#       includeCSS("css/style.css"),
+      includeCSS("css/style.css"),
 #       includeScript("js/share.min.js"),
 #       includeScript("js/execute-share.js"),
       includeScript("js/top-nav-links.js"),
