@@ -1,5 +1,4 @@
 library(shiny)
-library(ggplot2)
 library(rCharts)
 # options(RCHART_LIB = 'highcharts')
 shinyServer(function(input, output) {
