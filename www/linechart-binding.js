@@ -29,8 +29,7 @@
             var chart = nv.models.lineChart()
                 .margin({left: 100})
                 .useInteractiveGuideline(true)
-                //       .transitionDuration(350)
-                .transitionDuration(350)
+//                 .transitionDuration(350)
                 .showLegend(false)
                 .showYAxis(true)
                 .showXAxis(true);
