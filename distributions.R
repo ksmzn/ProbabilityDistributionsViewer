@@ -87,7 +87,7 @@ norm.func <- function(mean, sd, p_or_c){
 }
 
 # 対数正規分布
-lnorm.func <- function(meanlog, sdlog, p_or_c){
+lnormal.func <- function(meanlog, sdlog, p_or_c){
   if(p_or_c == "p"){
     func <- function(x) dlnorm(x, meanlog, sdlog)
   } else {

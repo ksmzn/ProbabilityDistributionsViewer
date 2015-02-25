@@ -1,41 +1,27 @@
 library(shiny)
 
 # To be called from ui.R
-lineChartOutput <- function(inputId, width="100%", height="400px") {
+nvd3ChartOutput <- function(inputId, type, width="100%", height="400px") {
   style <- sprintf("width: %s; height: %s;",
     validateCssUnit(width), validateCssUnit(height))
+  if (type == 'line') {
+    class <- 'nvd3-linechart'
+  } else {
+    class <- 'nvd3-scatterchart'
+  }
 
   tagList(
     # Include CSS/JS dependencies. Use "singleton" to make sure that even
     # if multiple lineChartOutputs are used in the same page, we'll still
     # only include these chunks once.
     singleton(tags$head(
-      tags$script(src="d3/d3.v3.min.js"),
-      tags$script(src="nvd3/nv.d3.min.js"),
-      tags$link(rel="stylesheet", type="text/css", href="nvd3/nv.d3.min.css"),
-      tags$script(src="linechart-binding.js")
+      tags$script(src="js/d3/d3.v3.min.js"),
+      tags$script(src="js/nvd3/nv.d3.min.js"),
+      tags$link(rel="stylesheet", type="text/css", href="js/nvd3/nv.d3.min.css"),
+      tags$script(src="js/linechart-binding.js"),
+      tags$script(src="js/scatterchart-binding.js")
     )),
-    div(id=inputId, class="nvd3-linechart", style=style,
-      tag("svg", list())
-    )
-  )
-}
-
-scatterChartOutput <- function(inputId, width="100%", height="400px") {
-  style <- sprintf("width: %s; height: %s;",
-    validateCssUnit(width), validateCssUnit(height))
-
-  tagList(
-    # Include CSS/JS dependencies. Use "singleton" to make sure that even
-    # if multiple lineChartOutputs are used in the same page, we'll still
-    # only include these chunks once.
-    singleton(tags$head(
-      tags$script(src="d3/d3.v3.min.js"),
-      tags$script(src="nvd3/nv.d3.min.js"),
-      tags$link(rel="stylesheet", type="text/css", href="nvd3/nv.d3.min.css"),
-      tags$script(src="scatterchart-binding.js")
-    )),
-    div(id=inputId, class="nvd3-scatterchart", style=style,
+    div(id=inputId, class=class, style=style,
       tag("svg", list())
     )
   )
@@ -57,15 +43,6 @@ renderNvd3Chart <- function(expr, env=parent.frame(), quoted=FALSE) {
         list(key = name, values = values)
       },c("y"), SIMPLIFY=FALSE, USE.NAMES=FALSE
     )
-#     mapply(function(col, name) {
-#
-#       values <- mapply(function(val, i) {
-#         list(x = i, y = val)
-#       }, col, 1:nrow(dataframe), SIMPLIFY=FALSE, USE.NAMES=FALSE)
-#
-#       list(key = name, values = values)
-#
-#     }, dataframe, names(dataframe), SIMPLIFY=FALSE, USE.NAMES=FALSE)
   }
 }
 
