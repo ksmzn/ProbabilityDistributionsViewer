@@ -86,7 +86,7 @@ sidebar <- dashboardSidebar(
           ); return false;",
         span('Tweet'),
         tags$small(
-          class = paste0("badge pull-right bg-", 'green'),
+          class = paste0("badge pull-right bg-", 'light-blue'),
           'Share'
         )
       )
@@ -97,7 +97,7 @@ sidebar <- dashboardSidebar(
         icon("facebook"),
         span('Facebook'),
         tags$small(
-          class = paste0("badge pull-right bg-", 'green'),
+          class = paste0("badge pull-right bg-", 'light-blue'),
           'Share'
         )
       )
