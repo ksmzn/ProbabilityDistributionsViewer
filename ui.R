@@ -345,10 +345,21 @@ board.ncChisq <- tabItem(tabName = "ncChisq",
       title = "確率密度関数", 
       helpText("$$
         f_X(x; k,\\lambda) =
-        \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x)
-        \\ \\ \\ \\ \\mathrm{for\\ } x > 0\\\\
-        \\\\ Y_q \\mathrm{\\ は自由度\\ } q \\mathrm{\\ のカイ二乗分布に従う\\ } 
+        \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x),
+        \\ \\ \\ \\ \\mathrm{for\\ } x > 0,\\ \\ Y_q \\sim\\chi^2_q \\ 
       $$")
+#       helpText("$$
+#         f_X(x; k,\\lambda) =
+#         \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x)
+#         \\ \\ \\ \\ \\mathrm{for\\ } x > 0\\\\
+#         \\\\ Y_q \\mathrm{\\ は自由度\\ } q \\mathrm{\\ のカイ二乗分布に従う\\ } 
+#       $$")
+#       helpText(paste0("\\(
+#         f_X(x; k,\\lambda) =
+#         \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x)
+#         \\ \\ \\ \\ \\mathrm{for\\ } x > 0\\\\
+#         \\\\ Y_q\\)", "は自由度", "\\(q\\)", "のカイ二乗分布に従う"
+#       ))
     )
   ),
   fluidRow(
