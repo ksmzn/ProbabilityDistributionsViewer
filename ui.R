@@ -77,7 +77,7 @@ sidebar <- dashboardSidebar(
       href = "http://github.com/ksmzn/ShinyDistributionsApp"
     ),
     tags$li(
-      a( href = "http://twitter.com/intent/tweet?text=いろいろな確率分布のパラメータをいじくるアプリ&url=https://ksmzn.shinyapps.io/statdist/&via=ksmzn&hashtags=shiny",
+      a( href = "http://twitter.com/intent/tweet?text=いろいろな確率分布のパラメータをいじくるアプリ&url=https://ksmzn.shinyapps.io/statdist/&via=ksmzn&hashtags=rshiny",
         target = "_blank",
         icon("twitter"),
         onClick = "window.open(encodeURI(decodeURI(this.href)),
