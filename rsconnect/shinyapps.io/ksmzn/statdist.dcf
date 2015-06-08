@@ -2,3 +2,4 @@ name: statdist
 account: ksmzn
 bundleId: 161364
 url: http://ksmzn.shinyapps.io/statdist
+server: shinyapps.io
