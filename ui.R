@@ -77,7 +77,7 @@ sidebar <- dashboardSidebar(
       href = "http://github.com/ksmzn/ShinyDistributionsApp"
     ),
     tags$li(
-      a( href = "http://twitter.com/intent/tweet?text=いろいろな確率分布のパラメータをいじくるアプリ&url=https://ksmzn.shinyapps.io/statdist/&via=ksmzn&hashtags=rshiny",
+      a( href = "http://twitter.com/intent/tweet?text=いろいろな確率分布のパラメータをいじくるアプリ&url=http://statdist.ksmzn.com/&via=ksmzn&hashtags=rshiny",
         target = "_blank",
         icon("twitter"),
         onClick = "window.open(encodeURI(decodeURI(this.href)),
@@ -92,7 +92,7 @@ sidebar <- dashboardSidebar(
       )
     ),
     tags$li(
-      a( href = "http://www.facebook.com/sharer.php?u=https://ksmzn.shinyapps.io/statdist/&t=いろいろな確率分布のパラメータをいじくるアプリ",
+      a( href = "http://www.facebook.com/sharer.php?u=http://statdist.ksmzn.com/&t=いろいろな確率分布のパラメータをいじくるアプリ",
         target = "_blank",
         icon("facebook"),
         span('Facebook'),
