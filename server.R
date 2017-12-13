@@ -611,7 +611,7 @@ server <- function(input, output) {
     mean <- (input$unif.range[1] + input$unif.range[2]) / 2
     mean <- round(mean, digits = 3)
     box <- valueBox(
-      withMathJax(paste0("\\(\\frac{1}{2}(\\alpha+\\beta)\\!=\\!",
+      withMathJax(paste0("\\(\\frac{1}{2}(a+b)\\!=\\!",
         mean, "\\)")),
       "期待値",
       icon = mean.icon,
@@ -625,7 +625,7 @@ server <- function(input, output) {
     var <- round(var, digits = 3)
     box <- valueBox(
       withMathJax(paste0(
-        "\\(\\frac{1}{12}(\\beta-\\alpha)^2\\!=\\!",
+        "\\(\\frac{1}{12}(b-a)^2\\!=\\!",
         var, "\\)")
       ),
       "分散",
