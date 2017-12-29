@@ -591,13 +591,21 @@ server <- function(input, output) {
   # 負の二項分布
   ###########################################################################
   output$nbinom.meanBox <- renderValueBox({
-    value <- input$nbinom.size / input$nbinom.prob
+    if(input$nbinom.prob == 0L){
+      value <- Inf
+    } else {
+      value <- input$nbinom.size / input$nbinom.prob
+    }
     f_str <- "\\frac{r}{p}"
     meanBox(f_str, value)
   })
 
   output$nbinom.varianceBox <- renderValueBox({
-    value <- input$nbinom.size * (1 - input$nbinom.prob) / (input$nbinom.prob ** 2)
+    if(input$nbinom.prob == 0L){
+      value <- Inf
+    } else {
+      value <- input$nbinom.size * (1 - input$nbinom.prob) / (input$nbinom.prob ** 2) 
+    }
     f_str <- "\\frac{r(1-p)}{p^2}"
     varianceBox(f_str, value)
   })
