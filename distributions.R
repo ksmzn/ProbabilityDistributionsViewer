@@ -108,7 +108,7 @@ t.func <- function(df, p_or_c){
 }
 
 # 非心t分布
-nct.func <- function(df, ncpncp, p_or_c){
+nct.func <- function(df, ncp, p_or_c){
   if(p_or_c == "p"){
     func <- function(x) dt(x, df=df, ncp=ncp)
   } else {

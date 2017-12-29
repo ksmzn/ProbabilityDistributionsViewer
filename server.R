@@ -5,26 +5,59 @@ source("distributions.R")
 boxcolor <- "blue"
 mean.icon <- icon("star", lib = "glyphicon")
 variance.icon <- icon("resize-horizontal", lib = "glyphicon")
+
+# Functions ----
+createFormula <- function(f_str, value){
+  paste0("\\(", f_str, "\\!=\\!", value, "\\)") 
+}
+
+createBox <- function(f_str, value, param_str, param = "mean"){
+  if(param == "variance"){
+    icon <- variance.icon
+  } else {
+    icon <- mean.icon
+  }
+  if(is.null(f_str) | is.null(value)){
+    formula <- "定義されない"
+  } else {
+    value <- round(value, digits = 3)
+    formula <- createFormula(f_str, value)
+    formula <- withMathJax(formula)
+  }
+  box <-
+    valueBox(
+      formula,
+      param_str,
+      icon = icon,
+      color = boxcolor
+    )
+  return(box)
+}
+
+meanBox <- function(f_str, value, param_str = "期待値"){
+  f <- createBox(f_str, value, param_str, param = "mean")
+  return(f)
+}
+
+varianceBox <- function(f_str, value, param_str = "分散"){
+  f <- createBox(f_str, value, param_str, param = "variance")
+  return(f)
+}
+
 server <- function(input, output) {
-  ################################################################################
+  ###########################################################################
   # 正規分布
   ###########################################################################
   output$normal.meanBox <- renderValueBox({
-    valueBox(
-      withMathJax(paste0("\\(\\mu\\!=\\!", input$norm.mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
+    value <- input$norm.mean
+    f_str <- "\\mu"
+    meanBox(f_str, value)
   })
+
   output$normal.varianceBox <- renderValueBox({
-    var <- input$norm.sd ** 2
-    valueBox(
-      withMathJax(paste0("\\(\\sigma^2\\!=\\!", var, "\\)")),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
+    value <- input$norm.sd ** 2
+    f_str <- "\\sigma^2"
+    varianceBox(f_str, value)
   })
   # outputs for plot
   output$normalPlot <- renderNvd3Chart({
@@ -34,31 +67,19 @@ server <- function(input, output) {
     df <- data.frame(x,y)
     return(df)
   })
-  ################################################################################
+  ###########################################################################
   # アーラン分布
   ###########################################################################
   output$erlang.meanBox <- renderValueBox({
-    mean <- input$erlang.shape / input$erlang.scale
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(n/\\lambda\\!=\\!", mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$erlang.shape / input$erlang.scale
+    f_str <- "n/\\lambda"
+    meanBox(f_str, value)
   })
 
   output$erlang.varianceBox <- renderValueBox({
-    var <- input$erlang.shape / (input$erlang.scale ** 2)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(n/\\lambda^2\\!=\\!", var, "\\)")),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$erlang.shape / (input$erlang.scale ** 2)
+    f_str <- "n/\\lambda^2"
+    varianceBox(f_str, value)
   })
 
   # outputs for plot
@@ -70,34 +91,20 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # F分布
   ###########################################################################
   output$f.meanBox <- renderValueBox({
-    mean <- input$f.df2 / (input$f.df2 - 2)
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{d_2}{d_2-2}\\!=\\!", mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$f.df2 / (input$f.df2 - 2)
+    f_str <- "\\frac{d_2}{d_2-2}"
+    meanBox(f_str, value)
   })
 
   output$f.varianceBox <- renderValueBox({
-    var <- (2 * input$f.df2 ** 2) * (input$f.df1 + input$f.df2 - 2) / 
+    value <- (2 * input$f.df2 ** 2) * (input$f.df1 + input$f.df2 - 2) / 
       (input$f.df1 * ((input$f.df2 - 2) ** 2) * (input$f.df2 - 4))
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{2\\,d_2^2\\,(d_1+d_2-2)}{d_1 (d_2-2)^2 (d_2-4)}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    f_str <- "\\frac{2\\,d_2^2\\,(d_1+d_2-2)}{d_1 (d_2-2)^2 (d_2-4)}"
+    varianceBox(f_str, value)
   })
 
   # outputs for plot
@@ -112,38 +119,21 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 非心F分布
   ###########################################################################
   output$ncf.meanBox <- renderValueBox({
-    mean <- (input$ncf.df2 * (input$ncf.df1 + input$ncf.ncp)) /
+    value <- (input$ncf.df2 * (input$ncf.df1 + input$ncf.ncp)) /
       (input$ncf.df1 * (input$ncf.df2 - 2))
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{\\nu_2(\\nu_1 + \\lambda)}{\\nu_1(\\nu_2-2)}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    f_str <- "\\frac{\\nu_2(\\nu_1 + \\lambda)}{\\nu_1(\\nu_2-2)}"
+    meanBox(f_str, value)
   })
 
   output$ncf.varianceBox <- renderValueBox({
-    var <- (2 * input$ncf.df2 ** 2) * (input$ncf.df1 + input$ncf.df2 - 2) / 
+    value <- (2 * input$ncf.df2 ** 2) * (input$ncf.df1 + input$ncf.df2 - 2) / 
       (input$ncf.df1 * ((input$ncf.df2 - 2) ** 2) * (input$ncf.df2 - 4))
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(2\\frac{(\\nu_1+\\lambda)^2+(\\nu_1+2\\lambda)(\\nu_2-2)}{(\\nu_2-2)^2(\\nu_2-4)}
-        \\left(\\frac{\\nu_2}{\\nu_1}\\right)^2\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    f_str <- "2\\frac{(\\nu_1+\\lambda)^2+(\\nu_1+2\\lambda)(\\nu_2-2)}{(\\nu_2-2)^2(\\nu_2-4)} \\left(\\frac{\\nu_2}{\\nu_1}\\right)^2"
+    varianceBox(f_str, value)
   })
 
   # outputs for plot
@@ -157,33 +147,19 @@ server <- function(input, output) {
     df <- data.frame(x,y)
     return(df)
   })
-  ################################################################################
+  ###########################################################################
   # カイ二乗分布
   ###########################################################################
   output$chisq.meanBox <- renderValueBox({
-    mean <- input$chisq.df
-    box <- valueBox(
-      withMathJax(paste0("\\(k\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$chisq.df
+    f_str <- "k"
+    meanBox(f_str, value)
   })
 
   output$chisq.varianceBox <- renderValueBox({
-    var <- 2 * input$chisq.df
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(2k\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- 2 * input$chisq.df
+    f_str <- "2k"
+    varianceBox(f_str, value)
   })
 
   output$chisqPlot <- renderNvd3Chart({
@@ -197,35 +173,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 非心カイ二乗分布
   ###########################################################################
   output$ncChisq.meanBox <- renderValueBox({
-    mean <- input$ncChisq.df + input$ncChisq.ncp
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(k+\\lambda\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$ncChisq.df + input$ncChisq.ncp
+    f_str <- "k+\\lambda"
+    meanBox(f_str, value)
   })
 
   output$ncChisq.varianceBox <- renderValueBox({
-    var <- 2 * (input$ncChisq.df + 2 * input$ncChisq.ncp)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(2(k+2\\lambda)\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- 2 * (input$ncChisq.df + 2 * input$ncChisq.ncp)
+    f_str <- "2(k+2\\lambda)"
+    varianceBox(f_str, value)
   })
 
   output$ncChisqPlot <- renderNvd3Chart({
@@ -239,34 +199,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # ガンマ分布
   ###########################################################################
   output$gamma.meanBox <- renderValueBox({
-    mean <- input$gamma.shape * input$gamma.scale
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(k\\theta\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$gamma.shape * input$gamma.scale
+    f_str <- "k\\theta"
+    meanBox(f_str, value)
   })
 
   output$gamma.varianceBox <- renderValueBox({
-    var <- input$gamma.shape * (input$gamma.scale ** 2)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(k\\theta^2\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$gamma.shape * (input$gamma.scale ** 2)
+    f_str <- "k\\theta^2"
+    varianceBox(f_str, value)
   })
 
   output$gammaPlot <- renderNvd3Chart({
@@ -280,27 +225,15 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # コーシー分布
   ###########################################################################
   output$cauchy.meanBox <- renderValueBox({
-    box <- valueBox(
-      "定義されない",
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    meanBox(NULL, NULL)
   })
 
   output$cauchy.varianceBox <- renderValueBox({
-    box <- valueBox(
-      "定義されない",
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    varianceBox(NULL, NULL)
   })
 
   output$cauchyPlot <- renderNvd3Chart({
@@ -311,34 +244,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 指数分布
   ###########################################################################
   output$exp.meanBox <- renderValueBox({
-    mean <- 1 / input$exp.rate
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{1}{\\lambda}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- 1 / input$exp.rate
+    f_str <- "\\frac{1}{\\lambda}"
+    meanBox(f_str, value)
   })
 
   output$exp.varianceBox <- renderValueBox({
-    var <- 1 / (input$exp.rate ** 2)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{1}{\\lambda^2}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- 1 / (input$exp.rate ** 2)
+    f_str <- "\\frac{1}{\\lambda^2}"
+    varianceBox(f_str, value)
   })
 
   output$expPlot <- renderNvd3Chart({
@@ -349,35 +267,20 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 対数正規分布
   ###########################################################################
   output$lnormal.meanBox <- renderValueBox({
-    mean <- exp(input$lnormal.meanlog + ((input$lnormal.sdlog ** 2) / 2))
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(e^{\\mu+\\sigma^2/2}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- exp(input$lnormal.meanlog + ((input$lnormal.sdlog ** 2) / 2))
+    f_str <- "e^{\\mu+\\sigma^2/2}"
+    meanBox(f_str, value)
   })
 
   output$lnormal.varianceBox <- renderValueBox({
-    var <- exp(2 * input$lnormal.meanlog + input$lnormal.sdlog) *
+    value <- exp(2 * input$lnormal.meanlog + input$lnormal.sdlog) *
       (exp(input$lnormal.sdlog ** 2) - 1)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(e^{2\\mu+\\sigma^2}(e^{\\sigma^2}-1)\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    f_str <- "e^{2\\mu+\\sigma^2}(e^{\\sigma^2}-1)"
+    varianceBox(f_str, value)
   })
 
   output$lnormalPlot <- renderNvd3Chart({
@@ -388,36 +291,23 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # t分布
   ###########################################################################
   output$t.meanBox <- renderValueBox({
-    mean <- 0
-    box <- valueBox(
-      withMathJax("\\(e^{\\mu+\\sigma^2/2}\\!=\\!0\\)"),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- 0L
+    f_str <- "e^{\\mu+\\sigma^2/2}"
+    meanBox(f_str, value)
   })
 
   output$t.varianceBox <- renderValueBox({
     if (input$t.df <= 2){
-      var <- Inf
+      value <- Inf
     } else {
-      var <- input$t.df / (input$t.df - 2)
-      var <- round(var, digits = 3)
+      value <- input$t.df / (input$t.df - 2)
     }
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{\\nu}{\\nu-2}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散 (自由度が2以下のときは∞)",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    f_str <- "\\frac{\\nu}{\\nu-2}"
+    varianceBox(f_str, value)
   })
 
   output$tPlot <- renderNvd3Chart({
@@ -428,52 +318,32 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 非心t分布
   ###########################################################################
   output$nct.meanBox <- renderValueBox({
-    if (input$nct.df <= 1) {
-      meanformula <- "定義されない"
+    if(input$nct.df <= 1){
+      value <- NULL
+      f_str <- NULL
     } else {
-      mean <- input$nct.ncp * sqrt(input$nct.df / 2) * 
+      value <- input$nct.ncp * sqrt(input$nct.df / 2) * 
         gamma((input$nct.df - 1) / 2) / gamma(input$nct.df / 2)
-      mean <- round(mean, digits = 3)
-      meanformula <- withMathJax(paste0(
-        "\\(\\mu\\sqrt{\\frac{\\nu}{2}}\\frac{\\Gamma((\\nu-1)/2)}{\\Gamma(\\nu/2)}
-        \\!=\\!",
-        mean, "\\)"))
+      f_str <- "\\mu\\sqrt{\\frac{\\nu}{2}}\\frac{\\Gamma((\\nu-1)/2)}{\\Gamma(\\nu/2)}"
     }
-    box <- valueBox(
-      meanformula,
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    meanBox(f_str, value)
   })
 
   output$nct.varianceBox <- renderValueBox({
     if (input$nct.df <= 2){
-      varformula <- "定義されない"
+      value <- NULL
+      f_str <- NULL
     } else {
-      var <- (input$nct.df * (1 + input$nct.ncp ** 2)) / (input$nct.df - 2) -
+      value <- (input$nct.df * (1 + input$nct.ncp ** 2)) / (input$nct.df - 2) -
         ((input$nct.ncp ** 2) * input$nct.df / 2) * 
         ((gamma((input$nct.df - 1) / 2) / gamma(input$nct.df / 2)) ** 2)
-      var <- round(var, digits = 3)
-      varformula <- withMathJax(paste0(
-        "\\(\\frac{\\nu(1+\\mu^2)}{\\nu-2}
-        -\\frac{\\mu^2\\nu}{2}
-        \\left(\\frac{\\Gamma((\\nu-1)/2)}{\\Gamma(\\nu/2)}\\right)^2\\!=\\!",
-        var, "\\)")
-      )
+      f_str <- "\\frac{\\nu(1+\\mu^2)}{\\nu-2}-\\frac{\\mu^2\\nu}{2}\\left(\\frac{\\Gamma((\\nu-1)/2)}{\\Gamma(\\nu/2)}\\right)^2"
     }
-    box <- valueBox(
-      varformula,
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    varianceBox(f_str, value)
   })
 
   output$nctPlot <- renderNvd3Chart({
@@ -484,37 +354,21 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # ベータ分布
   ###########################################################################
   output$beta.meanBox <- renderValueBox({
-    mean <- input$beta.shape1 / (input$beta.shape1 + input$beta.shape2)
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{\\alpha}{\\alpha+\\beta}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$beta.shape1 / (input$beta.shape1 + input$beta.shape2)
+    f_str <- "\\frac{\\alpha}{\\alpha+\\beta}"
+    meanBox(f_str, value)
   })
 
   output$beta.varianceBox <- renderValueBox({
-    var <- (input$beta.shape1 * input$beta.shape2) /
+    value <- (input$beta.shape1 * input$beta.shape2) /
       (((input$beta.shape1 + input$beta.shape2) ** 2) *
       (input$beta.shape1 + input$beta.shape1 + 1))
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\frac{\\alpha\\beta}{(\\alpha+\\beta)^2 (\\alpha+\\beta+1)}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    f_str <- "\\frac{\\alpha\\beta}{(\\alpha+\\beta)^2 (\\alpha+\\beta+1)}"
+    varianceBox(f_str, value)
   })
 
   output$betaPlot <- renderNvd3Chart({
@@ -530,69 +384,54 @@ server <- function(input, output) {
     df <- data.frame(x,y)
     return(df)
   })
-  ################################################################################
+  ###########################################################################
   # 非心ベータ分布
   ###########################################################################
   output$ncbeta.meanBox <- renderValueBox({
-    mean <- exp(- input$ncbeta.ncp / 2) * input$ncbeta.shape1 *
-      genhypergeo(U = c(input$ncbeta.shape1 + 1, input$ncbeta.shape1 + input$ncbeta.shape2),
-                  L = c(input$ncbeta.shape1, 1 + input$ncbeta.shape1 + input$ncbeta.shape2),
-                  z = input$ncbeta.ncp/2) /
-      (input$ncbeta.shape1 + input$ncbeta.shape2)
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(
-        e^{-\\frac{\\lambda}{2}}
+    ncp <- input$ncbeta.ncp
+    shape1 <- input$ncbeta.shape1
+    shape2 <- input$ncbeta.shape2
+    value <- exp(- ncp / 2) * shape1 *
+      genhypergeo(U = c(shape1 + 1, shape1 + shape2),
+                  L = c(shape1, 1 + shape1 + shape2),
+                  z = ncp/2) /
+      (shape1 + shape2)
+    f_str <- "e^{-\\frac{\\lambda}{2}}
         \\frac{\\alpha}{\\alpha+\\beta}
         {}_2F_2\\left(\\alpha+\\beta,\\alpha+1;\\alpha,\\alpha+\\beta+1;\\frac{\\lambda}{2}
-        \\right)
-        \\!=\\!",
-        mean, "\\)")),
-      "期待値μ",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+        \\right)"
+    meanBox(f_str, value)
   })
 
   output$ncbeta.varianceBox <- renderValueBox({
-    mean <- exp(- input$ncbeta.ncp / 2) * input$ncbeta.shape1 *
-      genhypergeo(U = c(input$ncbeta.shape1 + 1, input$ncbeta.shape1 + input$ncbeta.shape2),
-                  L = c(input$ncbeta.shape1, 1 + input$ncbeta.shape1 + input$ncbeta.shape2),
-                  z = input$ncbeta.ncp/2) /
-      (input$ncbeta.shape1 + input$ncbeta.shape2)
-    var <- exp(- input$ncbeta.ncp / 2) * input$ncbeta.shape1 * (input$ncbeta.shape1 + 1) *
-      genhypergeo(U = c(input$ncbeta.shape1 + 1, input$ncbeta.shape1 + input$ncbeta.shape2),
-                  L = c(input$ncbeta.shape1, 1 + input$ncbeta.shape1 + input$ncbeta.shape2),
-                  z = input$ncbeta.ncp/2) /
-      ((input$ncbeta.shape1 + input$ncbeta.shape2) *
-       (input$ncbeta.shape1 + input$ncbeta.shape2 + 1)) -
-      mean ** 2
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(
-        e^{-\\frac{\\lambda}{2}}
+    ncp <- input$ncbeta.ncp
+    shape1 <- input$ncbeta.shape1
+    shape2 <- input$ncbeta.shape2
+    value.mean <- exp(- ncp / 2) * shape1 *
+      genhypergeo(U = c(shape1 + 1, shape1 + shape2),
+                  L = c(shape1, 1 + shape1 + shape2),
+                  z = ncp/2) /
+      (shape1 + shape2)
+    value <- exp(- ncp / 2) * shape1 * (shape1 + 1) *
+      genhypergeo(U = c(shape1 + 1, shape1 + shape2),
+                  L = c(shape1, 1 + shape1 + shape2),
+                  z = ncp/2) /
+      ((shape1 + shape2) *
+       (shape1 + shape2 + 1)) -
+      value.mean ** 2
+    f_str <- "e^{-\\frac{\\lambda}{2}}
         \\frac{\\alpha (\\alpha+1)}{(\\alpha+\\beta)(\\alpha+\\beta+1)}
         {}_2F_2\\left(\\alpha+\\beta,\\alpha+2;\\alpha,\\alpha+\\beta+2
-        ;\\frac{\\lambda}{2}\\right) - \\mu^2
-        \\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+        ;\\frac{\\lambda}{2}\\right) - \\mu^2"
+    varianceBox(f_str, value)
   })
-
 
   output$ncbetaPlot <- renderNvd3Chart({
     func <- ncbeta.func(input$ncbeta.shape1,
                         input$ncbeta.shape2,
                         input$ncbeta.ncp,
                         input$ncbeta.p_or_c)
-    x<-seq(input$ncbeta.range[1], input$ncbeta.range[2] ,length=1000)
+    x <- seq(input$ncbeta.range[1], input$ncbeta.range[2] ,length=1000)
     if (input$ncbeta.shape1 < 1) {
       x <- x[x!=0]
     }
@@ -604,35 +443,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 連続一様分布
   ###########################################################################
   output$unif.meanBox <- renderValueBox({
-    mean <- (input$unif.range[1] + input$unif.range[2]) / 2
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{1}{2}(a+b)\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- (input$unif.range[1] + input$unif.range[2]) / 2
+    f_str <- "\\frac{1}{2}(a+b)"
+    meanBox(f_str, value)
   })
 
   output$unif.varianceBox <- renderValueBox({
-    var <- ((input$unif.range[2] - input$unif.range[1]) ** 2) / 12
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\frac{1}{12}(b-a)^2\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- ((input$unif.range[2] - input$unif.range[1]) ** 2) / 12
+    f_str <- "\\frac{1}{12}(b-a)^2"
+    varianceBox(f_str, value)
   })
 
   output$unifPlot <- renderNvd3Chart({
@@ -643,36 +466,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # ロジスティック分布
   ###########################################################################
   output$logis.meanBox <- renderValueBox({
-    mean <- input$logis.location
-    box <- valueBox(
-      withMathJax(paste0("\\(\\mu\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$logis.location
+    f_str <- "\\mu"
+    meanBox(f_str, value)
   })
 
   output$logis.varianceBox <- renderValueBox({
-    var <- ((input$logis.scale * pi) ** 2) / 3
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(
-        \\frac{\\pi^2}{3} s^2
-        \\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- ((input$logis.scale * pi) ** 2) / 3
+    f_str <- "\\frac{\\pi^2}{3} s^2"
+    varianceBox(f_str, value)
   })
 
   output$logisPlot <- renderNvd3Chart({
@@ -682,39 +488,20 @@ server <- function(input, output) {
     df <- data.frame(x,y)
     return(df)
   })
-  ################################################################################
-  # ロジスティック分布
+  ###########################################################################
+  # ワイブル分布
   ###########################################################################
   output$weibull.meanBox <- renderValueBox({
-    mean <- input$weibull.scale * gamma(1 + 1 / input$weibull.shape)
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\eta \\Gamma(1+1/m)\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$weibull.scale * gamma(1 + 1 / input$weibull.shape)
+    f_str <- "\\eta \\Gamma(1+1/m)"
+    meanBox(f_str, value)
   })
 
   output$weibull.varianceBox <- renderValueBox({
-    var <- (input$weibull.scale ** 2) *
+    value <- (input$weibull.scale ** 2) *
       (gamma(1 + 2 / input$weibull.shape) - gamma(1 + 1 / input$weibull.shape) ** 2)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(
-        \\eta^2\\left[\\Gamma\\left(1+\\frac{2}{m}\\right) -
-          \\left(\\Gamma\\left(1+\\frac{1}{m}\\right)\\right)^2\\right]\\,
-        \\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    f_str <- "\\eta^2\\left[\\Gamma\\left(1+\\frac{2}{m}\\right) - \\left(\\Gamma\\left(1+\\frac{1}{m}\\right)\\right)^2\\right]"
+    varianceBox(f_str, value)
   })
 
   output$weibullPlot <- renderNvd3Chart({
@@ -728,35 +515,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 幾何分布
   ###########################################################################
   output$geom.meanBox <- renderValueBox({
-    mean <- (1 - input$geom.prob) / input$geom.prob
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{1-p}{p}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- (1 - input$geom.prob) / input$geom.prob
+    f_str <- "\\frac{1-p}{p}"
+    meanBox(f_str, value)
   })
 
   output$geom.varianceBox <- renderValueBox({
-    var <- (1 - input$geom.prob) / input$geom.prob ** 2
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\frac{1-p}{p^2}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- (1 - input$geom.prob) / input$geom.prob ** 2
+    f_str <- "\\frac{1-p}{p^2}"
+    varianceBox(f_str, value)
   })
 
   output$geomPlot <- renderNvd3Chart({
@@ -767,37 +538,22 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 超幾何分布
   ###########################################################################
   output$hyper.meanBox <- renderValueBox({
-    mean <- input$hyper.k * input$hyper.m / (input$hyper.m + input$hyper.n)
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{km}{m+n}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$hyper.k * input$hyper.m / (input$hyper.m + input$hyper.n)
+    f_str <- "\\frac{km}{m+n}"
+    meanBox(f_str, value)
   })
 
   output$hyper.varianceBox <- renderValueBox({
-    var <- input$hyper.k * input$hyper.m * input$hyper.n *
-      (input$hyper.m + input$hyper.n - input$hyper.k) /
-      (((input$hyper.m + input$hyper.n) ** 2) * (input$hyper.m + input$hyper.n - 1))
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\frac{kmn(m+n-k)}{(m+n)^2 (m+n-1)}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    k <- input$hyper.k
+    m <- input$hyper.m
+    n <- input$hyper.n
+    value <- k * m * n * (m + n - k) / (((m + n) ** 2) * (m + n - 1))
+    f_str <- "\\frac{kmn(m+n-k)}{(m+n)^2 (m+n-1)}"
+    varianceBox(f_str, value)
   })
 
   output$hyperPlot <- renderNvd3Chart({
@@ -808,35 +564,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 二項分布
   ###########################################################################
   output$binom.meanBox <- renderValueBox({
-    mean <- input$binom.size * input$binom.prob
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(np\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$binom.size * input$binom.prob
+    f_str <- "np"
+    meanBox(f_str, value)
   })
 
   output$binom.varianceBox <- renderValueBox({
-    var <- input$binom.size * input$binom.prob * (1 - input$binom.prob)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(np(1-p)\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$binom.size * input$binom.prob * (1 - input$binom.prob)
+    f_str <- "np(1-p)"
+    varianceBox(f_str, value)
   })
 
   output$binomPlot <- renderNvd3Chart({
@@ -847,35 +587,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 負の二項分布
   ###########################################################################
   output$nbinom.meanBox <- renderValueBox({
-    mean <- input$nbinom.size / input$nbinom.prob
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0("\\(\\frac{r}{p}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$nbinom.size / input$nbinom.prob
+    f_str <- "\\frac{r}{p}"
+    meanBox(f_str, value)
   })
 
   output$nbinom.varianceBox <- renderValueBox({
-    var <- input$nbinom.size * (1 - input$nbinom.prob) / (input$nbinom.prob ** 2)
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\frac{r(1-p)}{p^2}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$nbinom.size * (1 - input$nbinom.prob) / (input$nbinom.prob ** 2)
+    f_str <- "\\frac{r(1-p)}{p^2}"
+    varianceBox(f_str, value)
   })
 
   output$nbinomPlot <- renderNvd3Chart({
@@ -886,33 +610,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # ポアソン分布
   ###########################################################################
   output$pois.meanBox <- renderValueBox({
-    mean <- input$pois.lambda
-    box <- valueBox(
-      withMathJax(paste0("\\(\\lambda\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$pois.lambda
+    f_str <- "\\lambda"
+    meanBox(f_str, value)
   })
 
   output$pois.varianceBox <- renderValueBox({
-    var <- input$pois.lambda
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\lambda\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- input$pois.lambda
+    f_str <- "\\lambda"
+    varianceBox(f_str, value)
   })
 
   output$poisPlot <- renderNvd3Chart({
@@ -923,36 +633,19 @@ server <- function(input, output) {
     return(df)
   })
 
-  ################################################################################
+  ###########################################################################
   # 連続一様分布
   ###########################################################################
   output$dunif.meanBox <- renderValueBox({
-    mean <- (input$dunif.range[1] + input$dunif.range[2]) / 2
-    mean <- round(mean, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\frac{a+b}{2}\\!=\\!",
-        mean, "\\)")),
-      "期待値",
-      icon = mean.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- (input$dunif.range[1] + input$dunif.range[2]) / 2
+    f_str <- "\\frac{a+b}{2}"
+    meanBox(f_str, value)
   })
 
   output$dunif.varianceBox <- renderValueBox({
-    var <- (((input$dunif.range[2] - input$dunif.range[1] + 1) ** 2) - 1) / 12
-    var <- round(var, digits = 3)
-    box <- valueBox(
-      withMathJax(paste0(
-        "\\(\\frac{(b-a+1)^2 -1}{12}\\!=\\!",
-        var, "\\)")
-      ),
-      "分散",
-      icon = variance.icon,
-      color = boxcolor
-    )
-    return(box)
+    value <- (((input$dunif.range[2] - input$dunif.range[1] + 1) ** 2) - 1) / 12
+    f_str <- "\\frac{(b-a+1)^2 -1}{12}"
+    varianceBox(f_str, value)
   })
 
   output$dunifPlot <- renderNvd3Chart({
