@@ -36,6 +36,30 @@ distPanel <- function(name, en) {
   }
 }
 
+# Box for formula
+createFormula <- function(f_str, p_or_c){
+  if(p_or_c == "p"){
+    f_title <- "確率密度関数" 
+  } else {
+    f_title <- "確率関数" 
+  }
+  f_text <- paste0("$$", f_str, "$$")
+  box(
+    width = 7,
+    status = "primary",
+    title = f_title, 
+    helpText(f_text)
+  )
+}
+
+formulaBox_p <- function(f_str){
+  createFormula(f_str, p_or_c = "p")
+}
+
+formulaBox_c <- function(f_str){
+  createFormula(f_str, p_or_c = "c")
+}
+
 header <- dashboardHeader(title = pageTitle)
 
 sidebar <- dashboardSidebar(
@@ -125,15 +149,7 @@ board.about <- tabItem(tabName = "about",
 board.norm <- tabItem(tabName = "norm",
   fluidRow(
     distPanel("正規分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
-        f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}}
-        \\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)
-      $$")
-    )
+    formulaBox_p("f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}}\\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)")
   ),
   fluidRow(
     box(
@@ -169,15 +185,7 @@ board.norm <- tabItem(tabName = "norm",
 board.erlang <- tabItem(tabName = "erlang",
   fluidRow(
     distPanel("アーラン分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
-        f(x; n, \\lambda)=
-        {\\lambda^{n} x^{n-1} e^{-\\lambda x} \\over (n-1)!}\\quad\\mbox{for }x>0
-      $$")
-    )
+    formulaBox_p("f(x; n, \\lambda)={\\lambda^{n} x^{n-1} e^{-\\lambda x} \\over (n-1)!}\\quad\\mbox{for }x>0")
   ),
   fluidRow(
     box(
@@ -210,16 +218,11 @@ board.erlang <- tabItem(tabName = "erlang",
 board.f <- tabItem(tabName = "f",
   fluidRow(
     distPanel("F分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
         f(x) = \\frac{1}{\\mathrm{B}(d_1/2, d_2/2)} \\; 
         \\left(\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_1/2} \\; 
         \\left(1-\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_2/2} \\; x^{-1}
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -252,11 +255,7 @@ board.f <- tabItem(tabName = "f",
 board.ncf <- tabItem(tabName = "ncf",
   fluidRow(
     distPanel("非心F分布", "Noncentral_F-distribution"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
       f(x) =\\sum\\limits_{k=0}^\\infty
       \\frac{e^{-\\lambda/2}(\\lambda/2)^k}
       { B\\left(\\frac{\\nu_2}{2},\\frac{\\nu_1}{2}+k\\right) k!}
@@ -264,8 +263,7 @@ board.ncf <- tabItem(tabName = "ncf",
       \\left(\\frac{\\nu_2}{\\nu_2+\\nu_1x}\\right)
       ^{\\frac{\\nu_1+\\nu_2}{2}+k}x^{\\nu_1/2-1+k}
       \\ \\ \\ \\ \\mathrm{for\\ } x > 0
-$$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -300,15 +298,10 @@ $$")
 board.chisq <- tabItem(tabName = "chisq",
   fluidRow(
     distPanel("カイ二乗分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
         f(x;k)=\\frac{(1/2)^{k/2}}{\\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}
         \\ \\ \\ \\ \\mathrm{for\\ } x > 0
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -339,28 +332,11 @@ board.chisq <- tabItem(tabName = "chisq",
 board.ncChisq <- tabItem(tabName = "ncChisq",
   fluidRow(
     distPanel("非心カイ二乗分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
         f_X(x; k,\\lambda) =
         \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x),
         \\ \\ \\ \\ \\mathrm{for\\ } x > 0,\\ \\ Y_q \\sim\\chi^2_q \\ 
-      $$")
-#       helpText("$$
-#         f_X(x; k,\\lambda) =
-#         \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x)
-#         \\ \\ \\ \\ \\mathrm{for\\ } x > 0\\\\
-#         \\\\ Y_q \\mathrm{\\ は自由度\\ } q \\mathrm{\\ のカイ二乗分布に従う\\ } 
-#       $$")
-#       helpText(paste0("\\(
-#         f_X(x; k,\\lambda) =
-#         \\sum_{i=0}^\\infty \\frac{e^{-\\lambda/2} (\\lambda/2)^i}{i!} f_{Y_{k+2i}}(x)
-#         \\ \\ \\ \\ \\mathrm{for\\ } x > 0\\\\
-#         \\\\ Y_q\\)", "は自由度", "\\(q\\)", "のカイ二乗分布に従う"
-#       ))
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -393,15 +369,10 @@ board.ncChisq <- tabItem(tabName = "ncChisq",
 board.gamma <- tabItem(tabName = "gamma",
   fluidRow(
     distPanel("ガンマ分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
         f(x) = x^{k-1} \\frac{e^{-x/\\theta}}{\\Gamma(k)\\,\\theta^k}
         \\ \\ \\ \\ \\mathrm{for\\ } x > 0
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -434,17 +405,12 @@ board.gamma <- tabItem(tabName = "gamma",
 board.cauchy <- tabItem(tabName = "cauchy",
   fluidRow(
     distPanel("コーシー分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
         \\begin{align}
         f(x; x_0,\\gamma) &=
         { 1 \\over \\pi } \\left[ { \\gamma \\over (x - x_0)^2 + \\gamma^2  } \\right]
         \\end{align}
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -477,18 +443,13 @@ board.cauchy <- tabItem(tabName = "cauchy",
 board.exp <- tabItem(tabName = "exp",
   fluidRow(
     distPanel("指数分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
       f(x; \\lambda) = \\left\\{
         \\begin{array}{ll}
         \\lambda e^{-\\lambda x} & (x \\geq 0) \\\\ 0 & (x < 0)
         \\end{array}
         \\right.
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -519,15 +480,10 @@ board.exp <- tabItem(tabName = "exp",
 board.lnormal <- tabItem(tabName = "lnormal",
   fluidRow(
     distPanel("対数正規分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
       f(x) = \\frac{1}{\\sqrt{2\\pi} \\sigma x} e^{-\\frac{ (\\ln{x}-\\mu)^2}{2\\sigma^2} },
       \\quad 0<x< \\infty
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -560,15 +516,10 @@ board.lnormal <- tabItem(tabName = "lnormal",
 board.t <- tabItem(tabName = "t",
   fluidRow(
     distPanel("t分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
       f(x) = \\frac{\\Gamma((\\nu+1)/2)}{\\sqrt{\\nu\\pi\\,}\\,
       \\Gamma(\\nu/2)} (1+x^2/\\nu)^{-(\\nu+1)/2}
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -599,18 +550,13 @@ board.t <- tabItem(tabName = "t",
 board.nct <- tabItem(tabName = "nct",
   fluidRow(
     distPanel("非心t分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
       f(x) =\\frac{\\nu^{\\frac{\\nu}{2}}
       \\exp\\left (-\\frac{\\nu\\mu^2}{2(x^2+\\nu)} \\right )}
       {\\sqrt{\\pi}\\Gamma(\\frac{\\nu}{2})2^{\\frac{\\nu-1}{2}}(x^2+\\nu)^{\\frac{\\nu+1}{2}}}
       \\int_0^\\infty y^\\nu\\exp\\left (-\\frac{1}{2}\\left(y-\\frac{\\mu x}{\\sqrt{x^2+\\nu}}
       \\right)^2\\right ) dy
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -643,14 +589,9 @@ board.nct <- tabItem(tabName = "nct",
 board.beta <- tabItem(tabName = "beta",
   fluidRow(
     distPanel("ベータ分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
       f(x)=\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -683,16 +624,11 @@ board.beta <- tabItem(tabName = "beta",
 board.ncbeta <- tabItem(tabName = "ncbeta",
   fluidRow(
     distPanel("非心ベータ分布", 'Noncentral_beta_distribution'),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
-        f(x) = \\sum_{j=0}^\\infty \\frac{1}{j!}
-        \\left(\\frac{\\lambda}{2}\\right)^je^{-\\lambda/2}
-        \\frac{x^{\\alpha+j-1}(1-x)^{\\beta-1}}{B(\\alpha+j,\\beta)}
-      $$")
-    )
+    formulaBox_p("
+      f(x) = \\sum_{j=0}^\\infty \\frac{1}{j!}
+      \\left(\\frac{\\lambda}{2}\\right)^je^{-\\lambda/2}
+      \\frac{x^{\\alpha+j-1}(1-x)^{\\beta-1}}{B(\\alpha+j,\\beta)}
+                 ")
   ),
   fluidRow(
     box(
@@ -727,17 +663,12 @@ board.ncbeta <- tabItem(tabName = "ncbeta",
 board.unif <- tabItem(tabName = "unif",
   fluidRow(
     distPanel("連続一様分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
+    formulaBox_p("
         f(x)=\\begin{cases}
         \\frac{1}{b - a} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
         0 & \\mathrm{for}\\ x<a\\ \\mathrm{or}\\ x>b
         \\end{cases} 
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -766,14 +697,9 @@ board.unif <- tabItem(tabName = "unif",
 board.logis <- tabItem(tabName = "logis",
   fluidRow(
     distPanel("ロジスティック分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
-        f(x;\\mu,s) = \\frac{\\exp(-\\frac{x-\\mu}{s})}{s(1+\\exp(-\\frac{x-\\mu}{s}))^2}
-      $$")
-    )
+    formulaBox_p("
+      f(x;\\mu,s) = \\frac{\\exp(-\\frac{x-\\mu}{s})}{s(1+\\exp(-\\frac{x-\\mu}{s}))^2}
+                 ")
   ),
   fluidRow(
     box(
@@ -806,15 +732,10 @@ board.logis <- tabItem(tabName = "logis",
 board.weibull <- tabItem(tabName = "weibull",
   fluidRow(
     distPanel("ワイブル分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率密度関数", 
-      helpText("$$
-        f(t)=\\frac{m}{\\eta}\\left(\\frac{t}{\\eta}\\right)^{m-1}
-        \\exp \\left\\{-\\left(\\frac{t}{\\eta}\\right)^m\\right\\}
-      $$")
-    )
+    formulaBox_p("
+      f(t)=\\frac{m}{\\eta}\\left(\\frac{t}{\\eta}\\right)^{m-1}
+      \\exp \\left\\{-\\left(\\frac{t}{\\eta}\\right)^m\\right\\}
+                 ")
   ),
   fluidRow(
     box(
@@ -848,14 +769,9 @@ board.weibull <- tabItem(tabName = "weibull",
 board.geom <- tabItem(tabName = "geom",
   fluidRow(
     distPanel("幾何分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率関数", 
-      helpText("$$
-        Pr(X = k) = p(1-p)^{k}
-      $$")
-    )
+    formulaBox_c("
+      Pr(X = k) = p(1-p)^{k}
+                 ")
   ),
   fluidRow(
     box(
@@ -886,15 +802,10 @@ board.geom <- tabItem(tabName = "geom",
 board.hyper <- tabItem(tabName = "hyper",
   fluidRow(
     distPanel("超幾何分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率関数", 
-      helpText("$$
+    formulaBox_c("
       \\operatorname{P}(X=x)
       = \\frac{\\binom{m}{x}\\binom{n}{k-x}}{\\binom{m+n}{k}}
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -929,14 +840,9 @@ board.hyper <- tabItem(tabName = "hyper",
 board.binom <- tabItem(tabName = "binom",
   fluidRow(
     distPanel("二項分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率関数", 
-      helpText("$$
+    formulaBox_c("
       P[X=k]={n\\choose k}p^k(1-p)^{n-k}\\quad\\mbox{for}\\ k=0,1,2,\\dots,n
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -969,14 +875,9 @@ board.binom <- tabItem(tabName = "binom",
 board.nbinom <- tabItem(tabName = "nbinom",
   fluidRow(
     distPanel("負の二項分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率関数", 
-      helpText("$$
-        f(x)=P(X=x) = {x-1 \\choose r-1} p^r (1-p)^{x-r}
-      $$")
-    )
+    formulaBox_c("
+      f(x)=P(X=x) = {x-1 \\choose r-1} p^r (1-p)^{x-r}
+                 ")
   ),
   fluidRow(
     box(
@@ -1009,14 +910,9 @@ board.nbinom <- tabItem(tabName = "nbinom",
 board.pois <- tabItem(tabName = "pois",
   fluidRow(
     distPanel("ポアソン分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率関数", 
-      helpText("$$
+    formulaBox_c("
       P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
@@ -1047,17 +943,12 @@ board.pois <- tabItem(tabName = "pois",
 board.dunif <- tabItem(tabName = "dunif",
   fluidRow(
     distPanel("離散一様分布"),
-    box(
-      width = 7,
-      status = "primary",
-      title = "確率関数", 
-      helpText("$$
+    formulaBox_c("
       f(x)=\\begin{cases}
       \\frac{1}{n} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
       0 & \\mathrm{for}\\ x<a\\ \\mathrm{or}\\ x>b
       \\end{cases} 
-      $$")
-    )
+                 ")
   ),
   fluidRow(
     box(
