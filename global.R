@@ -2,3 +2,5 @@
 # ui.R or server.R
 
 source("nvd3chart.R")
+source("distributions/all.R")
+source("components.R")
