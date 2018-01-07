@@ -10,6 +10,8 @@ f(x; \\lambda) = \\left\\{
   \\right.
 "
 
+exp_dist.x_filter <- NULL
+
 ## Moments ----
 exp_dist.mean <- function(rate) 1 / rate
 exp_dist.mean_str <- "\\frac{1}{\\lambda}"
@@ -41,6 +43,7 @@ exp_dist <- Distribution$new(
   formula = exp_dist.formula,
   func_p = exp_dist.func_p,
   func_c = exp_dist.func_c,
+  x_filter = exp_dist.x_filter,
   mean = exp_dist.mean,
   mean_str = exp_dist.mean_str,
   variance = exp_dist.variance,

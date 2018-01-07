@@ -3,7 +3,8 @@
 erlang.func_p <- function(shape, scale) function(x) dgamma(x, shape=shape, scale=scale)
 erlang.func_c <- function(shape, scale) function(x) pgamma(x, shape=shape, scale=scale)
 erlang.formula <- "f(x; k, \\theta)=\\frac{x^{k-1}e^{-x/\\theta}}{\\theta^{k}(k-1)!} \\quad\\mbox{for }x,\\theta > 0"
-# erlang.formula <- "f(x; k, \\theta)=\\frac{1}{\\theta^{k}(k-1)\\!}}x^{k-1}e^{-x/\\theta} \\quad\\mbox{for }x\\, \\theta >0"
+
+erlang.x_filter <- NULL
 
 ## Moments ----
 erlang.mean <- function(shape, scale) shape * scale
@@ -40,9 +41,10 @@ erlang <- Distribution$new(
   name = "Erlang distribution",
   wiki = "https://en.wikipedia.org/wiki/Erlang_distribution",
   c_or_d = "c",
-  formula = erlang.formula,
   func_p = erlang.func_p,
   func_c = erlang.func_c,
+  formula = erlang.formula,
+  x_filter = erlang.x_filter,
   mean = erlang.mean,
   mean_str = erlang.mean_str,
   variance = erlang.variance,

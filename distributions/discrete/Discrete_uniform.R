@@ -9,6 +9,8 @@ f(x)=\\begin{cases}
 \\end{cases} 
 "
 
+dunif.x_filter <- NULL
+
 ## Moments ----
 dunif.mean <- function(min, max) (min + max) / 2
 dunif.mean_str <- "\\frac{a+b}{2}"
@@ -22,6 +24,22 @@ dunif.range <- list(
   value = c(0, 20),
   step= 1
 )
+dunif.min <- list(
+  name = "min",
+  label = "min \\(a\\)",
+  min = 0,
+  max = 100,
+  value = 0,
+  step = 1
+)
+dunif.max <- list(
+  name = "max",
+  label = "max \\(b\\)",
+  min = 0,
+  max = 100,
+  value = 20,
+  step = 1
+)
 
 ## Instance ----
 dunif <- Distribution$new(
@@ -32,9 +50,12 @@ dunif <- Distribution$new(
   formula = dunif.formula,
   func_p = dunif.func_p,
   func_c = dunif.func_c,
+  x_filter = dunif.x_filter,
   mean = dunif.mean,
   mean_str = dunif.mean_str,
   variance = dunif.variance,
   variance_str = dunif.variance_str,
-  range = dunif.range
+  range = dunif.range,
+  dunif.min,
+  dunif.max
 )

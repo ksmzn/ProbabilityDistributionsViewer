@@ -1,18 +1,12 @@
 # 二項分布 ----
-binom.func <- function(size, prob, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dbinom(x, size=size, prob=prob)
-  } else {
-    func <- function(x) pbinom(x, size=size, prob=prob)
-  }
-  return(func)
-}
 ## Functions ----
 binom.func_p <- function(size, prob) function(x) dbinom(x, size=size, prob=prob)
 binom.func_c <- function(size, prob) function(x) pbinom(x, size=size, prob=prob)
 binom.formula <- "
 P[X=k]={n\\choose k}p^k(1-p)^{n-k}\\quad\\mbox{for}\\ k=0,1,2,\\dots,n
 "
+
+binom.x_filter <- NULL
 
 ## Moments ----
 binom.mean <- function(size, prob) size * prob
@@ -53,6 +47,7 @@ binom <- Distribution$new(
   formula = binom.formula,
   func_p = binom.func_p,
   func_c = binom.func_c,
+  x_filter = binom.x_filter,
   mean = binom.mean,
   mean_str = binom.mean_str,
   variance = binom.variance,

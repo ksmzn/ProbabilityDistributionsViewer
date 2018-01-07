@@ -6,6 +6,8 @@ logis.formula <- "
 f(x;\\mu,s) = \\frac{\\exp(-\\frac{x-\\mu}{s})}{s(1+\\exp(-\\frac{x-\\mu}{s}))^2}
 "
 
+logis.x_filter <- NULL
+
 ## Moments ----
 logis.mean <- function(location, scale) location
 logis.mean_str <- "\\mu"
@@ -45,6 +47,7 @@ logis <- Distribution$new(
   formula = logis.formula,
   func_p = logis.func_p,
   func_c = logis.func_c,
+  x_filter = logis.x_filter,
   mean = logis.mean,
   mean_str = logis.mean_str,
   variance = logis.variance,

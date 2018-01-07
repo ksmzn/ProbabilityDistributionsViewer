@@ -10,25 +10,29 @@ Distribution <- R6Class(
     c_or_d = NULL,
     func = NULL,
     formula = NULL,
+    x_filter = NULL,
     mean = NULL,
     mean_str = NULL,
     variance = NULL,
     variance_str = NULL,
     range = NULL,
     params = NULL,
-    initialize = function(dist = NA,
-                          name = NA,
-                          wiki = NA,
-                          c_or_d = NA,
-                          func_p = NA,
-                          func_c = NA,
-                          formula = NA,
-                          mean = NA,
-                          mean_str = NA,
-                          variance = NA,
-                          variance_str = NA,
-                          range = NA,
-                          ...) {
+    initialize = function(
+      dist = NA,
+      name = NA,
+      wiki = NA,
+      c_or_d = NA,
+      func_p = NA,
+      func_c = NA,
+      formula = NA,
+      x_filter = NA,
+      mean = NA,
+      mean_str = NA,
+      variance = NA,
+      variance_str = NA,
+      range = NA,
+      ...
+    ) {
       self$dist <- dist
       self$name <- name
       self$wiki <- wiki
@@ -38,12 +42,19 @@ Distribution <- R6Class(
       self$mean_str <- mean_str
       self$variance <- variance
       self$variance_str <- variance_str
+      self$range <- range
+      private$set_x_filter(x_filter)
       private$set_func(func_p, func_c)
-      private$set_range(dist, range)
       private$set_params(dist, ...)
     }
   ),
   private = list(
+    set_x_filter = function(x_filter){
+      if(is.null(x_filter)){
+        x_filter <- function(x, ...) x
+      }
+      self$x_filter <- x_filter
+    },
     set_func = function(func_p, func_c){
       self$func <- function(p_or_c){
         if(p_or_c == "p"){
@@ -53,12 +64,9 @@ Distribution <- R6Class(
         }
       }
     },
-    set_range = function(dist, range) {
-      range <- append(range, c(dist = dist))
-      self$range <- range
-    },
     set_params = function(dist, ...) {
-      params <- lapply(list(...), append, c(dist = dist))
+      params <- list(...)
+      names(params) <- sapply(params, `[[`, "name")
       self$params <- params
     }
   )

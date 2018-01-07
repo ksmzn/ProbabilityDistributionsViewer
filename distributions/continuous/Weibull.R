@@ -7,6 +7,13 @@ f(t)=\\frac{m}{\\eta}\\left(\\frac{t}{\\eta}\\right)^{m-1}
 \\exp \\left\\{-\\left(\\frac{t}{\\eta}\\right)^m\\right\\}
 "
 
+weibull.x_filter <- function(x, shape, scale) {
+  if (shape < 1) {
+    x <- x[x!=0]
+  }
+  return(x)
+}
+
 ## Moments ----
 weibull.mean <- function(shape, scale) scale * gamma(1 + 1 / shape)
 weibull.mean_str <- "\\eta \\Gamma(1+1/m)"
@@ -25,7 +32,7 @@ weibull.range <- list(
 weibull.shape <- list(
   name = "shape",
   label = "形状 \\(m\\)",
-  min = 0,
+  min = 0.1,
   max = 20,
   value = 1,
   step = 0.1
@@ -33,7 +40,7 @@ weibull.shape <- list(
 weibull.scale <- list(
   name = "scale",
   label = "尺度 \\(\\eta\\)",
-  min = 0,
+  min = 0.1,
   max = 20,
   value = 1,
   step = 0.1
@@ -45,9 +52,10 @@ weibull <- Distribution$new(
   name = "Weibull distribution",
   wiki = "https://en.wikipedia.org/wiki/Weibull_distribution",
   c_or_d = "c",
-  formula = weibull.formula,
   func_p = weibull.func_p,
   func_c = weibull.func_c,
+  formula = weibull.formula,
+  x_filter = weibull.x_filter,
   mean = weibull.mean,
   mean_str = weibull.mean_str,
   variance = weibull.variance,

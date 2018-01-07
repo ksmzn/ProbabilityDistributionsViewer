@@ -4,6 +4,8 @@ norm.func_p <- function(mean, sd) function(x) dnorm(x, mean=mean, sd=sd)
 norm.func_c <- function(mean, sd) function(x) pnorm(x, mean=mean, sd=sd)
 norm.formula <- "f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}}\\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)"
 
+norm.x_filter <- NULL
+
 ## Moments ----
 norm.mean <- function(mean, sd) mean
 norm.mean_str <- "\\mu"
@@ -42,6 +44,7 @@ norm <- Distribution$new(
   formula = norm.formula,
   func_p = norm.func_p,
   func_c = norm.func_c,
+  x_filter = norm.x_filter,
   mean = norm.mean,
   mean_str = norm.mean_str,
   variance = norm.variance,

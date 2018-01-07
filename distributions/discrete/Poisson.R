@@ -6,6 +6,8 @@ pois.formula <- "
 P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}
 "
 
+pois.x_filter <- NULL
+
 ## Moments ----
 pois.mean <- function(lambda) lambda
 pois.mean_str <- "\\lambda"
@@ -37,6 +39,7 @@ pois <- Distribution$new(
   formula = pois.formula,
   func_p = pois.func_p,
   func_c = pois.func_c,
+  x_filter = pois.x_filter,
   mean = pois.mean,
   mean_str = pois.mean_str,
   variance = pois.variance,

@@ -7,6 +7,8 @@ f(x) = \\frac{1}{\\sqrt{2\\pi} \\sigma x} e^{-\\frac{ (\\ln{x}-\\mu)^2}{2\\sigma
   \\quad 0<x< \\infty
 "
 
+lnormal.x_filter <- NULL
+
 ## Moments ----
 lnormal.mean <- function(meanlog, sdlog) exp(meanlog + ((sdlog ** 2) / 2))
 lnormal.mean_str <- "e^{\\mu+\\sigma^2/2}"
@@ -47,6 +49,7 @@ lnormal <- Distribution$new(
   formula = lnormal.formula,
   func_p = lnormal.func_p,
   func_c = lnormal.func_c,
+  x_filter = lnormal.x_filter,
   mean = lnormal.mean,
   mean_str = lnormal.mean_str,
   variance = lnormal.variance,

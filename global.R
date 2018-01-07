@@ -3,4 +3,4 @@
 
 source("nvd3chart.R")
 source("distributions/all.R")
-source("components.R")
+source("modules.R")

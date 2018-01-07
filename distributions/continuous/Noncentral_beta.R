@@ -1,12 +1,4 @@
 # 非心ベータ分布 ----
-ncbeta.func <- function(shape1, shape2, ncp, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dncbeta(x, shape1=shape1, shape2=shape2, ncp=ncp)
-  } else {
-    func <- function(x) pncbeta(x, shape1=shape1, shape2=shape2, ncp=ncp)
-  }
-  return(func)
-}
 ## functions ----
 ncbeta.func_p <- function(shape1, shape2, ncp) function(x) dbeta(x, shape1=shape1, shape2=shape2, ncp=ncp)
 ncbeta.func_c <- function(shape1, shape2, ncp) function(x) pbeta(x, shape1=shape1, shape2=shape2, ncp=ncp)
@@ -15,6 +7,16 @@ f(x) = \\sum_{j=0}^\\infty \\frac{1}{j!}
 \\left(\\frac{\\lambda}{2}\\right)^je^{-\\lambda/2}
 \\frac{x^{\\alpha+j-1}(1-x)^{\\beta-1}}{B(\\alpha+j,\\beta)}
 "
+
+ncbeta.x_filter <- function(x, shape1, shape2, ncp) {
+  if (shape1 < 1) {
+    x <- x[x!=0]
+  }
+  if (shape2 < 1) {
+    x <- x[x!=1]
+  }
+  return(x)
+}
 
 ## Moments ----
 ncbeta.mean <- function(shape1, shape2, ncp){
@@ -92,9 +94,10 @@ ncbeta <- Distribution$new(
   name = "Noncentral beta distribution",
   wiki = "https://en.wikipedia.org/wiki/Noncentral_beta_distribution",
   c_or_d = "c",
-  formula = ncbeta.formula,
   func_p = ncbeta.func_p,
   func_c = ncbeta.func_c,
+  formula = ncbeta.formula,
+  x_filter = ncbeta.x_filter,
   mean = ncbeta.mean,
   mean_str = ncbeta.mean_str,
   variance = ncbeta.variance,

@@ -7,6 +7,8 @@ f(x) = \\frac{\\Gamma((\\nu+1)/2)}{\\sqrt{\\nu\\pi\\,}\\,
   \\Gamma(\\nu/2)} (1+x^2/\\nu)^{-(\\nu+1)/2}
 "
 
+t_dist.x_filter <- NULL
+
 ## Moments ----
 t_dist.mean <- function(df) 0L
 t_dist.mean_str <- "e^{\\mu+\\sigma^2/2}"
@@ -43,6 +45,7 @@ t_dist <- Distribution$new(
   formula = t_dist.formula,
   func_p = t_dist.func_p,
   func_c = t_dist.func_c,
+  x_filter = t_dist.x_filter,
   mean = t_dist.mean,
   mean_str = t_dist.mean_str,
   variance = t_dist.variance,
