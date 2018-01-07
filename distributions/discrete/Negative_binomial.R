@@ -4,6 +4,8 @@ nbinom.func_p <- function(size, prob) function(x) dnbinom(x, size=size, prob=pro
 nbinom.func_c <- function(size, prob) function(x) pnbinom(x, size=size, prob=prob)
 nbinom.formula <- "f(x)=P(X=x) = {x-1 \\choose r-1} p^r (1-p)^{x-r}"
 
+nbinom.x_filter <- NULL
+
 ## Moments ----
 nbinom.mean <- function(size, prob){
   if(prob == 0L){
@@ -57,6 +59,7 @@ nbinom <- Distribution$new(
   formula = nbinom.formula,
   func_p = nbinom.func_p,
   func_c = nbinom.func_c,
+  x_filter = nbinom.x_filter,
   mean = nbinom.mean,
   mean_str = nbinom.mean_str,
   variance = nbinom.variance,

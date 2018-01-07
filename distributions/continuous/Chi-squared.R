@@ -7,6 +7,13 @@ chisq.formula <- "
   \\ \\ \\ \\ \\mathrm{for\\ } x > 0
 "
 
+chisq.x_filter <- function(x, df) {
+  if (df == 1) {
+    x <- x[x!=0]
+  }
+  return(x)
+}
+
 ## Moments ----
 chisq.mean <- function(df) df
 chisq.mean_str <- "k"
@@ -34,9 +41,10 @@ chisq <- Distribution$new(
   name = "Chi-squared distribution",
   wiki = "https://en.wikipedia.org/wiki/Noncentral_chi-squared_distribution",
   c_or_d = "c",
-  formula = chisq.formula,
   func_p = chisq.func_p,
   func_c = chisq.func_c,
+  formula = chisq.formula,
+  x_filter = chisq.x_filter,
   mean = chisq.mean,
   mean_str = chisq.mean_str,
   variance = chisq.variance,

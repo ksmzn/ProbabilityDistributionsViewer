@@ -12,14 +12,33 @@ ncf.formula <- "
   \\ \\ \\ \\ \\mathrm{for\\ } x > 0
 "
 
+ncf.x_filter <- function(x, df1, df2, ncp) {
+  if (df1 == 1) {
+    x <- x[x!=0]
+  }
+  return(x)
+}
+
 ## Moments ----
 ncf.mean <- function(df1, df2, ncp) {
-  (df2 * (df1 + ncp)) / (df1 * (df2 - 2))
+  if(df2 <= 2){
+    value <- NULL
+  } else {
+    value <- (df2 * (df1 + ncp)) / (df1 * (df2 - 2))
+  }
+  return(value)
 }
 ncf.mean_str <- "\\frac{\\nu_2(\\nu_1 + \\lambda)}{\\nu_1(\\nu_2-2)}"
 
 ncf.variance <- function(df1, df2, ncp) {
-  (2 * df2 ** 2) * (df1 + df2 - 2) / (df1 * ((df2 - 2) ** 2) * (df2 - 4))
+  if(df2 <= 4){
+    value <- NULL
+  } else {
+    value <-
+      (2 * df2 ** 2 * (((df1 + ncp) ** 2) + (df1 + 2 * ncp) * (df2 - 2))) /
+      (df1 ** 2 * (df2 - 2) ** 2 * (df2 - 4))
+  }
+  return(value)
 }
 ncf.variance_str <- "2\\frac{(\\nu_1+\\lambda)^2+(\\nu_1+2\\lambda)(\\nu_2-2)}{(\\nu_2-2)^2(\\nu_2-4)} \\left(\\frac{\\nu_2}{\\nu_1}\\right)^2"
 
@@ -62,6 +81,7 @@ ncf <- Distribution$new(
   func_p = ncf.func_p,
   func_c = ncf.func_c,
   formula = ncf.formula,
+  x_filter = ncf.x_filter,
   mean = ncf.mean,
   mean_str = ncf.mean_str,
   variance = ncf.variance,

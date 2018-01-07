@@ -10,6 +10,8 @@ f(x) =\\frac{\\nu^{\\frac{\\nu}{2}}
 \\right)^2\\right ) dy
 "
 
+nct.x_filter <- NULL
+
 ## Moments ----
 nct.mean <- function(df, ncp){
   if(df <= 1){
@@ -63,6 +65,7 @@ nct <- Distribution$new(
   formula = nct.formula,
   func_p = nct.func_p,
   func_c = nct.func_c,
+  x_filter = nct.x_filter,
   mean = nct.mean,
   mean_str = nct.mean_str,
   variance = nct.variance,

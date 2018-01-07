@@ -1,12 +1,4 @@
 # 一様分布 ----
-unif.func <- function(min, max, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dunif(x, min=min, max=max)
-  } else {
-    func <- function(x) punif(x, min=min, max=max)
-  }
-  return(func)
-}
 ## functions ----
 unif.func_p <- function(min, max) function(x) dunif(x, min=min, max=max)
 unif.func_c <- function(min, max) function(x) punif(x, min=min, max=max)
@@ -16,6 +8,8 @@ f(x)=\\begin{cases}
 0 & \\mathrm{for}\\ x<a\\ \\mathrm{or}\\ x>b
 \\end{cases} 
 "
+
+unif.x_filter <- NULL
 
 ## Moments ----
 unif.mean <- function(min, max) (min + max) / 2
@@ -30,6 +24,22 @@ unif.range <- list(
   value = c(0, 1),
   step= 0.5
 )
+unif.min <- list(
+  name = "min",
+  label = "min \\(a\\)",
+  min = -50,
+  max = 50,
+  value = 0,
+  step = 0.5
+)
+unif.max <- list(
+  name = "max",
+  label = "max \\(b\\)",
+  min = -50,
+  max = 50,
+  value = 1,
+  step = 0.5
+)
 
 ## Instance ----
 unif <- Distribution$new(
@@ -40,9 +50,12 @@ unif <- Distribution$new(
   formula = unif.formula,
   func_p = unif.func_p,
   func_c = unif.func_c,
+  x_filter = unif.x_filter,
   mean = unif.mean,
   mean_str = unif.mean_str,
   variance = unif.variance,
   variance_str = unif.variance_str,
-  range = unif.range
+  range = unif.range,
+  unif.min,
+  unif.max
 )

@@ -9,10 +9,12 @@ cauchy.formula <- "
 \\end{align}
 "
 
+cauchy.x_filter <- NULL
+
 ## Moments ----
-cauchy.mean <- function() NULL
+cauchy.mean <- function(...) NULL
 cauchy.mean_str <- NULL
-cauchy.variance <- function() NULL
+cauchy.variance <- function(...) NULL
 cauchy.variance_str <- NULL
 
 ## Parameters ----
@@ -48,6 +50,7 @@ cauchy <- Distribution$new(
   formula = cauchy.formula,
   func_p = cauchy.func_p,
   func_c = cauchy.func_c,
+  x_filter = cauchy.x_filter,
   mean = cauchy.mean,
   mean_str = cauchy.mean_str,
   variance = cauchy.variance,

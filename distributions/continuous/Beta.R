@@ -6,6 +6,16 @@ beta.formula <- "
 f(x)=\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}
 "
 
+beta.x_filter <- function(x, shape1, shape2) {
+  if (shape1 < 1) {
+    x <- x[x!=0]
+  }
+  if (shape2 < 1) {
+    x <- x[x!=1]
+  }
+  return(x)
+}
+
 ## Moments ----
 beta.mean <- function(shape1, shape2) shape1 / (shape1 + shape2)
 beta.mean_str <- "\\frac{\\alpha}{\\alpha+\\beta}"
@@ -46,9 +56,10 @@ beta <- Distribution$new(
   name = "Beta distribution",
   wiki = "https://en.wikipedia.org/wiki/Beta_distribution",
   c_or_d = "c",
-  formula = beta.formula,
   func_p = beta.func_p,
   func_c = beta.func_c,
+  formula = beta.formula,
+  x_filter = beta.x_filter,
   mean = beta.mean,
   mean_str = beta.mean_str,
   variance = beta.variance,

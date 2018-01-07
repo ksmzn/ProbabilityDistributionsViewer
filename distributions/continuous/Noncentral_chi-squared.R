@@ -15,6 +15,13 @@ ncChisq.formula <- "f_X(x; k,\\lambda) =
         \\ \\ \\ \\ \\mathrm{for\\ } x > 0,\\ \\ Y_q \\sim\\chi^2_q \\
 "
 
+ncChisq.x_filter <- function(x, df, ncp) {
+  if (df == 1) {
+    x <- x[x!=0]
+  }
+  return(x)
+}
+
 ## Moments ----
 ncChisq.mean <- function(df, ncp) df + ncp
 ncChisq.mean_str <- "k+\\lambda"
@@ -50,9 +57,10 @@ ncChisq <- Distribution$new(
   name = "Noncentral chi-squared distribution",
   wiki = "https://en.wikipedia.org/wiki/Noncentral_chi-squared_distribution",
   c_or_d = "c",
-  formula = ncChisq.formula,
   func_p = ncChisq.func_p,
   func_c = ncChisq.func_c,
+  formula = ncChisq.formula,
+  x_filter = ncChisq.x_filter,
   mean = ncChisq.mean,
   mean_str = ncChisq.mean_str,
   variance = ncChisq.variance,

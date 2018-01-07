@@ -6,6 +6,13 @@ gamma.formula <- "f(x) = x^{k-1} \\frac{e^{-x/\\theta}}{\\Gamma(k)\\,\\theta^k}
         \\ \\ \\ \\ \\mathrm{for\\ } x > 0
 "
 
+gamma.x_filter <- function(x, shape, scale) {
+  if (shape < 1) {
+    x <- x[x!=0]
+  }
+  return(x)
+}
+
 ## Moments ----
 gamma.mean <- function(shape, scale) shape * scale
 gamma.mean_str <- "k\\theta"
@@ -42,9 +49,10 @@ gamma <- Distribution$new(
   name = "Gamma distribution",
   wiki = "https://en.wikipedia.org/wiki/Gamma_distribution",
   c_or_d = "c",
-  formula = gamma.formula,
   func_p = gamma.func_p,
   func_c = gamma.func_c,
+  formula = gamma.formula,
+  x_filter = gamma.x_filter,
   mean = gamma.mean,
   mean_str = gamma.mean_str,
   variance = gamma.variance,

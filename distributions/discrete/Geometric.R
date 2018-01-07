@@ -6,6 +6,8 @@ geom.formula <- "
 Pr(X = k) = p(1-p)^{k}
 "
 
+geom.x_filter <- NULL
+
 ## Moments ----
 geom.mean <- function(prob) (1 - prob) / prob
 geom.mean_str <- "\\frac{1-p}{p}"
@@ -37,6 +39,7 @@ geom <- Distribution$new(
   formula = geom.formula,
   func_p = geom.func_p,
   func_c = geom.func_c,
+  x_filter = geom.x_filter,
   mean = geom.mean,
   mean_str = geom.mean_str,
   variance = geom.variance,

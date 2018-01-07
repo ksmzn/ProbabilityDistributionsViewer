@@ -8,6 +8,8 @@ f.formula <- "
   \\left(1-\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_2/2} \\; x^{-1}
 "
 
+f.x_filter <- NULL
+
 ## Moments ----
 f.mean <- function(df1, df2) df2 / (df2 - 2)
 f.mean_str <- "\\frac{d_2}{d_2-2}"
@@ -48,6 +50,7 @@ f <- Distribution$new(
   formula = f.formula,
   func_p = f.func_p,
   func_c = f.func_c,
+  x_filter = f.x_filter,
   mean = f.mean,
   mean_str = f.mean_str,
   variance = f.variance,

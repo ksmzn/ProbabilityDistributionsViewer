@@ -1,12 +1,4 @@
 # 超幾何分布 ----
-hyper.func <- function(m, n, k, p_or_c){
-  if(p_or_c == "p"){
-    func <- function(x) dhyper(x, m=m, n=n, k=k)
-  } else {
-    func <- function(x) phyper(x, m=m, n=n, k=k)
-  }
-  return(func)
-}
 ## Functions ----
 hyper.func_p <- function(m, n, k) function(x) dhyper(x, m=m, n=n, k=k)
 hyper.func_c <- function(m, n, k) function(x) phyper(x, m=m, n=n, k=k)
@@ -14,6 +6,8 @@ hyper.formula <- "
 \\operatorname{P}(X=x)
 = \\frac{\\binom{m}{x}\\binom{n}{k-x}}{\\binom{m+n}{k}}
 "
+
+hyper.x_filter <- NULL
 
 ## Moments ----
 hyper.mean <- function(m, n, k) k * m / (m + n)
@@ -62,6 +56,7 @@ hyper <- Distribution$new(
   formula = hyper.formula,
   func_p = hyper.func_p,
   func_c = hyper.func_c,
+  x_filter = hyper.x_filter,
   mean = hyper.mean,
   mean_str = hyper.mean_str,
   variance = hyper.variance,
