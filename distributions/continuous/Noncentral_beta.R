@@ -1,3 +1,4 @@
+library(hypergeo)
 # 非心ベータ分布 ----
 ## functions ----
 ncbeta.func_p <- function(shape1, shape2, ncp) function(x) dbeta(x, shape1=shape1, shape2=shape2, ncp=ncp)
