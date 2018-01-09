@@ -239,7 +239,7 @@ distTab <- function(input, output, session, distribution) {
   # Plot
   output$plot <- renderNvd3Chart({
     x <- seq_func(input$range[1], input$range[2])
-    x <- do.call(d$x_filter, c(x = x, params()))
+    x <- do.call(d$x_filter, append(list(x = x), params()))
     y <- eval(func()(x))
     df <- data.frame(x, y)
     return(df)
