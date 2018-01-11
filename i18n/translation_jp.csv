@@ -1,0 +1,62 @@
+English,Japanese
+mean,期待値
+Mean,期待値
+variance,分散
+Variance,分散
+Undefined,定義されない
+Plot,プロット
+variance(∞ if 1 <= ν <= 2),分散 (自由度が2以下のときは∞)
+mean μ,期待値 μ
+ShinyDistributionsApp,確率分布いろいろ
+Reference,参考
+Probability density function (PDF),確率密度関数
+Cumulative distribution function (CDF),確率関数
+Range,範囲
+Continuous distributions,連続分布
+Normal distribution,正規分布
+https://en.wikipedia.org/wiki/Normal_distribution,https://ja.wikipedia.org/wiki/正規分布
+Erlang distribution,アーラン分布
+https://en.wikipedia.org/wiki/Erlang_distribution,https://ja.wikipedia.org/wiki/アーラン分布
+F-distribution,F分布
+https://en.wikipedia.org/wiki/F-distribution,https://ja.wikipedia.org/wiki/F分布
+Noncentral F-distribution,非心F分布
+https://en.wikipedia.org/wiki/Noncentral_F-distribution,https://en.wikipedia.org/wiki/Noncentral_F-distribution
+Chi-squared distribution,カイ二乗分布
+https://en.wikipedia.org/wiki/Chi-squared_distribution,https://ja.wikipedia.org/wiki/カイ二乗分布
+Noncentral chi-squared distribution,非心カイ二乗分布
+https://en.wikipedia.org/wiki/Noncentral_chi-squared_distribution,https://ja.wikipedia.org/wiki/非心カイ二乗分布
+Gamma distribution,ガンマ分布
+https://en.wikipedia.org/wiki/Gamma_distribution,https://ja.wikipedia.org/wiki/ガンマ分布
+Cauchy distribution,コーシー分布
+https://en.wikipedia.org/wiki/Cauchy_distribution,https://ja.wikipedia.org/wiki/コーシー分布
+Exponential distribution,指数分布
+https://en.wikipedia.org/wiki/Exponential_distribution,https://ja.wikipedia.org/wiki/指数分布
+Log-normal distribution,対数正規分布
+https://en.wikipedia.org/wiki/Log-normal_distribution,https://ja.wikipedia.org/wiki/対数正規分布
+Student's t-distribution,t分布
+https://en.wikipedia.org/wiki/Student%27s_t-distribution,https://ja.wikipedia.org/wiki/t分布
+Noncentral t-distribution,非心t分布
+https://en.wikipedia.org/wiki/Noncentral_t-distribution,https://ja.wikipedia.org/wiki/非心t分布
+Beta distribution,ベータ分布
+https://en.wikipedia.org/wiki/Beta_distribution,https://ja.wikipedia.org/wiki/ベータ分布
+Noncentral beta distribution,非心ベータ分布
+https://en.wikipedia.org/wiki/Noncentral_beta_distribution,https://en.wikipedia.org/wiki/Noncentral_beta_distribution
+Uniform distribution (continuous),連続一様分布
+https://en.wikipedia.org/wiki/Uniform_distribution_(continuous),https://ja.wikipedia.org/wiki/連続一様分布
+Logistic distribution,ロジスティック分布
+https://en.wikipedia.org/wiki/Logistic_distribution,https://ja.wikipedia.org/wiki/ロジスティック分布
+Weibull distribution,ワイブル分布
+https://en.wikipedia.org/wiki/Weibull_distribution,https://ja.wikipedia.org/wiki/ワイブル分布
+Discrete distributions,離散分布
+Geometric distribution,幾何分布
+https://en.wikipedia.org/wiki/Geometric_distribution,https://ja.wikipedia.org/wiki/幾何分布
+Hypergeometric distribution,超幾何分布
+https://en.wikipedia.org/wiki/Hypergeometric_distribution,https://ja.wikipedia.org/wiki/超幾何分布
+Binomial distribution,二項分布
+https://en.wikipedia.org/wiki/Binomial_distribution,https://ja.wikipedia.org/wiki/二項分布
+Negative binomial distribution,負の二項分布
+https://en.wikipedia.org/wiki/Negative_binomial_distribution,https://ja.wikipedia.org/wiki/負の二項分布
+Poisson distribution,ポアソン分布
+https://en.wikipedia.org/wiki/Poisson_distribution,https://ja.wikipedia.org/wiki/ポアソン分布
+Discrete uniform distribution,離散一様分布
+https://en.wikipedia.org/wiki/Discrete_uniform_distribution,https://ja.wikipedia.org/wiki/離散一様分布

@@ -2,5 +2,7 @@
 # ui.R or server.R
 
 source("nvd3chart.R")
+source("i18n/main.R")
 source("distributions/all.R")
-source("modules.R")
+source("modules/ui.R")
+source("modules/server.R")

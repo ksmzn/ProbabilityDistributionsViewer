@@ -15,6 +15,7 @@ nvd3ChartOutput <- function(inputId, type, width="100%", height="400px") {
     # if multiple lineChartOutputs are used in the same page, we'll still
     # only include these chunks once.
     singleton(tags$head(
+      tags$link(rel="stylesheet", type="text/css", href="css/main.css"),
       tags$script(src="js/d3/d3.v3.min.js"),
       tags$script(src="js/nvd3/nv.d3.min.js"),
       tags$link(rel="stylesheet", type="text/css", href="js/nvd3/nv.d3.min.css"),

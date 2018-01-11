@@ -1,0 +1,12 @@
+#language_selector {
+  padding: 7px 15px 0;
+}
+#language_selector label {
+  display: inline;
+}
+#language_selector > .form-group {
+  margin-bottom: 0px;
+}
+#language_selector .selectize-control {
+  margin-bottom: 0px;
+}
