@@ -67,6 +67,8 @@ ncbeta.range <- list(
 ncbeta.shape1 <- list(
   name = "shape1",
   label = "形状 \\(\\alpha\\)",
+  label_name = "Shape",
+  label_symbol = "\\alpha",
   min = 0,
   max = 20,
   value = 2,
@@ -75,6 +77,8 @@ ncbeta.shape1 <- list(
 ncbeta.shape2 <- list(
   name = "shape2",
   label = "形状 \\(\\beta\\)",
+  label_name = "Shape",
+  label_symbol = "\\beta",
   min = 0,
   max = 20,
   value = 2,
@@ -82,7 +86,8 @@ ncbeta.shape2 <- list(
 )
 ncbeta.ncp <- list(
   name = "ncp",
-  label = "非中心度 \\(\\lambda\\)",
+  label_name = "Noncentrality parameter",
+  label_symbol = "\\lambda",
   min = 0,
   max = 20,
   value = 0,

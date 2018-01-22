@@ -23,7 +23,8 @@ geom.range <- list(
 )
 geom.prob <- list(
   name = "prob",
-  label = "成功確率 \\(p\\)",
+  label_name = "Probability of successful trial",
+  label_symbol = "p",
   min = 0,
   max = 1,
   value = 0.5,

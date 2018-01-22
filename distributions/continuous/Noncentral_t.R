@@ -42,14 +42,16 @@ nct.range <- list(
 )
 nct.df <- list(
   name = "df",
-  label = "自由度 \\(\\nu\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "\\nu",
   min = 1,
   max = 20,
   value = 1
 )
 nct.ncp <- list(
   name = "ncp",
-  label = "非中心度 \\(\\mu\\)",
+  label_name = "Noncentrality parameter",
+  label_symbol = "\\mu",
   min = 0,
   max = 20,
   value = 0,

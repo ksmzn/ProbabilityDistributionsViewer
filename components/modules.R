@@ -1,54 +1,38 @@
 library(shiny)
 library(shinydashboard)
-# Variables ----
-boxcolor <- "blue"
-mean.icon <- icon("star", lib = "glyphicon")
-variance.icon <- icon("resize-horizontal", lib = "glyphicon")
 
-# Functions ----
-createFormula <- function(f_str, value){
-  paste0("\\(", f_str, "\\!=\\!", value, "\\)") 
-}
-
-createBox <- function(f_str, value, param = "Mean", i18n = NULL){
-  if(param == "Variance"){
-    icon <- variance.icon
-  } else {
-    icon <- mean.icon
-  }
-  param_str <- i18n()$t(param)
-  if(is.null(f_str) | is.null(value)){
-    formula <- i18n()$t("Undefined")
-  } else {
-    value <- round(value, digits = 3)
-    formula <- createFormula(f_str, value)
-    formula <- withMathJax(formula)
-  }
-  box <-
-    valueBox(
-      formula,
-      param_str,
-      icon = icon,
-      color = boxcolor
-    )
-  return(box)
-}
-
-meanBox <- function(f_str, value, i18n){
-  f <- createBox(f_str, value, param = "Mean", i18n)
-  return(f)
-}
-
-varianceBox <- function(f_str, value, i18n){
-  f <- createBox(f_str, value, param = "Variance", i18n)
-  return(f)
-}
+# Functions
+source("components/functions.R")
 
 # Module ----
+distTabUI <- function(distEnv, wide = F){
+  if(wide){
+    boxRow <- valueBoxRowWide
+  } else {
+    boxRow <- valueBoxRow
+  }
+  dist <- distEnv[["dist"]]
+  c_or_d <- distEnv[["c_or_d"]]
+  ns <- NS(dist)
+
+  item <- tabItem(tabName = dist,
+    fluidRow(
+      uiOutput(ns("distBox")),
+      uiOutput(ns("formulaBox"))
+    ),
+    fluidRow(
+      uiOutput(ns("paramBox")),
+      uiOutput(ns("plotBox"))
+    ),
+    boxRow(ns)
+  )
+  return(item)
+}
+
 distTab <- function(input, output, session, distribution, i18n) {
   # Set Up ----
   d <- distribution
-  is_continious <- d$c_or_d == "c"
+  c_or_d <- d$c_or_d
 
   # Parameters
   param_names <- names(d$params)
@@ -66,7 +50,7 @@ distTab <- function(input, output, session, distribution, i18n) {
   func <- reactive(do.call(func_base(), params()))
 
   # X axis 
-  if(is_continious){
+  if(c_or_d == "c"){
     seq_func <- function(min, max) seq(min, max, length=1000)
     plot_type <- "line"
   } else {
@@ -75,6 +59,22 @@ distTab <- function(input, output, session, distribution, i18n) {
   }
 
   # Outputs ----
+  # Distribution Box
+  output$distBox <- renderUI({
+    distBox(d$name, d$wiki, i18n)
+  })
+
+  # Formula Box
+  output$formulaBox <- renderUI({
+    formulaBox(d$formula, c_or_d, i18n)
+  })
+
+  # Parameter Box
+  output$paramBox <- renderUI({
+    ns <- session$ns
+    createParamBox(ns, c_or_d, d$range, d$params, i18n)
+  })
+
   # Mean
   output$meanBox <- renderValueBox({
     value <- do.call(d$mean, params())

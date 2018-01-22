@@ -1,16 +1,34 @@
 English,Japanese
+about.md,about_ja.md
 mean,期待値
 Mean,期待値
 variance,分散
 Variance,分散
+Standard deviation,標準偏差
+Shape,形状
+Scale,尺度
+Degrees of freedom,自由度
+Noncentrality parameter,非中心度
+Location,位置
+Mean Log,平均log
+Standard deviation Log,標準偏差log
+Probability of successful trial,成功確率
+Number of trials,試行回数
+target for number of successful trials,成功をする前に失敗した試行回数
+Number of white balls in the urn,成功状態の数
+Number of black balls in the urn,失敗状態の数
+Number of balls drawn from the urn,取り出す数
+Min,最小値
+Max,最大値
 Undefined,定義されない
 Plot,プロット
 variance(∞ if 1 <= ν <= 2),分散 (自由度が2以下のときは∞)
-mean μ,期待値 μ
 ShinyDistributionsApp,確率分布いろいろ
 Reference,参考
+Parameters,パラメータ
 Probability density function (PDF),確率密度関数
-Cumulative distribution function (CDF),確率関数
+Probability mass function (PMF),確率関数
+Cumulative distribution function (CDF),累積分布関数
 Range,範囲
 Continuous distributions,連続分布
 Normal distribution,正規分布

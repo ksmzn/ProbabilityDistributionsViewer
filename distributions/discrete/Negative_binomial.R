@@ -8,7 +8,7 @@ nbinom.x_filter <- NULL
 
 ## Moments ----
 nbinom.mean <- function(size, prob){
-  if(prob == 0L){
+  if(is.null(prob) || prob == 0){
     value <- Inf
   } else {
     value <- size / prob
@@ -17,7 +17,7 @@ nbinom.mean <- function(size, prob){
 }
 nbinom.mean_str <- "\\frac{r}{p}"
 nbinom.variance <- function(size, prob){
-  if(prob == 0L){
+  if(is.null(prob) || prob == 0){
     value <- Inf
   } else {
     value <- size * (1 - prob) / (prob ** 2) 
@@ -35,7 +35,8 @@ nbinom.range <- list(
 )
 nbinom.size <- list(
   name = "size",
-  label = "試行回数 \\(r\\)",
+  label_name = "target for number of successful trials",
+  label_symbol = "r",
   min = 1,
   max = 20,
   value = 1,
@@ -43,7 +44,8 @@ nbinom.size <- list(
 )
 nbinom.prob <- list(
   name = "prob",
-  label = "成功確率 \\(p\\)",
+  label_name = "Probability of successful trial",
+  label_symbol = "p",
   min = 0,
   max = 1,
   value = 0.5,

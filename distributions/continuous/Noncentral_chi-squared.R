@@ -37,14 +37,16 @@ ncChisq.range <- list(
 )
 ncChisq.df <- list(
   name = "df",
-  label = "自由度 \\(k\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "k",
   min = 1,
   max = 20,
   value = 1
 )
 ncChisq.ncp <- list(
   name = "ncp",
-  label = "非中心度 \\(\\lambda\\)",
+  label_name = "Noncentrality parameter",
+  label_symbol = "\\lambda",
   min = 0,
   max = 20,
   value = 0,

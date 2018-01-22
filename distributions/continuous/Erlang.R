@@ -21,14 +21,16 @@ erlang.range <- list(
 )
 erlang.shape <- list(
   name = "shape",
-  label = "形状 \\(k\\)",
+  label_name = "Shape",
+  label_symbol = "k",
   min = 1,
   max = 20,
   value = 1
 )
 erlang.scale <- list(
   name = "scale",
-  label = "尺度 \\(\\theta\\)",
+  label_name = "Scale",
+  label_symbol = "\\theta",
   min = 0.5,
   max = 20,
   value = 1,

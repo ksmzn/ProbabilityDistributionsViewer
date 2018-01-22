@@ -27,7 +27,8 @@ exp_dist.range <- list(
 )
 exp_dist.rate <- list(
   name = "rate",
-  label = "\\(\\lambda\\)",
+  label_name = "",
+  label_symbol = "\\lambda",
   min = 0,
   max = 20,
   value = 1,

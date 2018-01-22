@@ -28,7 +28,8 @@ gamma.range <- list(
 )
 gamma.shape <- list(
   name = "shape",
-  label = "形状 \\(k\\)",
+  label_name = "Shape",
+  label_symbol = "k",
   min = 0,
   max = 20,
   value = 1,
@@ -36,7 +37,8 @@ gamma.shape <- list(
 )
 gamma.scale <- list(
   name = "scale",
-  label = "尺度 \\(\\theta\\)",
+  label_name = "Scale",
+  label_symbol = "\\theta",
   min = 0,
   max = 20,
   value = 1,

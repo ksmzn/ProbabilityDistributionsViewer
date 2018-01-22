@@ -51,21 +51,24 @@ ncf.range <- list(
 )
 ncf.df1 <- list(
   name = "df1",
-  label = "自由度 \\(\\nu_1\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "\\nu_1",
   min = 1,
   max = 20,
   value = 1
 )
 ncf.df2 <- list(
   name = "df2",
-  label = "自由度 \\(\\nu_2\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "\\nu_2",
   min = 1,
   max = 20,
   value = 1
 )
 ncf.ncp <- list(
   name = "ncp",
-  label = "非中心度 \\(\\lambda\\)",
+  label_name = "Noncentrality parameter",
+  label_symbol = "\\lambda",
   min = 0,
   max = 20,
   value = 0,

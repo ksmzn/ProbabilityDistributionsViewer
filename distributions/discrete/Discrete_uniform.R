@@ -26,7 +26,8 @@ dunif.range <- list(
 )
 dunif.min <- list(
   name = "min",
-  label = "min \\(a\\)",
+  label_name = "Min",
+  label_symbol = "a",
   min = 0,
   max = 100,
   value = 0,
@@ -34,7 +35,8 @@ dunif.min <- list(
 )
 dunif.max <- list(
   name = "max",
-  label = "max \\(b\\)",
+  label_name = "Max",
+  label_symbol = "b",
   min = 0,
   max = 100,
   value = 20,

@@ -24,7 +24,8 @@ hyper.range <- list(
 )
 hyper.m <- list(
   name = "m",
-  label = "成功状態の数 \\(m\\)",
+  label_name = "Number of white balls in the urn",
+  label_symbol = "m",
   min = 0,
   max = 100,
   value = 50,
@@ -32,7 +33,8 @@ hyper.m <- list(
 )
 hyper.n <- list(
   name = "n",
-  label = "失敗状態の数 \\(n\\)",
+  label_name = "Number of black balls in the urn",
+  label_symbol = "n",
   min = 0,
   max = 100,
   value = 50,
@@ -40,7 +42,8 @@ hyper.n <- list(
 )
 hyper.k <- list(
   name = "k",
-  label = "取り出す数 \\(k\\)",
+  label_name = "Number of balls drawn from the urn",
+  label_symbol = "k",
   min = 0,
   max = 100,
   value = 50,

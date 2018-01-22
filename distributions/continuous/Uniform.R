@@ -26,7 +26,8 @@ unif.range <- list(
 )
 unif.min <- list(
   name = "min",
-  label = "min \\(a\\)",
+  label_name = "Min",
+  label_symbol = "a",
   min = -50,
   max = 50,
   value = 0,
@@ -34,7 +35,8 @@ unif.min <- list(
 )
 unif.max <- list(
   name = "max",
-  label = "max \\(b\\)",
+  label_name = "Max",
+  label_symbol = "b",
   min = -50,
   max = 50,
   value = 1,

@@ -26,7 +26,8 @@ cauchy.range <- list(
 )
 cauchy.location <- list(
   name = "location",
-  label = "位置 \\(x_0\\)",
+  label_name = "Location",
+  label_symbol = "x_0",
   min = -20,
   max = 20,
   value = 0,
@@ -34,7 +35,8 @@ cauchy.location <- list(
 )
 cauchy.scale <- list(
   name = "scale",
-  label = "尺度 \\(\\gamma\\)",
+  label_name = "Scale",
+  label_symbol = "\\gamma",
   min = 0,
   max = 20,
   value = 1,

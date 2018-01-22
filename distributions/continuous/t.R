@@ -30,7 +30,8 @@ t_dist.range <- list(
 )
 t_dist.df <- list(
   name = "df",
-  label = "自由度 \\(\\nu\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "\\nu",
   min = 1,
   max = 20,
   value = 1

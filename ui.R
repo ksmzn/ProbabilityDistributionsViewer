@@ -25,11 +25,7 @@ sidebar <- dashboardSidebar(
 )
 
 board.about <- tabItem(tabName = "about",
-  fluidRow(
-    column(12,
-      includeMarkdown("about.md")
-    )
-  )
+  uiOutput("about")
 )
 ####################################################
 # Tab Items for Distributions ----

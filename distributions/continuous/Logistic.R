@@ -23,7 +23,8 @@ logis.range <- list(
 )
 logis.location <- list(
   name = "location",
-  label = "位置 \\(\\mu\\)",
+  label_name = "Location",
+  label_symbol = "\\mu",
   min = -20,
   max = 20,
   value = 0,
@@ -31,7 +32,8 @@ logis.location <- list(
 )
 logis.scale <- list(
   name = "scale",
-  label = "尺度 \\(s\\)",
+  label_name = "Scale",
+  label_symbol = "s",
   min = 0,
   max = 20,
   value = 1,

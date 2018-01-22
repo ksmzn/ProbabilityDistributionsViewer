@@ -28,14 +28,16 @@ f.range <- list(
 )
 f.df1 <- list(
   name = "df1",
-  label = "自由度 \\(d_1\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "d_1",
   min = 1,
   max = 20,
   value = 1
 )
 f.df2 <- list(
   name = "df2",
-  label = "自由度 \\(d_2\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "d_2",
   min = 1,
   max = 20,
   value = 1

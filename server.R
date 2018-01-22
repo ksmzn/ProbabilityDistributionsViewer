@@ -22,6 +22,15 @@ server <- function(input, output) {
     )
   })
 
+  output$about <- renderUI({
+    fn <- paste0("markdown/", i18n()$t("about.md"))
+    fluidRow(
+      column(12,
+        includeMarkdown(fn)
+      )
+    )
+  })
+
   output$sidebar_menu <- renderMenu({
     sidebarMenu(
       menuItem(i18n()$t("Continuous distributions"), icon = icon("line-chart"),

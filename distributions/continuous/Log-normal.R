@@ -24,7 +24,8 @@ lnormal.range <- list(
 )
 lnormal.meanlog <- list(
   name = "meanlog",
-  label = "平均log",
+  label_name = "Mean Log",
+  label_symbol = "\\mu",
   min = -30,
   max = 30,
   value = 0,
@@ -32,7 +33,8 @@ lnormal.meanlog <- list(
 )
 lnormal.sdlog <- list(
   name = "sdlog",
-  label = "標準偏差log",
+  label_name = "Standard deviation Log",
+  label_symbol = "\\sigma",
   min = 0,
   max = 10,
   value = 1,

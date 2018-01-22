@@ -23,7 +23,8 @@ pois.range <- list(
 )
 pois.lambda <- list(
   name = "lambda",
-  label = "\\(\\lambda\\)",
+  label_name = "",
+  label_symbol = "\\lambda",
   min = 1,
   max = 20,
   value = 1,

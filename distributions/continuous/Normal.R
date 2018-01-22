@@ -20,14 +20,16 @@ norm.range <- list(
 )
 norm.meanParam <- list(
   name = "mean",
-  label = "平均 \\(\\mu\\)",
+  label_name = "Mean",
+  label_symbol = "\\mu",
   min = -50,
   max = 50,
   value = 0
 )
 norm.sd <- list(
   name = "sd",
-  label = "標準偏差 \\(\\sigma\\)",
+  label_name = "Standard deviation",
+  label_symbol = "\\sigma",
   min = 0,
   max = 10,
   value = 1,
@@ -41,9 +43,9 @@ norm <- Distribution$new(
   name = "Normal distribution",
   wiki = "https://en.wikipedia.org/wiki/Normal_distribution",
   c_or_d = "c",
-  formula = norm.formula,
   func_p = norm.func_p,
   func_c = norm.func_c,
+  formula = norm.formula,
   x_filter = norm.x_filter,
   mean = norm.mean,
   mean_str = norm.mean_str,

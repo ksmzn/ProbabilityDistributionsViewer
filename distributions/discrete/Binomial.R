@@ -23,7 +23,8 @@ binom.range <- list(
 )
 binom.size <- list(
   name = "size",
-  label = "試行回数 \\(n\\)",
+  label_name = "Number of trials",
+  label_symbol = "n",
   min = 0,
   max = 40,
   value = 10,
@@ -31,7 +32,8 @@ binom.size <- list(
 )
 binom.prob <- list(
   name = "prob",
-  label = "成功確率 \\(p\\)",
+  label_name = "Probability of successful trial",
+  label_symbol = "p",
   min = 0,
   max = 1,
   value = 0.5,

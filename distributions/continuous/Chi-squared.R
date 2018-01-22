@@ -29,7 +29,8 @@ chisq.range <- list(
 )
 chisq.df <- list(
   name = "df",
-  label = "自由度 \\(k\\)",
+  label_name = "Degrees of freedom",
+  label_symbol = "k",
   min = 1,
   max = 20,
   value = 1
