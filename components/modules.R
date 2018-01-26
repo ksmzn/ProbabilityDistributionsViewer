@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(purrr)
 
 # Functions
 source("components/functions.R")
@@ -72,7 +73,23 @@ distTab <- function(input, output, session, distribution, i18n) {
   # Parameter Box
   output$paramBox <- renderUI({
     ns <- session$ns
-    createParamBox(ns, c_or_d, d$range, d$params, i18n)
+
+    # Update initial values
+    if(!is.null(input$p_or_c)){
+      input_list <- reactiveValuesToList(input)
+      purrr::imap(input_list, ~ {
+        if(.y == "p_or_c"){
+          p_or_c <<- .x
+        } else if(.y == "range"){
+          d$range$value <- .x
+        } else if(.y %in% param_names) {
+          d$params[[.y]]$value <- .x
+        }
+      })
+    } else {
+      p_or_c <- "c"
+    }
+    createParamBox(ns, c_or_d, d$range, d$params, p_or_c, i18n)
   })
 
   # Mean

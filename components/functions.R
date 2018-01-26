@@ -66,7 +66,7 @@ createSlider <- function(name, label, min, max, value, step = 1L){
   )
 }
 ### Parameters Box
-createParamBox <- function(ns, c_or_d, rangeArgs, paramArgs = NULL, i18n = NULL){
+createParamBox <- function(ns, c_or_d, rangeArgs, paramArgs = NULL, p_or_c = NULL, i18n = NULL){
   # Selector
   choices <- c("p", "c")
   if(c_or_d == "c") {
@@ -76,7 +76,7 @@ createParamBox <- function(ns, c_or_d, rangeArgs, paramArgs = NULL, i18n = NULL)
   }
   cdf <- i18n()$t("Cumulative distribution function (CDF)")
   names(choices) <- c(pdf, cdf)
-  pcButton <- radioButtons(ns("p_or_c"), "", choices)
+  pcButton <- radioButtons(ns("p_or_c"), "", choices, p_or_c)
   
   # Range Slider
   rangeArgs$name <- ns("range")
