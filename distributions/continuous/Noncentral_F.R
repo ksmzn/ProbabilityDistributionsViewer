@@ -21,7 +21,7 @@ ncf.x_filter <- function(x, df1, df2, ncp) {
 
 ## Moments ----
 ncf.mean <- function(df1, df2, ncp) {
-  if(df2 <= 2){
+  if(is.null(df2) || df2 <= 2){
     value <- NULL
   } else {
     value <- (df2 * (df1 + ncp)) / (df1 * (df2 - 2))
@@ -31,7 +31,7 @@ ncf.mean <- function(df1, df2, ncp) {
 ncf.mean_str <- "\\frac{\\nu_2(\\nu_1 + \\lambda)}{\\nu_1(\\nu_2-2)}"
 
 ncf.variance <- function(df1, df2, ncp) {
-  if(df2 <= 4){
+  if(is.null(df2) || df2 <= 4){
     value <- NULL
   } else {
     value <-
