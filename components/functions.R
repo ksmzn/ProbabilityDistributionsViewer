@@ -89,11 +89,12 @@ createParamBox <- function(ns, c_or_d, rangeArgs, paramArgs = NULL, p_or_c = NUL
   } else {
     paramSliders <- lapply(paramArgs, function(x){
       x$name <- ns(x$name)
-      label_name <- i18n()$t(x$label_name)
+      label_name <- x$label_name
       label_symbol <- paste0("\\(", x$label_symbol, "\\)")
       if(is.na(label_name) || label_name == ''){
         x$label <- label_symbol
       } else {
+        label_name <- i18n()$t(label_name)
         x$label <- paste(label_name, label_symbol)
       }
       # Remove "label_name" and "label_symbol"
