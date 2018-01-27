@@ -1,6 +1,7 @@
 library(shiny)
+library(shinydashboard)
 
-server <- function(input, output) {
+server <- function(input, output, session) {
   ###########################################################################
   # UI
   ###########################################################################
@@ -10,6 +11,11 @@ server <- function(input, output) {
       translator$set_translation_language(selected)
     }
     translator
+  })
+
+  # Maintain Tab State
+  observeEvent(input$selected_language, {
+    updateTabItems(session, "tabs", input$tabs)
   })
 
   output$language_selector <- renderUI({
@@ -33,6 +39,7 @@ server <- function(input, output) {
 
   output$sidebar_menu <- renderMenu({
     sidebarMenu(
+      id = "tabs",
       menuItem(i18n()$t("Continuous distributions"), icon = icon("line-chart"),
         menuSubItem(i18n()$t("Normal distribution"), tabName = "norm"),
         menuSubItem(i18n()$t("Erlang distribution"), tabName = "erlang"),
