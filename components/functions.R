@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(htmltools)
 
 # Variables ----
 boxcolor <- "blue"
@@ -9,6 +10,28 @@ variance.icon <- icon("resize-horizontal", lib = "glyphicon")
 # Functions ----
 
 ## ui ----
+### Custom selectInput
+selectLanguageInput <- function (inputId, choices, selected = NULL, selectize = TRUE, width = NULL) {
+  selected <- shiny::restoreInput(id = inputId, default = selected)
+  choices <- shiny:::choicesWithNames(choices)
+  if (is.null(selected)) {
+    selected <- shiny:::firstChoice(choices)
+  } else{
+    selected <- as.character(selected)
+  }
+  selectTag <- htmltools::tags$select(
+    id = inputId,
+    shiny:::selectOptions(choices, selected)
+  )
+  res <- div(
+    class = "form-group shiny-input-container",
+    style = paste0("width: ", htmltools::validateCssUnit(width), ";"),
+    NULL, # For selectizeIt function.
+    div(selectTag)
+  )
+  shiny:::selectizeIt(inputId, res, NULL, nonempty = TRUE)
+}
+
 ### Panel for Distributions
 distPanel <- function(name, en) {
   if (missing(en)) {

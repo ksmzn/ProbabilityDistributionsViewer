@@ -29,7 +29,7 @@ distTabUI <- function(distEnv, wide = F){
   return(item)
 }
 
-distTab <- function(input, output, session, distribution, i18n) {
+distTab <- function(input, output, session, distribution, initParams, i18n) {
   # Set Up ----
   d <- distribution
   c_or_d <- d$c_or_d
@@ -72,24 +72,26 @@ distTab <- function(input, output, session, distribution, i18n) {
   # Parameter Box
   output$paramBox <- renderUI({
     ns <- session$ns
-    targets <- c(c("p_or_c", "range"), param_names)
 
-    # Update initial values
-    if(is.null(input$p_or_c)){
+    range_list <- d$range
+    params_list <- d$params
+    dist_name <- d$dist
+
+    # Handle initial values when language changes
+    params_kept <- initParams()
+    new_params <- params_kept[[dist_name]] # parameters before language changes
+
+    if(is.null(new_params)){
       p_or_c <- NULL
     } else {
-      for(x in targets){
-        res <- input[[x]]
-        if(x == "p_or_c"){
-          p_or_c <- res
-        } else  if(x == "range"){
-          d$range$value <- res
-        } else if(x %in% param_names) {
-          d$params[[x]]$value <- res
-        }
+      # Set as default values
+      p_or_c <- new_params$p_or_c
+      range_list$value <- new_params$range
+      for(x in param_names){
+        params_list[[x]]$value <- new_params[[x]]
       }
     }
-    createParamBox(ns, c_or_d, d$range, d$params, p_or_c, i18n)
+    createParamBox(ns, c_or_d, range_list, params_list, p_or_c, i18n)
   })
 
   # Mean
@@ -126,7 +128,7 @@ distTab <- function(input, output, session, distribution, i18n) {
   })
 }
 
-callDistributionModule <- function(distribution, i18n = NULL){
-  callModule(distTab, distribution$dist, distribution, i18n)
+callDistributionModule <- function(distribution, initParams, i18n = NULL){
+  callModule(distTab, distribution$dist, distribution, initParams, i18n)
 }
 
