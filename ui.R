@@ -16,7 +16,16 @@ jsFiles <- tags$head(
 header <- dashboardHeader(
   title = pageTitle,
   titleWidth = sidebarWidth,
-  uiOutput("language_selector")
+  .list = list(
+    tags$li(
+      class = "dropdown dummy",
+      bookmarkButton()
+    ),
+    tags$li(
+      class = "dropdown dummy",
+      uiOutput("language_selector")
+    )
+  )
 )
 
 sidebar <- dashboardSidebar(
@@ -90,4 +99,6 @@ body <- dashboardBody(
   )
 )
 
-ui <- dashboardPage(header, sidebar, body)
+ui <- function(req) {
+  dashboardPage(header, sidebar, body)
+}

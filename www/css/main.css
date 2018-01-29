@@ -1,12 +1,14 @@
-#language_selector {
-  padding: 7px 15px 0;
-}
-#language_selector label {
-  display: inline;
+.dummy {
+  padding: 7px 15px 0 0;
 }
 #language_selector > .form-group {
   margin-bottom: 0px;
 }
 #language_selector .selectize-control {
   margin-bottom: 0px;
+}
+
+.btn-twitter {
+  text-align: left;
+  float: left;
 }

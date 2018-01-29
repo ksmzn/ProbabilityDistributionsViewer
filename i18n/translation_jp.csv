@@ -1,5 +1,10 @@
 English,Japanese
 about.md,about_ja.md
+This link stores the current state of this application.,このURLはアプリの状態を保持したものです。
+Bookmarked application link,ブックマーク用リンク
+Dismiss,閉じる
+Press Ctrl-C to copy.,Ctrl-C を押してコピーできます。
+Press ⌘-C to copy.,⌘-C を押してコピーできます。
 mean,期待値
 Mean,期待値
 variance,分散
