@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(purrr)
 
 server <- function(input, output, session) {
   ###########################################################################
@@ -75,32 +76,19 @@ server <- function(input, output, session) {
   output$sidebar_menu <- renderMenu({
     sidebarMenu(
       id = "tabs",
-      menuItem(i18n()$t("Continuous distributions"), icon = icon("line-chart"),
-        menuSubItem(i18n()$t("Normal distribution"), tabName = "norm"),
-        menuSubItem(i18n()$t("Erlang distribution"), tabName = "erlang"),
-        menuSubItem(i18n()$t("F-distribution"), tabName = "f"),
-        menuSubItem(i18n()$t("Noncentral F-distribution"), tabName = "ncf"),
-        menuSubItem(i18n()$t("Chi-squared distribution"), tabName = "chisq"),
-        menuSubItem(i18n()$t("Noncentral chi-squared distribution"), tabName = "ncChisq"),
-        menuSubItem(i18n()$t("Gamma distribution"), tabName = "gamma"),
-        menuSubItem(i18n()$t("Cauchy distribution"), tabName = "cauchy"),
-        menuSubItem(i18n()$t("Exponential distribution"), tabName = "exp_dist"),
-        menuSubItem(i18n()$t("Log-normal distribution"), tabName = "lnormal"),
-        menuSubItem(i18n()$t("Student's t-distribution"), tabName = "t_dist"),
-        menuSubItem(i18n()$t("Noncentral t-distribution"), tabName = "nct"),
-        menuSubItem(i18n()$t("Beta distribution"), tabName = "beta"),
-        menuSubItem(i18n()$t("Noncentral beta distribution"), tabName = "ncbeta"),
-        menuSubItem(i18n()$t("Uniform distribution (continuous)"), tabName = "unif"),
-        menuSubItem(i18n()$t("Logistic distribution"), tabName = "logis"),
-        menuSubItem(i18n()$t("Weibull distribution"), tabName = "weibull")
+      menuItem(
+        i18n()$t("Continuous distributions"),
+        icon = icon("line-chart"),
+        purrr::map(continuous_distributions, ~ {
+          menuSubItem(i18n()$t(.x$name), tabName = .x$dist)
+        })
       ),
-      menuItem(i18n()$t("Discrete distributions"), icon = icon("bar-chart-o"),
-        menuSubItem(i18n()$t("Geometric distribution"), tabName = "geom"),
-        menuSubItem(i18n()$t("Hypergeometric distribution"), tabName = "hyper"),
-        menuSubItem(i18n()$t("Binomial distribution"), tabName = "binom"),
-        menuSubItem(i18n()$t("Negative binomial distribution"), tabName = "nbinom"),
-        menuSubItem(i18n()$t("Poisson distribution"), tabName = "pois"),
-        menuSubItem(i18n()$t("Discrete uniform distribution"), tabName = "dunif")
+      menuItem(
+        i18n()$t("Discrete distributions"),
+        icon = icon("bar-chart-o"),
+        purrr::map(discrete_distributions, ~ {
+          menuSubItem(i18n()$t(.x$name), tabName = .x$dist)
+        })
       ),
       menuItem("About", icon = icon("info"),
         tabName = "about"

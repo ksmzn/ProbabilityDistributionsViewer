@@ -104,9 +104,9 @@ source_this("discrete/Negative_binomial.R")
 source_this("discrete/Poisson.R")
 source_this("discrete/Discrete_uniform.R")
 
-# All List
-distributions <- list(
-  # Continuous
+# Distribituons List ----
+# Continuous
+continuous_distributions <- list(
   norm,
   erlang,
   f,
@@ -123,8 +123,10 @@ distributions <- list(
   ncbeta,
   unif,
   logis,
-  weibull,
-  # Discrete
+  weibull 
+)
+# Discrete
+discrete_distributions <- list(
   geom,
   hyper,
   binom,
@@ -133,5 +135,12 @@ distributions <- list(
   dunif
 )
 
-dist_names <- purrr::map_chr(distributions, ~ .x$dist)
-names(distributions) <- dist_names
+add_names <- function(x){
+  names(x) <- purrr::map_chr(x, ~ .x$dist)
+  return(x)
+}
+continuous_distributions <- add_names(continuous_distributions)
+discrete_distributions <- add_names(discrete_distributions)
+
+# All Distribituons
+distributions <- c(continuous_distributions, discrete_distributions)
