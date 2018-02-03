@@ -1,7 +1,7 @@
 # ロジスティック分布 ----
 ## Functions ----
-logis.func_p <- function(location, scale) function(x) dlogis(x, location=location, scale=scale)
-logis.func_c <- function(location, scale) function(x) plogis(x, location=location, scale=scale)
+logis.func_p <- function(location, scale) function(x) dlogis(x, location = location, scale = scale)
+logis.func_c <- function(location, scale) function(x) plogis(x, location = location, scale = scale)
 logis.formula <- "
 f(x;\\mu,s) = \\frac{\\exp(-\\frac{x-\\mu}{s})}{s(1+\\exp(-\\frac{x-\\mu}{s}))^2}
 "
@@ -12,14 +12,14 @@ logis.x_filter <- NULL
 logis.mean <- function(location, scale) location
 logis.mean_str <- "\\mu"
 logis.variance <- function(location, scale) ((scale * pi) ** 2) / 3
-logis.variance_str <-  "\\frac{\\pi^2}{3} s^2"
+logis.variance_str <- "\\frac{\\pi^2}{3} s^2"
 
 ## Parameters ----
 logis.range <- list(
   min = -100,
   max = 100,
   value = c(-10, 10),
-  step= 0.5
+  step = 0.5
 )
 logis.location <- list(
   name = "location",
@@ -28,7 +28,7 @@ logis.location <- list(
   min = -20,
   max = 20,
   value = 0,
-  step= 0.1
+  step = 0.1
 )
 logis.scale <- list(
   name = "scale",

@@ -1,7 +1,7 @@
 # 指数分布 ----
 ## Functions ----
-exp_dist.func_p <- function(rate) function(x) dexp(x, rate=rate)
-exp_dist.func_c <- function(rate) function(x) pexp(x, rate=rate)
+exp_dist.func_p <- function(rate) function(x) dexp(x, rate = rate)
+exp_dist.func_c <- function(rate) function(x) pexp(x, rate = rate)
 exp_dist.formula <- "
 f(x; \\lambda) = \\left\\{
   \\begin{array}{ll}
@@ -23,7 +23,7 @@ exp_dist.range <- list(
   min = -10,
   max = 50,
   value = c(0, 5),
-  step= 1
+  step = 1
 )
 exp_dist.rate <- list(
   name = "rate",

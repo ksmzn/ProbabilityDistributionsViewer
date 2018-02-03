@@ -1,17 +1,17 @@
 # ベータ分布 ----
 ## functions ----
-beta.func_p <- function(shape1, shape2) function(x) dbeta(x, shape1=shape1, shape2=shape2, ncp=0L)
-beta.func_c <- function(shape1, shape2) function(x) pbeta(x, shape1=shape1, shape2=shape2, ncp=0L)
+beta.func_p <- function(shape1, shape2) function(x) dbeta(x, shape1 = shape1, shape2 = shape2, ncp = 0L)
+beta.func_c <- function(shape1, shape2) function(x) pbeta(x, shape1 = shape1, shape2 = shape2, ncp = 0L)
 beta.formula <- "
 f(x)=\\frac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}
 "
 
 beta.x_filter <- function(x, shape1, shape2) {
   if (shape1 < 1) {
-    x <- x[x!=0]
+    x <- x[x != 0]
   }
   if (shape2 < 1) {
-    x <- x[x!=1]
+    x <- x[x != 1]
   }
   return(x)
 }
@@ -22,7 +22,7 @@ beta.mean_str <- "\\frac{\\alpha}{\\alpha+\\beta}"
 beta.variance <- function(shape1, shape2) {
   (shape1 * shape2) /
     (((shape1 + shape2) ** 2) *
-    (shape1 + shape1 + 1))
+      (shape1 + shape1 + 1))
 }
 beta.variance_str <- "\\frac{\\alpha\\beta}{(\\alpha+\\beta)^2 (\\alpha+\\beta+1)}"
 
@@ -31,7 +31,7 @@ beta.range <- list(
   min = 0,
   max = 1,
   value = c(0, 1),
-  step= 0.01
+  step = 0.01
 )
 beta.shape1 <- list(
   name = "shape1",

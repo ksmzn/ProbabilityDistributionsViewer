@@ -1,7 +1,7 @@
 # ワイブル分布 ----
 ## Functions ----
-weibull.func_p <- function(shape, scale) function(x) dweibull(x, shape=shape, scale=scale)
-weibull.func_c <- function(shape, scale) function(x) pweibull(x, shape=shape, scale=scale)
+weibull.func_p <- function(shape, scale) function(x) dweibull(x, shape = shape, scale = scale)
+weibull.func_c <- function(shape, scale) function(x) pweibull(x, shape = shape, scale = scale)
 weibull.formula <- "
 f(t)=\\frac{m}{\\eta}\\left(\\frac{t}{\\eta}\\right)^{m-1}
 \\exp \\left\\{-\\left(\\frac{t}{\\eta}\\right)^m\\right\\}
@@ -9,7 +9,7 @@ f(t)=\\frac{m}{\\eta}\\left(\\frac{t}{\\eta}\\right)^{m-1}
 
 weibull.x_filter <- function(x, shape, scale) {
   if (shape < 1) {
-    x <- x[x!=0]
+    x <- x[x != 0]
   }
   return(x)
 }
@@ -27,7 +27,7 @@ weibull.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 0.5
+  step = 0.5
 )
 weibull.shape <- list(
   name = "shape",

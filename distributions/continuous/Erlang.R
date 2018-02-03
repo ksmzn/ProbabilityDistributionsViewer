@@ -1,7 +1,7 @@
 # アーラン分布 ----
 ## Functions ----
-erlang.func_p <- function(shape, scale) function(x) dgamma(x, shape=shape, scale=scale)
-erlang.func_c <- function(shape, scale) function(x) pgamma(x, shape=shape, scale=scale)
+erlang.func_p <- function(shape, scale) function(x) dgamma(x, shape = shape, scale = scale)
+erlang.func_c <- function(shape, scale) function(x) pgamma(x, shape = shape, scale = scale)
 erlang.formula <- "f(x; k, \\theta)=\\frac{x^{k-1}e^{-x/\\theta}}{\\theta^{k}(k-1)!} \\quad\\mbox{for }x,\\theta > 0"
 
 erlang.x_filter <- NULL
@@ -17,7 +17,7 @@ erlang.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 0.5
+  step = 0.5
 )
 erlang.shape <- list(
   name = "shape",

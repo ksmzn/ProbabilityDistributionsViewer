@@ -1,7 +1,7 @@
 # 対数正規分布 ----
 ## Functions ----
-lnormal.func_p <- function(meanlog, sdlog) function(x) dlnorm(x, meanlog=meanlog, sdlog=sdlog)
-lnormal.func_c <- function(meanlog, sdlog) function(x) plnorm(x, meanlog=meanlog, sdlog=sdlog)
+lnormal.func_p <- function(meanlog, sdlog) function(x) dlnorm(x, meanlog = meanlog, sdlog = sdlog)
+lnormal.func_c <- function(meanlog, sdlog) function(x) plnorm(x, meanlog = meanlog, sdlog = sdlog)
 lnormal.formula <- "
 f(x) = \\frac{1}{\\sqrt{2\\pi} \\sigma x} e^{-\\frac{ (\\ln{x}-\\mu)^2}{2\\sigma^2} },
   \\quad 0<x< \\infty
@@ -20,7 +20,7 @@ lnormal.range <- list(
   min = 0,
   max = 200,
   value = c(0, 20),
-  step= 0.5
+  step = 0.5
 )
 lnormal.meanlog <- list(
   name = "meanlog",
@@ -29,7 +29,7 @@ lnormal.meanlog <- list(
   min = -30,
   max = 30,
   value = 0,
-  step= 0.05
+  step = 0.05
 )
 lnormal.sdlog <- list(
   name = "sdlog",

@@ -19,21 +19,20 @@ Distribution <- R6Class(
     range = NULL,
     params = NULL,
     initialize = function(
-      dist = NA,
-      name = NA,
-      wiki = NA,
-      c_or_d = NA,
-      func_p = NA,
-      func_c = NA,
-      formula = NA,
-      x_filter = NA,
-      mean = NA,
-      mean_str = NA,
-      variance = NA,
-      variance_str = NA,
-      range = NA,
-      ...
-    ) {
+                          dist = NA,
+                          name = NA,
+                          wiki = NA,
+                          c_or_d = NA,
+                          func_p = NA,
+                          func_c = NA,
+                          formula = NA,
+                          x_filter = NA,
+                          mean = NA,
+                          mean_str = NA,
+                          variance = NA,
+                          variance_str = NA,
+                          range = NA,
+                          ...) {
       self$dist <- dist
       self$name <- name
       self$wiki <- wiki
@@ -50,15 +49,15 @@ Distribution <- R6Class(
     }
   ),
   private = list(
-    set_x_filter = function(x_filter){
-      if(is.null(x_filter)){
+    set_x_filter = function(x_filter) {
+      if (is.null(x_filter)) {
         x_filter <- function(x, ...) x
       }
       self$x_filter <- x_filter
     },
-    set_func = function(func_p, func_c){
-      self$func <- function(p_or_c){
-        if(p_or_c == "p"){
+    set_func = function(func_p, func_c) {
+      self$func <- function(p_or_c) {
+        if (p_or_c == "p") {
           return(func_p)
         } else {
           return(func_c)
@@ -73,7 +72,7 @@ Distribution <- R6Class(
   )
 )
 
-source_this <- function(path){
+source_this <- function(path) {
   source(file.path("./distributions", path))
 }
 
@@ -123,7 +122,7 @@ continuous_distributions <- list(
   ncbeta,
   unif,
   logis,
-  weibull 
+  weibull
 )
 # Discrete
 discrete_distributions <- list(
@@ -135,7 +134,7 @@ discrete_distributions <- list(
   dunif
 )
 
-add_names <- function(x){
+add_names <- function(x) {
   names(x) <- purrr::map_chr(x, ~ .x$dist)
   return(x)
 }

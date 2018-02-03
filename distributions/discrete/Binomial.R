@@ -1,7 +1,7 @@
 # 二項分布 ----
 ## Functions ----
-binom.func_p <- function(size, prob) function(x) dbinom(x, size=size, prob=prob)
-binom.func_c <- function(size, prob) function(x) pbinom(x, size=size, prob=prob)
+binom.func_p <- function(size, prob) function(x) dbinom(x, size = size, prob = prob)
+binom.func_c <- function(size, prob) function(x) pbinom(x, size = size, prob = prob)
 binom.formula <- "
 P[X=k]={n\\choose k}p^k(1-p)^{n-k}\\quad\\mbox{for}\\ k=0,1,2,\\dots,n
 "
@@ -19,7 +19,7 @@ binom.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 1
+  step = 1
 )
 binom.size <- list(
   name = "size",

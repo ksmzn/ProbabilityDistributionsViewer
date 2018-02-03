@@ -1,7 +1,7 @@
 # 離散一様分布
 ## functions ----
-dunif.func_p <- function(min, max) function(x) dunif(x, min=min, max=max)
-dunif.func_c <- function(min, max) function(x) punif(x, min=min, max=max)
+dunif.func_p <- function(min, max) function(x) dunif(x, min = min, max = max)
+dunif.func_c <- function(min, max) function(x) punif(x, min = min, max = max)
 dunif.formula <- "
 f(x)=\\begin{cases}
 \\frac{1}{n} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
@@ -22,7 +22,7 @@ dunif.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 1
+  step = 1
 )
 dunif.min <- list(
   name = "min",

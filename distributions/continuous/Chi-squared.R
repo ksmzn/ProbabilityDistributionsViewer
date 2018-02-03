@@ -1,7 +1,7 @@
 # カイ二乗分布
 ## Functions ----
-chisq.func_p <- function(df) function(x) dchisq(x, df=df, ncp=0L)
-chisq.func_c <- function(df) function(x) pchisq(x, df=df, ncp=0L)
+chisq.func_p <- function(df) function(x) dchisq(x, df = df, ncp = 0L)
+chisq.func_c <- function(df) function(x) pchisq(x, df = df, ncp = 0L)
 chisq.formula <- "
   f(x;k)=\\frac{(1/2)^{k/2}}{\\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}
   \\ \\ \\ \\ \\mathrm{for\\ } x > 0
@@ -9,7 +9,7 @@ chisq.formula <- "
 
 chisq.x_filter <- function(x, df) {
   if (df == 1) {
-    x <- x[x!=0]
+    x <- x[x != 0]
   }
   return(x)
 }
@@ -25,7 +25,7 @@ chisq.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 0.5
+  step = 0.5
 )
 chisq.df <- list(
   name = "df",

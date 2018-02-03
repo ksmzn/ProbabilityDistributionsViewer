@@ -1,7 +1,7 @@
 # ポアソン分布 ----
 ## Functions ----
-pois.func_p <- function(lambda) function(x) dpois(x, lambda=lambda)
-pois.func_c <- function(lambda) function(x) ppois(x, lambda=lambda)
+pois.func_p <- function(lambda) function(x) dpois(x, lambda = lambda)
+pois.func_c <- function(lambda) function(x) ppois(x, lambda = lambda)
 pois.formula <- "
 P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}
 "
@@ -19,7 +19,7 @@ pois.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 1
+  step = 1
 )
 pois.lambda <- list(
   name = "lambda",

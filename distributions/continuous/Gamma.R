@@ -1,14 +1,14 @@
 # ガンマ分布 ----
 ## Functions ----
-gamma.func_p <- function(shape, scale) function(x) dgamma(x, shape=shape, scale=scale)
-gamma.func_c <- function(shape, scale) function(x) pgamma(x, shape=shape, scale=scale)
+gamma.func_p <- function(shape, scale) function(x) dgamma(x, shape = shape, scale = scale)
+gamma.func_c <- function(shape, scale) function(x) pgamma(x, shape = shape, scale = scale)
 gamma.formula <- "f(x) = x^{k-1} \\frac{e^{-x/\\theta}}{\\Gamma(k)\\,\\theta^k}
         \\ \\ \\ \\ \\mathrm{for\\ } x > 0
 "
 
 gamma.x_filter <- function(x, shape, scale) {
   if (shape < 1) {
-    x <- x[x!=0]
+    x <- x[x != 0]
   }
   return(x)
 }
@@ -24,7 +24,7 @@ gamma.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 0.5
+  step = 0.5
 )
 gamma.shape <- list(
   name = "shape",

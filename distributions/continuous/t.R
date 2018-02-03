@@ -1,7 +1,7 @@
 # t分布 ----
 ## Functions ----
-t_dist.func_p <- function(df) function(x) dt(x, df=df, ncp=0L)
-t_dist.func_c <- function(df) function(x) pt(x, df=df, ncp=0L)
+t_dist.func_p <- function(df) function(x) dt(x, df = df, ncp = 0L)
+t_dist.func_c <- function(df) function(x) pt(x, df = df, ncp = 0L)
 t_dist.formula <- "
 f(x) = \\frac{\\Gamma((\\nu+1)/2)}{\\sqrt{\\nu\\pi\\,}\\,
   \\Gamma(\\nu/2)} (1+x^2/\\nu)^{-(\\nu+1)/2}
@@ -13,7 +13,7 @@ t_dist.x_filter <- NULL
 t_dist.mean <- function(df) 0L
 t_dist.mean_str <- "e^{\\mu+\\sigma^2/2}"
 t_dist.variance <- function(df) {
-  if (df <= 2){
+  if (df <= 2) {
     return(Inf)
   } else {
     return(df / (df - 2))
@@ -26,7 +26,7 @@ t_dist.range <- list(
   min = -100,
   max = 100,
   value = c(-10, 10),
-  step= 0.5
+  step = 0.5
 )
 t_dist.df <- list(
   name = "df",

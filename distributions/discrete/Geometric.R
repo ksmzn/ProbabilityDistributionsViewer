@@ -1,7 +1,7 @@
 # 幾何分布 ----
 ## Functions ----
-geom.func_p <- function(prob) function(x) dgeom(x, prob=prob)
-geom.func_c <- function(prob) function(x) pgeom(x, prob=prob)
+geom.func_p <- function(prob) function(x) dgeom(x, prob = prob)
+geom.func_c <- function(prob) function(x) pgeom(x, prob = prob)
 geom.formula <- "
 Pr(X = k) = p(1-p)^{k}
 "
@@ -19,7 +19,7 @@ geom.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 1
+  step = 1
 )
 geom.prob <- list(
   name = "prob",
