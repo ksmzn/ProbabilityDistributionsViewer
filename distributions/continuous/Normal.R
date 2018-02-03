@@ -1,7 +1,7 @@
 # 正規分布 ----
 ## Functions ----
-norm.func_p <- function(mean, sd) function(x) dnorm(x, mean=mean, sd=sd)
-norm.func_c <- function(mean, sd) function(x) pnorm(x, mean=mean, sd=sd)
+norm.func_p <- function(mean, sd) function(x) dnorm(x, mean = mean, sd = sd)
+norm.func_c <- function(mean, sd) function(x) pnorm(x, mean = mean, sd = sd)
 norm.formula <- "f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^{2}}}\\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)"
 
 norm.x_filter <- NULL

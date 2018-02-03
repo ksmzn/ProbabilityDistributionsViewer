@@ -8,11 +8,11 @@ APP_PARAMS <- "selected_language"
 SHINYDASHBOARD_PARAMS <- "tabs"
 
 # Buttons
-createTwitterButton <- function(share_text, share_url){
+createTwitterButton <- function(share_text, share_url) {
   tags$button(
-      type = "button",
-      class = "btn btn-default btn-twitter", 
-      onClick = stringr::str_interp("
+    type = "button",
+    class = "btn btn-default btn-twitter",
+    onClick = stringr::str_interp("
         (function(){
           var share_url = encodeURIComponent('${share_url}');
           var url = 'http://twitter.com/intent/tweet?text=${share_text}&url=' + share_url + '&via=ksmzn&hashtags=rshiny'
@@ -23,13 +23,13 @@ createTwitterButton <- function(share_text, share_url){
           return false;
         })();
       "),
-      icon("twitter"), "Share"
-    )
+    icon("twitter"), "Share"
+  )
 }
 
 # Arrange Bookmark URL
-filterQueryParams <- function(url, input){
-  # Distribution which is currently selected 
+filterQueryParams <- function(url, input) {
+  # Distribution which is currently selected
   dist_name <- input$tabs
   # Required Parameters
   bookmark_params <- c(APP_PARAMS, SHINYDASHBOARD_PARAMS, str_c(dist_name, "-"))
@@ -37,30 +37,33 @@ filterQueryParams <- function(url, input){
   base_url <- stringr::str_split_fixed(url, "&", n = 2)[[1]]
   # Create URL query from input list
   url_filtered <- purrr::imap(input, ~ {
-      val <- .x
-      if(class(val)=="character")
-        val <- stringr::str_c("\"", val, "\"")
-      if(class(val)=="logical")
-        val <- stringr::str_to_lower(val)
-      if(length(val)==2) # Range
-        val <- stringr::str_c("[", stringr::str_c(val, collapse = ","), "]")
-      val <- ifelse(
-        is.null(val),
-        "null", # Convert NULL to character
-        URLencode(as.character(val), reserved = TRUE)
-      )
-      nm <- URLencode(as.character(.y))
-      param_str <- stringr::str_c(nm, val, sep = "=")
-      return(param_str)
-    }) %>% 
+    val <- .x
+    if (class(val) == "character") {
+      val <- stringr::str_c("\"", val, "\"")
+    }
+    if (class(val) == "logical") {
+      val <- stringr::str_to_lower(val)
+    }
+    if (length(val) == 2) { # Range
+      val <- stringr::str_c("[", stringr::str_c(val, collapse = ","), "]")
+    }
+    val <- ifelse(
+      is.null(val),
+      "null", # Convert NULL to character
+      URLencode(as.character(val), reserved = TRUE)
+    )
+    nm <- URLencode(as.character(.y))
+    param_str <- stringr::str_c(nm, val, sep = "=")
+    return(param_str)
+  }) %>%
     # Filter Parameters
-    purrr::keep( ~ {
+    purrr::keep(~ {
       stringr::str_detect(
         .x,
         stringr::str_c("^", bookmark_params, collapse = "|")
       )
-    }) %>% 
-    stringr::str_c(collapse = "&") %>% 
+    }) %>%
+    stringr::str_c(collapse = "&") %>%
     stringr::str_c(base_url, ., sep = "&")
   return(url_filtered)
 }
@@ -69,15 +72,17 @@ filterQueryParams <- function(url, input){
 urlBookmarkModal <- function(url, title, subtitle = NULL, dismiss_label = "Dismiss", copy_text = "Press Ctrl-C to copy.", copy_text_mac = "Press ⌘-C to copy.", share_text = "Probability Distributions Viewer") {
   subtitleTag <- tagList(
     br(),
-    span(class = "text-muted",
-         subtitle),
+    span(
+      class = "text-muted",
+      subtitle
+    ),
     span(id = "shiny-bookmark-copy-text", class = "text-muted")
   )
 
   # Buttons
   dismissButton <- modalButton(dismiss_label)
 
-  share_url <- str_c("http://twitter.com/intent/tweet?text=", share_text, "&url=", url, "&via=ksmzn&hashtags=rshiny") 
+  share_url <- str_c("http://twitter.com/intent/tweet?text=", share_text, "&url=", url, "&via=ksmzn&hashtags=rshiny")
   twitterButton <- createTwitterButton(share_text = share_text, share_url = url)
   modalDialog(
     title = title,
@@ -118,7 +123,7 @@ urlBookmarkModal <- function(url, title, subtitle = NULL, dismiss_label = "Dismi
 
 # Show custom modal
 showBookmarkModal <- function(input, i18n) {
-  f <- function (url){
+  f <- function(url) {
     url <- filterQueryParams(url, reactiveValuesToList(input))
 
     # Translate characters
@@ -130,7 +135,7 @@ showBookmarkModal <- function(input, i18n) {
 
     # Share text
     tabs <- input$tabs
-    page_title <- switch (tabs,
+    page_title <- switch(tabs,
       about = "About",
       i18n()$t(distributions[[tabs]]$name)
     )

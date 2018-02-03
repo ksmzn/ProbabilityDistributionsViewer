@@ -1,7 +1,7 @@
 # 超幾何分布 ----
 ## Functions ----
-hyper.func_p <- function(m, n, k) function(x) dhyper(x, m=m, n=n, k=k)
-hyper.func_c <- function(m, n, k) function(x) phyper(x, m=m, n=n, k=k)
+hyper.func_p <- function(m, n, k) function(x) dhyper(x, m = m, n = n, k = k)
+hyper.func_c <- function(m, n, k) function(x) phyper(x, m = m, n = n, k = k)
 hyper.formula <- "
 \\operatorname{P}(X=x)
 = \\frac{\\binom{m}{x}\\binom{n}{k-x}}{\\binom{m+n}{k}}
@@ -20,7 +20,7 @@ hyper.range <- list(
   min = 0,
   max = 100,
   value = c(0, 50),
-  step= 1
+  step = 1
 )
 hyper.m <- list(
   name = "m",

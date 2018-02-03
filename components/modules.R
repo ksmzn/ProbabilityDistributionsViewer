@@ -5,8 +5,8 @@ library(shinydashboard)
 source("components/functions.R")
 
 # Module ----
-distTabUI <- function(distEnv, wide = F){
-  if(wide){
+distTabUI <- function(distEnv, wide = F) {
+  if (wide) {
     boxRow <- valueBoxRowWide
   } else {
     boxRow <- valueBoxRow
@@ -15,7 +15,8 @@ distTabUI <- function(distEnv, wide = F){
   c_or_d <- distEnv[["c_or_d"]]
   ns <- NS(dist)
 
-  item <- tabItem(tabName = dist,
+  item <- tabItem(
+    tabName = dist,
     fluidRow(
       uiOutput(ns("distBox")),
       uiOutput(ns("formulaBox"))
@@ -37,7 +38,7 @@ distTab <- function(input, output, session, distribution, initParams, i18n) {
   # Parameters
   param_names <- names(d$params)
   params <- reactive({
-    li <- lapply(param_names, function(x){
+    li <- lapply(param_names, function(x) {
       # `input` is not allowed bracket indexing.
       eval(parse(text = paste0("input$", x)))
     })
@@ -49,9 +50,9 @@ distTab <- function(input, output, session, distribution, initParams, i18n) {
   func_base <- reactive(d$func(input$p_or_c))
   func <- reactive(do.call(func_base(), params()))
 
-  # X axis 
-  if(c_or_d == "c"){
-    seq_func <- function(min, max) seq(min, max, length=1000)
+  # X axis
+  if (c_or_d == "c") {
+    seq_func <- function(min, max) seq(min, max, length = 1000)
     plot_type <- "line"
   } else {
     seq_func <- function(min, max) seq(min, max)
@@ -81,13 +82,13 @@ distTab <- function(input, output, session, distribution, initParams, i18n) {
     params_kept <- initParams()
     new_params <- params_kept[[dist_name]] # parameters before language changes
 
-    if(is.null(new_params)){
+    if (is.null(new_params)) {
       p_or_c <- NULL
     } else {
       # Set as default values
       p_or_c <- new_params$p_or_c
       range_list$value <- new_params$range
-      for(x in param_names){
+      for (x in param_names) {
         params_list[[x]]$value <- new_params[[x]]
       }
     }
@@ -128,7 +129,6 @@ distTab <- function(input, output, session, distribution, initParams, i18n) {
   })
 }
 
-callDistributionModule <- function(distribution, initParams, i18n = NULL){
+callDistributionModule <- function(distribution, initParams, i18n = NULL) {
   callModule(distTab, distribution$dist, distribution, initParams, i18n)
 }
-

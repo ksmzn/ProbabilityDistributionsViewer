@@ -1,7 +1,7 @@
 # 一様分布 ----
 ## functions ----
-unif.func_p <- function(min, max) function(x) dunif(x, min=min, max=max)
-unif.func_c <- function(min, max) function(x) punif(x, min=min, max=max)
+unif.func_p <- function(min, max) function(x) dunif(x, min = min, max = max)
+unif.func_c <- function(min, max) function(x) punif(x, min = min, max = max)
 unif.formula <- "
 f(x)=\\begin{cases}
 \\frac{1}{b - a} & \\mathrm{for}\\ a \\le x \\le b, \\\\[8pt]
@@ -22,7 +22,7 @@ unif.range <- list(
   min = -50,
   max = 50,
   value = c(0, 1),
-  step= 0.5
+  step = 0.5
 )
 unif.min <- list(
   name = "min",

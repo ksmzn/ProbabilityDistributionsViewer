@@ -1,7 +1,7 @@
 # コーシー分布
 ## Functions ----
-cauchy.func_p <- function(location, scale) function(x) dcauchy(x, location=location, scale=scale)
-cauchy.func_c <- function(location, scale) function(x) pcauchy(x, location=location, scale=scale)
+cauchy.func_p <- function(location, scale) function(x) dcauchy(x, location = location, scale = scale)
+cauchy.func_c <- function(location, scale) function(x) pcauchy(x, location = location, scale = scale)
 cauchy.formula <- "
 \\begin{align}
   f(x; x_0,\\gamma) &=
@@ -22,7 +22,7 @@ cauchy.range <- list(
   min = -100,
   max = 100,
   value = c(-10, 10),
-  step= 0.5
+  step = 0.5
 )
 cauchy.location <- list(
   name = "location",
@@ -31,7 +31,7 @@ cauchy.location <- list(
   min = -20,
   max = 20,
   value = 0,
-  step= 0.1
+  step = 0.1
 )
 cauchy.scale <- list(
   name = "scale",

@@ -2,12 +2,14 @@ library(shiny)
 
 # To be called from ui.R
 nvd3ChartOutput <- function(inputId, type, width="100%", height="400px") {
-  style <- sprintf("width: %s; height: %s;",
-    validateCssUnit(width), validateCssUnit(height))
-  if (type == 'line') {
-    class <- 'nvd3-linechart'
+  style <- sprintf(
+    "width: %s; height: %s;",
+    validateCssUnit(width), validateCssUnit(height)
+  )
+  if (type == "line") {
+    class <- "nvd3-linechart"
   } else {
-    class <- 'nvd3-scatterchart'
+    class <- "nvd3-scatterchart"
   }
 
   tagList(
@@ -15,13 +17,14 @@ nvd3ChartOutput <- function(inputId, type, width="100%", height="400px") {
     # if multiple lineChartOutputs are used in the same page, we'll still
     # only include these chunks once.
     singleton(tags$head(
-      tags$script(src="js/d3/d3.v3.min.js"),
-      tags$script(src="js/nvd3/nv.d3.min.js"),
-      tags$link(rel="stylesheet", type="text/css", href="js/nvd3/nv.d3.min.css"),
-      tags$script(src="js/linechart-binding.js"),
-      tags$script(src="js/scatterchart-binding.js")
+      tags$script(src = "js/d3/d3.v3.min.js"),
+      tags$script(src = "js/nvd3/nv.d3.min.js"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "js/nvd3/nv.d3.min.css"),
+      tags$script(src = "js/linechart-binding.js"),
+      tags$script(src = "js/scatterchart-binding.js")
     )),
-    div(id=inputId, class=class, style=style,
+    div(
+      id = inputId, class = class, style = style,
       tag("svg", list())
     )
   )
@@ -37,25 +40,24 @@ renderNvd3Chart <- function(expr, env=parent.frame(), quoted=FALSE) {
   function() {
     dataframe <- func()
     mapply(function(name) {
-        values <- mapply(function(i, j) {
-          list(x = i, y = j)
-        }, dataframe$x, dataframe$y, SIMPLIFY=FALSE, USE.NAMES=FALSE)
-        list(key = name, values = values)
-      },c("y"), SIMPLIFY=FALSE, USE.NAMES=FALSE
-    )
+      values <- mapply(function(i, j) {
+        list(x = i, y = j)
+      }, dataframe$x, dataframe$y, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+      list(key = name, values = values)
+    }, c("y"), SIMPLIFY = FALSE, USE.NAMES = FALSE)
   }
 }
 
 
 # Data frame or list looks like:
-# 
+#
 # {
 #   "Series A": [1,2,3,4,5],
 #   "Series B": [6,7,8,9,10]
 # }
-# 
+#
 # D3 expects:
-# 
+#
 # [
 #   {
 #     key: "Series A",

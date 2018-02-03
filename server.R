@@ -22,13 +22,13 @@ server <- function(input, output, session) {
   # Reproduce parameters when language changes
   initParams <- eventReactive(input$selected_language, {
     dist_opened <- input$tabs
-    if(!(dist_opened %in% dist_names)){
+    if (!(dist_opened %in% dist_names)) {
       return(NULL)
     }
     ns <- NS(dist_opened)
 
     # App is prepairing
-    if(is.null(input[[ns("p_or_c")]])){
+    if (is.null(input[[ns("p_or_c")]])) {
       return(NULL)
     }
 
@@ -60,7 +60,7 @@ server <- function(input, output, session) {
   ###########################################################################
   output$language_selector <- renderUI({
     selectLanguageInput(
-      inputId = 'selected_language',
+      inputId = "selected_language",
       choices = i18n()$languages,
       selected = input$selected_language,
       width = "100px"
@@ -70,7 +70,8 @@ server <- function(input, output, session) {
   output$about <- renderUI({
     fn <- paste0("markdown/", i18n()$t("about.md"))
     fluidRow(
-      column(12,
+      column(
+        12,
         includeMarkdown(fn)
       )
     )
@@ -93,42 +94,48 @@ server <- function(input, output, session) {
           menuSubItem(i18n()$t(.x$name), tabName = .x$dist)
         })
       ),
-      menuItem("About", icon = icon("info"),
+      menuItem(
+        "About", icon = icon("info"),
         tabName = "about"
       ),
-      menuItem("Source code", icon = icon("github"),
+      menuItem(
+        "Source code", icon = icon("github"),
         href = "http://github.com/ksmzn/ShinyDistributionsApp"
       ),
       tags$li(
-        a(href = paste0("http://twitter.com/intent/tweet?text=", i18n()$t("Probability Distributions Viewer"), "&url=http://statdist.ksmzn.com/&via=ksmzn&hashtags=rshiny"),
+        a(
+          href = paste0("http://twitter.com/intent/tweet?text=", i18n()$t("Probability Distributions Viewer"), "&url=http://statdist.ksmzn.com/&via=ksmzn&hashtags=rshiny"),
           target = "_blank",
           icon("twitter"),
           onClick = "window.open(encodeURI(decodeURI(this.href)),
             'tweetwindow',
             'width=550, height=450, personalbar=0, toolbar=0, scrollbars=1, resizable=1'
             ); return false;",
-          span('Tweet'),
+          span("Tweet"),
           tags$small(
             class = "badge pull-right bg-light-blue",
-            'Share'
+            "Share"
           )
         )
       ),
       tags$li(
-        a(href = paste0("http://www.facebook.com/sharer.php?u=http://statdist.ksmzn.com/&t=", i18n()$t("Probability Distributions Viewer")),
+        a(
+          href = paste0("http://www.facebook.com/sharer.php?u=http://statdist.ksmzn.com/&t=", i18n()$t("Probability Distributions Viewer")),
           target = "_blank",
           icon("facebook"),
-          span('Facebook'),
+          span("Facebook"),
           tags$small(
             class = "badge pull-right bg-light-blue",
-            'Share'
+            "Share"
           )
         )
       ),
-      menuItem("@ksmzn", icon = icon("twitter"),
+      menuItem(
+        "@ksmzn", icon = icon("twitter"),
         href = "https://twitter.com/ksmzn"
       ),
-      menuItem("Blog", icon = icon("pencil"),
+      menuItem(
+        "Blog", icon = icon("pencil"),
         href = "http://ksmzn.hatenablog.com/"
       )
     )

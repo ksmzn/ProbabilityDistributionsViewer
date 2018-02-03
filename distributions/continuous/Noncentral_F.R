@@ -1,7 +1,7 @@
 # 非心F分布
 ## Functions ----
-ncf.func_p <- function(df1, df2, ncp) function(x) df(x, df1=df1, df2=df2, ncp=ncp)
-ncf.func_c <- function(df1, df2, ncp) function(x) pf(x, df1=df1, df2=df2, ncp=ncp)
+ncf.func_p <- function(df1, df2, ncp) function(x) df(x, df1 = df1, df2 = df2, ncp = ncp)
+ncf.func_c <- function(df1, df2, ncp) function(x) pf(x, df1 = df1, df2 = df2, ncp = ncp)
 ncf.formula <- "
   f(x) =\\sum\\limits_{k=0}^\\infty
   \\frac{e^{-\\lambda/2}(\\lambda/2)^k}
@@ -14,14 +14,14 @@ ncf.formula <- "
 
 ncf.x_filter <- function(x, df1, df2, ncp) {
   if (df1 == 1) {
-    x <- x[x!=0]
+    x <- x[x != 0]
   }
   return(x)
 }
 
 ## Moments ----
 ncf.mean <- function(df1, df2, ncp) {
-  if(is.null(df2) || df2 <= 2){
+  if (is.null(df2) || df2 <= 2) {
     value <- NULL
   } else {
     value <- (df2 * (df1 + ncp)) / (df1 * (df2 - 2))
@@ -31,12 +31,12 @@ ncf.mean <- function(df1, df2, ncp) {
 ncf.mean_str <- "\\frac{\\nu_2(\\nu_1 + \\lambda)}{\\nu_1(\\nu_2-2)}"
 
 ncf.variance <- function(df1, df2, ncp) {
-  if(is.null(df2) || df2 <= 4){
+  if (is.null(df2) || df2 <= 4) {
     value <- NULL
   } else {
     value <-
       (2 * df2 ** 2 * (((df1 + ncp) ** 2) + (df1 + 2 * ncp) * (df2 - 2))) /
-      (df1 ** 2 * (df2 - 2) ** 2 * (df2 - 4))
+        (df1 ** 2 * (df2 - 2) ** 2 * (df2 - 4))
   }
   return(value)
 }
@@ -47,7 +47,7 @@ ncf.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 0.5
+  step = 0.5
 )
 ncf.df1 <- list(
   name = "df1",

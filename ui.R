@@ -7,11 +7,11 @@ sidebarWidth <- 300
 
 # CSS Files
 cssFiles <- tags$head(
-  tags$link(rel="stylesheet", type="text/css", href="css/main.css")
+  tags$link(rel = "stylesheet", type = "text/css", href = "css/main.css")
 )
 # JavaScript Files
 jsFiles <- tags$head(
-  tags$script(src="js/google-analytics.js")
+  tags$script(src = "js/google-analytics.js")
 )
 
 ####################################################
@@ -37,7 +37,8 @@ sidebar <- dashboardSidebar(
   sidebarMenuOutput("sidebar_menu")
 )
 
-board.about <- tabItem(tabName = "about",
+board.about <- tabItem(
+  tabName = "about",
   uiOutput("about")
 )
 ####################################################

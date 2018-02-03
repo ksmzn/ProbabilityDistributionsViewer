@@ -1,8 +1,8 @@
 library(hypergeo)
 # 非心ベータ分布 ----
 ## functions ----
-ncbeta.func_p <- function(shape1, shape2, ncp) function(x) dbeta(x, shape1=shape1, shape2=shape2, ncp=ncp)
-ncbeta.func_c <- function(shape1, shape2, ncp) function(x) pbeta(x, shape1=shape1, shape2=shape2, ncp=ncp)
+ncbeta.func_p <- function(shape1, shape2, ncp) function(x) dbeta(x, shape1 = shape1, shape2 = shape2, ncp = ncp)
+ncbeta.func_c <- function(shape1, shape2, ncp) function(x) pbeta(x, shape1 = shape1, shape2 = shape2, ncp = ncp)
 ncbeta.formula <- "
 f(x) = \\sum_{j=0}^\\infty \\frac{1}{j!}
 \\left(\\frac{\\lambda}{2}\\right)^je^{-\\lambda/2}
@@ -11,22 +11,23 @@ f(x) = \\sum_{j=0}^\\infty \\frac{1}{j!}
 
 ncbeta.x_filter <- function(x, shape1, shape2, ncp) {
   if (shape1 < 1) {
-    x <- x[x!=0]
+    x <- x[x != 0]
   }
   if (shape2 < 1) {
-    x <- x[x!=1]
+    x <- x[x != 1]
   }
   return(x)
 }
 
 ## Moments ----
-ncbeta.mean <- function(shape1, shape2, ncp){
-  value <- exp(- ncp / 2) *
+ncbeta.mean <- function(shape1, shape2, ncp) {
+  value <- exp(-ncp / 2) *
     shape1 *
     hypergeo::genhypergeo(
       U = c(shape1 + 1, shape1 + shape2),
       L = c(shape1, 1 + shape1 + shape2),
-      z = ncp / 2) /
+      z = ncp / 2
+    ) /
     (shape1 + shape2)
   return(value)
 }
@@ -39,13 +40,14 @@ e^{-\\frac{\\lambda}{2}}
 
 ncbeta.variance <- function(shape1, shape2, ncp) {
   value.mean <- ncbeta.mean(shape1, shape2, ncp)
-  value <- exp(- ncp / 2) *
+  value <- exp(-ncp / 2) *
     shape1 *
     (shape1 + 1) *
     hypergeo::genhypergeo(
       U = c(shape1 + 1, shape1 + shape2),
       L = c(shape1, 1 + shape1 + shape2),
-      z = ncp / 2) /
+      z = ncp / 2
+    ) /
     ((shape1 + shape2) * (shape1 + shape2 + 1)) -
     value.mean ** 2
   return(value)
@@ -62,7 +64,7 @@ ncbeta.range <- list(
   min = 0,
   max = 1,
   value = c(0, 1),
-  step= 0.01
+  step = 0.01
 )
 ncbeta.shape1 <- list(
   name = "shape1",

@@ -1,7 +1,7 @@
 # 非心t分布
 ## Functions ----
-nct.func_p <- function(df, ncp) function(x) dt(x, df=df, ncp=ncp)
-nct.func_c <- function(df, ncp) function(x) pt(x, df=df, ncp=ncp)
+nct.func_p <- function(df, ncp) function(x) dt(x, df = df, ncp = ncp)
+nct.func_c <- function(df, ncp) function(x) pt(x, df = df, ncp = ncp)
 nct.formula <- "
 f(x) =\\frac{\\nu^{\\frac{\\nu}{2}}
 \\exp\\left (-\\frac{\\nu\\mu^2}{2(x^2+\\nu)} \\right )}
@@ -13,17 +13,17 @@ f(x) =\\frac{\\nu^{\\frac{\\nu}{2}}
 nct.x_filter <- NULL
 
 ## Moments ----
-nct.mean <- function(df, ncp){
-  if(is.null(df) || df <= 1){
+nct.mean <- function(df, ncp) {
+  if (is.null(df) || df <= 1) {
     value <- NULL
   } else {
     value <- ncp * sqrt(df / 2) * gamma((df - 1) / 2) / gamma(df / 2)
   }
   return(value)
 }
-nct.mean_str <- "\\mu\\sqrt{\\frac{\\nu}{2}}\\frac{\\Gamma((\\nu-1)/2)}{\\Gamma(\\nu/2)}" 
+nct.mean_str <- "\\mu\\sqrt{\\frac{\\nu}{2}}\\frac{\\Gamma((\\nu-1)/2)}{\\Gamma(\\nu/2)}"
 nct.variance <- function(df, ncp) {
-  if(is.null(df) || df <= 2){
+  if (is.null(df) || df <= 2) {
     value <- NULL
   } else {
     value <- (df * (1 + ncp ** 2)) / (df - 2) -
@@ -38,7 +38,7 @@ nct.range <- list(
   min = -100,
   max = 100,
   value = c(-10, 10),
-  step= 0.5
+  step = 0.5
 )
 nct.df <- list(
   name = "df",

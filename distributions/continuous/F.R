@@ -1,7 +1,7 @@
 # F分布 ----
 ## Functions ----
-f.func_p <- function(df1, df2) function(x) df(x, df1=df1, df2=df2, ncp=0L)
-f.func_c <- function(df1, df2) function(x) pf(x, df1=df1, df2=df2, ncp=0L)
+f.func_p <- function(df1, df2) function(x) df(x, df1 = df1, df2 = df2, ncp = 0L)
+f.func_c <- function(df1, df2) function(x) pf(x, df1 = df1, df2 = df2, ncp = 0L)
 f.formula <- "
   f(x) = \\frac{1}{\\mathrm{B}(d_1/2, d_2/2)} \\; 
   \\left(\\frac{d_1\\,x}{d_1\\,x + d_2}\\right)^{d_1/2} \\; 
@@ -14,8 +14,8 @@ f.x_filter <- NULL
 f.mean <- function(df1, df2) df2 / (df2 - 2)
 f.mean_str <- "\\frac{d_2}{d_2-2}"
 f.variance <- function(df1, df2) {
-  (2 * df2 ** 2) * (df1 + df2 - 2) / 
-  (df1 * ((df2 - 2) ** 2) * (df2 - 4))
+  (2 * df2 ** 2) * (df1 + df2 - 2) /
+    (df1 * ((df2 - 2) ** 2) * (df2 - 4))
 }
 f.variance_str <- "\\frac{2\\,d_2^2\\,(d_1+d_2-2)}{d_1 (d_2-2)^2 (d_2-4)}"
 
@@ -24,7 +24,7 @@ f.range <- list(
   min = 0,
   max = 100,
   value = c(0, 20),
-  step= 0.5
+  step = 0.5
 )
 f.df1 <- list(
   name = "df1",
