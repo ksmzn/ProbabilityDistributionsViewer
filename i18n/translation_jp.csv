@@ -28,7 +28,7 @@ Max,最大値
 Undefined,定義されない
 Plot,プロット
 variance(∞ if 1 <= ν <= 2),分散 (自由度が2以下のときは∞)
-ShinyDistributionsApp,確率分布いろいろ
+Probability Distributions Viewer,確率分布 Viewer
 Reference,参考
 Parameters,パラメータ
 Probability density function (PDF),確率密度関数
