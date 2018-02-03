@@ -1,3 +1,6 @@
+.wrapper {
+    overflow-y: hidden;
+}
 .dummy {
   padding: 7px 15px 0 0;
 }
