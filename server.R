@@ -96,10 +96,7 @@ server <- function(input, output, session) {
       menuItem("About", icon = icon("info"),
         tabName = "about"
       ),
-      menuItem("English", icon = icon("external-link"),
-        href = "https://kaz-yos.shinyapps.io/ShinyDistributionsApp/"
-      ),
-      menuItem("Source code for app", icon = icon("github"),
+      menuItem("Source code", icon = icon("github"),
         href = "http://github.com/ksmzn/ShinyDistributionsApp"
       ),
       tags$li(
