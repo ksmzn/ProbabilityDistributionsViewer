@@ -5,7 +5,7 @@ library(stringr)
 library(htmltools)
 
 APP_PARAMS <- "selected_language"
-SHINYDASHBOARD_PARAMS <- c("sidebarCollapsed", "sidebarItemExpanded", "tabs")
+SHINYDASHBOARD_PARAMS <- "tabs"
 
 # Buttons
 createTwitterButton <- function(share_text, share_url){
@@ -127,7 +127,12 @@ showBookmarkModal <- function(input, i18n) {
     dismiss_label <- i18n()$t("Dismiss")
     copy_text <- i18n()$t("Press Ctrl-C to copy.")
     copy_text_mac <- i18n()$t("Press ⌘-C to copy.")
-    app_name <- i18n()$t("ShinyDistributionsApp")
+
+    # Share sentences
+    dist_name <- i18n()$t(distributions[[input$tabs]]$name)
+    app_title <- i18n()$t("ShinyDistributionsApp")
+    app_name <- stringr::str_c(dist_name, app_title, sep = " - ")
+
     modal <- urlBookmarkModal(
       url,
       title = title,
