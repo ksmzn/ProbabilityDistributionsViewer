@@ -51,6 +51,9 @@ server <- function(input, output, session) {
     updateQueryString(url_filtered)
   })
   onBookmarked(showBookmarkModal(input, i18n))
+  onRestore(function(state) {
+    updateTabItems(session, "tabs", state$input$tabs)
+  })
 
   ###########################################################################
   # UI
