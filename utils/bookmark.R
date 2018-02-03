@@ -66,7 +66,7 @@ filterQueryParams <- function(url, input){
 }
 
 # Custom Modal which is supported i18n
-urlBookmarkModal <- function(url, title, subtitle = NULL, dismiss_label = "Dismiss", copy_text = "Press Ctrl-C to copy.", copy_text_mac = "Press ⌘-C to copy.", app_name = "ShinyDistributionsApp") {
+urlBookmarkModal <- function(url, title, subtitle = NULL, dismiss_label = "Dismiss", copy_text = "Press Ctrl-C to copy.", copy_text_mac = "Press ⌘-C to copy.", share_text = "ShinyDistributionsApp") {
   subtitleTag <- tagList(
     br(),
     span(class = "text-muted",
@@ -77,8 +77,8 @@ urlBookmarkModal <- function(url, title, subtitle = NULL, dismiss_label = "Dismi
   # Buttons
   dismissButton <- modalButton(dismiss_label)
 
-  share_url <- str_c("http://twitter.com/intent/tweet?text=", app_name, "&url=", url, "&via=ksmzn&hashtags=rshiny") 
-  twitterButton <- createTwitterButton(share_text = app_name, share_url = url)
+  share_url <- str_c("http://twitter.com/intent/tweet?text=", share_text, "&url=", url, "&via=ksmzn&hashtags=rshiny") 
+  twitterButton <- createTwitterButton(share_text = share_text, share_url = url)
   modalDialog(
     title = title,
     footer = list(twitterButton, dismissButton),
@@ -128,10 +128,14 @@ showBookmarkModal <- function(input, i18n) {
     copy_text <- i18n()$t("Press Ctrl-C to copy.")
     copy_text_mac <- i18n()$t("Press ⌘-C to copy.")
 
-    # Share sentences
-    dist_name <- i18n()$t(distributions[[input$tabs]]$name)
+    # Share text
+    tabs <- input$tabs
+    page_title <- switch (tabs,
+      about = "About",
+      i18n()$t(distributions[[tabs]]$name)
+    )
     app_title <- i18n()$t("ShinyDistributionsApp")
-    app_name <- stringr::str_c(dist_name, app_title, sep = " - ")
+    share_text <- stringr::str_c(page_title, app_title, sep = " - ")
 
     modal <- urlBookmarkModal(
       url,
@@ -140,7 +144,7 @@ showBookmarkModal <- function(input, i18n) {
       dismiss_label = dismiss_label,
       copy_text = copy_text,
       copy_text_mac = copy_text_mac,
-      app_name = app_name
+      share_text = share_text
     )
     showModal(modal)
   }

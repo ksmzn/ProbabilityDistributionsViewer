@@ -5,6 +5,10 @@ library(rmarkdown)
 pageTitle <- "ShinyDistributionsApp"
 sidebarWidth <- 300
 
+# CSS Files
+cssFiles <- tags$head(
+  tags$link(rel="stylesheet", type="text/css", href="css/main.css")
+)
 # JavaScript Files
 jsFiles <- tags$head(
   tags$script(src="js/google-analytics.js")
@@ -67,6 +71,7 @@ board.pois <- distTabUI(pois)
 board.dunif <- distTabUI(dunif)
 
 body <- dashboardBody(
+  cssFiles,
   jsFiles,
   tabItems(
     # Continuous
