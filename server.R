@@ -100,7 +100,7 @@ server <- function(input, output, session) {
       ),
       menuItem(
         "Source code", icon = icon("github"),
-        href = "http://github.com/ksmzn/ShinyDistributionsApp"
+        href = "http://github.com/ksmzn/ProbabilityDistributionsViewer"
       ),
       tags$li(
         a(

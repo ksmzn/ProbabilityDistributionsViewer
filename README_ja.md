@@ -1,7 +1,7 @@
 Probability Distributions Viewer
 =====================
 
-![demo](https://github.com/ksmzn/ShinyDistributionsApp/blob/master/doc/ja/demo.png)
+![demo](https://github.com/ksmzn/ProbabilityDistributionsViewer/blob/master/doc/ja/demo.png)
 
 ## どんなアプリ？
 

@@ -6,8 +6,7 @@ You can modify their parameters, and check how they influence the distributions.
 
 The web app was authored by <a href="https://twitter.com/ksmzn">@ksmzn</a> using the <a href="http://shiny.rstudio.com/">Shiny</a> R web app framework and the NVD3.js graphing framework. <a href="https://twitter.com/kaz_yos">@kaz_yos</a> translated it into English.
 
-- The original code is avaialbe at: https://github.com/ksmzn/ShinyDistributionsApp
-- The English translation is avialble at: https://github.com/kaz-yos/ShinyDistributionsApp
+- The original code is avaialbe at: https://github.com/ksmzn/ProbabilityDistributionsViewer
 
 ### References 
 

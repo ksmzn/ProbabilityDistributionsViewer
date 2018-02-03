@@ -19,7 +19,7 @@ URLをコピーすれば、シェアすることも可能です。
 - 言語切り替え機能を作成しました。  
 右上の選択ボタンからどうぞ。  
 現在対応しているのは日本語と英語です。  
-その他の言語の対応は未定ですが、[PullRequest](https://github.com/ksmzn/ShinyDistributionsApp/pulls) は大歓迎です。  
+その他の言語の対応は未定ですが、[PullRequest](https://github.com/ksmzn/ProbabilityDistributionsViewer/pulls) は大歓迎です。  
 よろしくお願いします。
 
 **【2015年1月14日 追記】**  

@@ -1,7 +1,7 @@
 Probability Distributions Viewer
 =====================
 
-![demo](https://github.com/ksmzn/ShinyDistributionsApp/blob/master/doc/demo.png)
+![demo](https://github.com/ksmzn/ProbabilityDistributionsViewer/blob/master/doc/demo.png)
 
 [http://statdist.ksmzn.com](http://statdist.ksmzn.com)
 
@@ -11,7 +11,7 @@ You can modify their parameters, and check how they influence the distributions.
 
 The web app was authored by <a href="https://twitter.com/ksmzn">@ksmzn</a> using the <a href="http://shiny.rstudio.com/">Shiny</a> R web app framework and the NVD3.js graphing framework. <a href="https://twitter.com/kaz_yos">@kaz_yos</a> translated it into English.
 
-- The original code is avaialbe at: https://github.com/ksmzn/ShinyDistributionsApp
+- The original code is avaialbe at: https://github.com/ksmzn/ProbabilityDistributionsViewer
 
 ### References 
 
