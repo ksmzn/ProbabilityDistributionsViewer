@@ -1,19 +1,19 @@
 Probability Distributions Viewer
 =====================
 
-![demo](https://github.com/ksmzn/ShinyDistributionsApp/blob/master/doc/demo.png)
+![demo](https://github.com/ksmzn/ShinyDistributionsApp/blob/master/doc/ja/demo.png)
 
-[http://statdist.ksmzn.com](http://statdist.ksmzn.com)
+## どんなアプリ？
 
-This web app enables visual inspection of various probability distributions commonly used in statistics.
-You can modify their parameters, and check how they influence the distributions.
- From the **left menu**, choose a probability distribution of interest.
+様々な確率分布のカタチを見ることができるWebアプリです。  
+R言語でアプリを作れる [Shiny](http://shiny.rstudio.com) で作りました。 
 
-The web app was authored by <a href="https://twitter.com/ksmzn">@ksmzn</a> using the <a href="http://shiny.rstudio.com/">Shiny</a> R web app framework and the NVD3.js graphing framework. <a href="https://twitter.com/kaz_yos">@kaz_yos</a> translated it into English.
+パラメータを変えて、確率分布のカタチがどのように変わるのか観察しましょう。  
+平均値・分散の値も知ることができます。
 
-- The original code is avaialbe at: https://github.com/ksmzn/ShinyDistributionsApp
+ **左メニュー** からお好きな確率分布を選んでください。
 
-### References 
+### 参考文献
 
 #### Shiny
 
@@ -37,10 +37,10 @@ The web app was authored by <a href="https://twitter.com/ksmzn">@ksmzn</a> using
 
 #### Tutorial & Example
 
-+ [ボケて(bokete)のネタを全自動で流し見できるサイト作った - ほくそ笑む](http://d.hatena.ne.jp/hoxo_m/20140731/p1) (in Japanese)
-+ [RStudio Shiny チュートリアル レッスン1 ようこそ Shiny へ - Qiita](http://qiita.com/hoxo_m/items/c8365117f3444fb51df4) (in Japanese)
++ [ボケて(bokete)のネタを全自動で流し見できるサイト作った - ほくそ笑む](http://d.hatena.ne.jp/hoxo_m/20140731/p1)
++ [RStudio Shiny チュートリアル レッスン1 ようこそ Shiny へ - Qiita](http://qiita.com/hoxo_m/items/c8365117f3444fb51df4)
 
-### Author's blog article (in Japanese)
+### 拙ブログ
 
 + [Shinyで確率分布を動かして遊べるページ作った](http://ksmzn.hatenablog.com/entry/statdist-shiny)
 + [Shinyで作った確率分布を動かせるページを, NVD3.jsでヌルヌルでインタラクティブなグラフにしました。そしてShinyでD3.jsを使う方法３つ。](http://ksmzn.hatenablog.com/entry/shiny-nvd3-js-nuru) 

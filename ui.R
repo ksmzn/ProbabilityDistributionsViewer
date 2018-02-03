@@ -2,7 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(rmarkdown)
 
-pageTitle <- "ShinyDistributionsApp"
+pageTitle <- "Probability Distributions Viewer"
 sidebarWidth <- 300
 
 # CSS Files

@@ -66,7 +66,7 @@ filterQueryParams <- function(url, input){
 }
 
 # Custom Modal which is supported i18n
-urlBookmarkModal <- function(url, title, subtitle = NULL, dismiss_label = "Dismiss", copy_text = "Press Ctrl-C to copy.", copy_text_mac = "Press ⌘-C to copy.", share_text = "ShinyDistributionsApp") {
+urlBookmarkModal <- function(url, title, subtitle = NULL, dismiss_label = "Dismiss", copy_text = "Press Ctrl-C to copy.", copy_text_mac = "Press ⌘-C to copy.", share_text = "Probability Distributions Viewer") {
   subtitleTag <- tagList(
     br(),
     span(class = "text-muted",
@@ -134,7 +134,7 @@ showBookmarkModal <- function(input, i18n) {
       about = "About",
       i18n()$t(distributions[[tabs]]$name)
     )
-    app_title <- i18n()$t("ShinyDistributionsApp")
+    app_title <- i18n()$t("Probability Distributions Viewer")
     share_text <- stringr::str_c(page_title, app_title, sep = " - ")
 
     modal <- urlBookmarkModal(

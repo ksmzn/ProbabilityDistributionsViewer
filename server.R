@@ -96,14 +96,11 @@ server <- function(input, output, session) {
       menuItem("About", icon = icon("info"),
         tabName = "about"
       ),
-      menuItem("English", icon = icon("external-link"),
-        href = "https://kaz-yos.shinyapps.io/ShinyDistributionsApp/"
-      ),
-      menuItem("Source code for app", icon = icon("github"),
+      menuItem("Source code", icon = icon("github"),
         href = "http://github.com/ksmzn/ShinyDistributionsApp"
       ),
       tags$li(
-        a(href = paste0("http://twitter.com/intent/tweet?text=", i18n()$t("ShinyDistributionsApp"), "&url=http://statdist.ksmzn.com/&via=ksmzn&hashtags=rshiny"),
+        a(href = paste0("http://twitter.com/intent/tweet?text=", i18n()$t("Probability Distributions Viewer"), "&url=http://statdist.ksmzn.com/&via=ksmzn&hashtags=rshiny"),
           target = "_blank",
           icon("twitter"),
           onClick = "window.open(encodeURI(decodeURI(this.href)),
@@ -118,7 +115,7 @@ server <- function(input, output, session) {
         )
       ),
       tags$li(
-        a(href = paste0("http://www.facebook.com/sharer.php?u=http://statdist.ksmzn.com/&t=", i18n()$t("ShinyDistributionsApp")),
+        a(href = paste0("http://www.facebook.com/sharer.php?u=http://statdist.ksmzn.com/&t=", i18n()$t("Probability Distributions Viewer")),
           target = "_blank",
           icon("facebook"),
           span('Facebook'),
