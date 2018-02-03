@@ -144,3 +144,4 @@ discrete_distributions <- add_names(discrete_distributions)
 
 # All Distribituons
 distributions <- c(continuous_distributions, discrete_distributions)
+dist_names <- purrr::map_chr(distributions, ~ .x$dist)
