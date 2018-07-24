@@ -1,7 +1,9 @@
-Probability Distributions Viewer
+確率分布Viewer
 =====================
 
 ![demo](https://github.com/ksmzn/ProbabilityDistributionsViewer/blob/master/doc/ja/demo.png)
+
+[https://statdist.ksmzn.com](https://statdist.ksmzn.com)
 
 ## どんなアプリ？
 
@@ -30,6 +32,10 @@ R言語でアプリを作れる [Shiny](http://shiny.rstudio.com) で作りま�
 #### shiny.i18n
 
 + [GitHub - Appsilon/shiny.i18n](https://github.com/Appsilon/shiny.i18n)
+
+#### Shiny & HTTPS
+
++ [SteveLTN/https-portal](https://github.com/SteveLTN/https-portal)
 
 #### JavaScript
 

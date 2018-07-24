@@ -3,7 +3,7 @@ Probability Distributions Viewer
 
 ![demo](https://github.com/ksmzn/ProbabilityDistributionsViewer/blob/master/doc/demo.png)
 
-[http://statdist.ksmzn.com](http://statdist.ksmzn.com)
+[https://statdist.ksmzn.com](https://statdist.ksmzn.com)
 
 This web app enables visual inspection of various probability distributions commonly used in statistics.
 You can modify their parameters, and check how they influence the distributions.
@@ -30,6 +30,10 @@ The web app was authored by <a href="https://twitter.com/ksmzn">@ksmzn</a> using
 #### shiny.i18n
 
 + [GitHub - Appsilon/shiny.i18n](https://github.com/Appsilon/shiny.i18n)
+
+#### Shiny & HTTPS
+
++ [SteveLTN/https-portal](https://github.com/SteveLTN/https-portal)
 
 #### JavaScript
 

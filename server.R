@@ -104,7 +104,7 @@ server <- function(input, output, session) {
       ),
       tags$li(
         a(
-          href = paste0("http://twitter.com/intent/tweet?text=", i18n()$t("Probability Distributions Viewer"), "&url=http://statdist.ksmzn.com/&via=ksmzn&hashtags=rshiny"),
+          href = paste0("http://twitter.com/intent/tweet?text=", i18n()$t("Probability Distributions Viewer"), "&url=https://statdist.ksmzn.com/&via=ksmzn&hashtags=rshiny"),
           target = "_blank",
           icon("twitter"),
           onClick = "window.open(encodeURI(decodeURI(this.href)),
@@ -120,7 +120,7 @@ server <- function(input, output, session) {
       ),
       tags$li(
         a(
-          href = paste0("http://www.facebook.com/sharer.php?u=http://statdist.ksmzn.com/&t=", i18n()$t("Probability Distributions Viewer")),
+          href = paste0("http://www.facebook.com/sharer.php?u=https://statdist.ksmzn.com/&t=", i18n()$t("Probability Distributions Viewer")),
           target = "_blank",
           icon("facebook"),
           span("Facebook"),
