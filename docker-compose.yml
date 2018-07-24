@@ -7,7 +7,7 @@ https-portal:
     - statdist
   restart: always
   environment:
-    DOMAINS: 'statdist.ksmzn.com -> http://statdist'
+    DOMAINS: 'statdist.ksmzn.com -> http://statdist:3838'
     STAGE: 'production'
     # FORCE_RENEW: 'true'
 
