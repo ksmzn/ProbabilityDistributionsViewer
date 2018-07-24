@@ -1,12 +1,5 @@
-FROM rocker/shiny:latest
+FROM ksmzn/shinydistributionsapp:latest
 
-RUN apt-get update && apt-get install -y \
-  libssl-dev/unstable \
-  libssh2-1-dev/unstable \
-  build-essential
+COPY  /ShinyDistributionsApp/ /srv/shiny-server/
 
-RUN R -e "install.packages(c('devtools', 'shinydashboard', 'hypergeo', 'purrr', 'R6', 'dplyr', 'stringr'), repos='http://cran.rstudio.com/')"
-
-RUN R -e "devtools::install_github('Appsilon/shiny.i18n')"
-
-CMD ["/usr/bin/shiny-server.sh"]
+CMD exec shiny-server >> /var/log/shiny-server.log 2>&1

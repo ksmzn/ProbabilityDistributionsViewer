@@ -1,0 +1,15 @@
+https-portal:
+  image: steveltn/https-portal:1
+  ports:
+    - '80:80'
+    - '443:443'
+  links:
+    - statdist
+  restart: always
+  environment:
+    DOMAINS: 'statdist.ksmzn.com -> http://statdist'
+    STAGE: 'production'
+    # FORCE_RENEW: 'true'
+
+statdist:
+  build: .
